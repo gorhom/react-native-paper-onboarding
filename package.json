@@ -26,7 +26,6 @@
   },
   "homepage": "https://github.com/gorhom/react-native-paper-onboarding",
   "scripts": {
-    "test": "jest",
     "typescript": "tsc --noEmit",
     "lint": "eslint --ext .js,.ts,.tsx .",
     "prepare": "bob build",
