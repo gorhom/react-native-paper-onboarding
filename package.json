@@ -5,7 +5,7 @@
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
-  "react-native": "src/index.tsx",
+  "react-native": "src/index.ts",
   "files": [
     "src",
     "lib"
@@ -33,6 +33,9 @@
     "bootstrap": "yarn example && yarn && cd example/ios && pod install",
     "release": "release-it"
   },
+  "dependencies": {
+    "react-native-redash": "^9.6.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
@@ -49,12 +52,16 @@
     "prettier": "^1.19.1",
     "react": "~16.9.0",
     "react-native": "~0.61.5",
+    "react-native-gesture-handler": "^1.6.0",
+    "react-native-reanimated": "^1.7.0",
     "release-it": "^12.6.2",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-gesture-handler": "^1.6.0",
+    "react-native-reanimated": "^1.7.0"
   },
   "husky": {
     "hooks": {
