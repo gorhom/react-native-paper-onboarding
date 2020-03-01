@@ -1,15 +1,9 @@
 import React, { useMemo, useCallback } from 'react';
-import { View, Dimensions } from 'react-native';
+import { View, Dimensions, StatusBar, Platform } from 'react-native';
 import { horizontalPanGestureHandler, ReText } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
-import Animated, {
-  interpolate,
-  add,
-  concat,
-  block,
-  call,
-} from 'react-native-reanimated';
-import { withSpring } from './withSpring';
+import Animated, { interpolate, add, concat } from 'react-native-reanimated';
+import { withTiming } from './withTiming';
 import {
   PaperOnboardingItemType,
   PaperOnboardingSafeAreaInsetsType,
@@ -27,13 +21,12 @@ interface PaperOnboardingProps {
 export const PaperOnboarding = (props: PaperOnboardingProps) => {
   // props
   const { data, safeInsets: _safeInsets, indicatorSize = 40 } = props;
-
   const safeInsets = useMemo<PaperOnboardingSafeAreaInsetsType>(
     () => ({
-      top: _safeInsets?.top || 50,
-      bottom: _safeInsets?.bottom || 50,
-      left: _safeInsets?.left || 50,
-      right: _safeInsets?.right || 50,
+      top: _safeInsets?.top ?? 50,
+      bottom: _safeInsets?.bottom ?? 50,
+      left: _safeInsets?.left ?? 50,
+      right: _safeInsets?.right ?? 50,
     }),
     [_safeInsets]
   );
@@ -48,8 +41,10 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
 
   const screenDimensions = useMemo(
     () => ({
-      width: Dimensions.get('screen').width,
-      height: Dimensions.get('screen').height,
+      width: Dimensions.get('window').width,
+      height:
+        Dimensions.get('window').height -
+        (Platform.OS === 'android' ? StatusBar.currentHeight ?? 0 : 0),
     }),
     []
   );
@@ -60,11 +55,12 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
   );
 
   // animations
-  const currentIndex = withSpring({
+  const currentIndex = withTiming({
     value: translationX,
     velocity: velocityX,
     state: state,
     size: data.length,
+    screenWidth: screenDimensions.width,
   });
 
   const animatedIndicatorsContainerPosition = add(
@@ -118,17 +114,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
           indicatorSize={indicatorSize}
           safeInsets={safeInsets}
         />
-        <View style={styles.debugContainer}>
-          <Animated.Code>
-            {() =>
-              block([
-                call(
-                  [currentIndex, concat(`currentIndex: `, currentIndex)],
-                  args => console.log(`currentIndex: ${args[0]}, ${args[1]}`)
-                ),
-              ])
-            }
-          </Animated.Code>
+        <View style={styles.debugContainer} pointerEvents="none">
           <ReText
             style={styles.text}
             text={concat(`translationX: `, translationX)}

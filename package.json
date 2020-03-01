@@ -28,13 +28,14 @@
   "scripts": {
     "typescript": "tsc --noEmit",
     "lint": "eslint --ext .js,.ts,.tsx .",
-    "prepare": "bob build",
+    "build": "bob build",
     "example": "yarn --cwd example",
     "bootstrap": "yarn example && yarn && cd example/ios && pod install",
     "release": "release-it"
   },
   "dependencies": {
-    "react-native-redash": "^9.6.0"
+    "react-native-redash": "^9.6.0",
+    "react-native-svg": "^11.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
@@ -54,6 +55,7 @@
     "react-native": "~0.61.5",
     "react-native-gesture-handler": "^1.6.0",
     "react-native-reanimated": "^1.7.0",
+    "react-native-svg": "^11.0.1",
     "release-it": "^12.6.2",
     "typescript": "^3.8.3"
   },
@@ -61,7 +63,8 @@
     "react": "*",
     "react-native": "*",
     "react-native-gesture-handler": "^1.6.0",
-    "react-native-reanimated": "^1.7.0"
+    "react-native-reanimated": "^1.7.0",
+    "react-native-svg": "^11.0.1"
   },
   "husky": {
     "hooks": {

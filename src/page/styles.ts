@@ -30,6 +30,6 @@ export const styles = StyleSheet.create({
     fontSize: 18,
   },
   background: {
-    position: 'absolute',
+    ...StyleSheet.absoluteFillObject,
   },
 });

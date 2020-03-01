@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Text } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { Svg, Circle } from 'react-native-svg';
+import Animated, { add } from 'react-native-reanimated';
 import {
   PaperOnboardingItemType,
   PaperOnboardingSafeAreaInsetsType,
@@ -8,7 +9,8 @@ import {
 } from '../types';
 import { styles } from './styles';
 
-const { interpolate, sub, Extrapolate } = Animated;
+const { interpolate, Extrapolate } = Animated;
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 interface PaperOnboardingPageProps {
   index: number;
@@ -33,9 +35,14 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
   } = props;
 
   // memo
-  const pageBackgroundExtendedSize = useMemo(
-    () => screenDimensions.height * 2,
+  const backgroundExtendedSize = useMemo(
+    () => screenDimensions.height,
+    // () => 40,
     [screenDimensions]
+  );
+  const backgroundBottomPosition = useMemo(
+    () => screenDimensions.height - indicatorSize / 2 - safeInsets.bottom,
+    [screenDimensions, indicatorSize, safeInsets]
   );
 
   // animations
@@ -61,15 +68,16 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
     extrapolate: Extrapolate.CLAMP,
   });
 
-  const animatedBackgroundScale = interpolate(currentIndex, {
+  const animatedBackgroundSize = interpolate(currentIndex, {
     inputRange: [index - 1, index],
-    outputRange: [0, 1],
+    outputRange: [0, backgroundExtendedSize],
     extrapolate: Extrapolate.CLAMP,
   });
 
-  const animatedBackgroundLeftPosition = sub(
+  const animatedBackgroundLeftPosition = add(
     animatedIndicatorsContainerPosition,
-    pageBackgroundExtendedSize / 2 - indicatorSize / 2 - index * indicatorSize
+    indicatorSize / 2,
+    index * indicatorSize
   );
 
   // styles
@@ -116,37 +124,22 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
     [animatedImageTopPosition]
   );
 
-  const backgroundStyle = useMemo(
-    () => [
-      styles.background,
-      {
-        backgroundColor: item.color,
-        width: pageBackgroundExtendedSize,
-        height: pageBackgroundExtendedSize,
-        borderRadius: pageBackgroundExtendedSize,
-        top:
-          screenDimensions.height -
-          indicatorSize / 2 -
-          pageBackgroundExtendedSize / 2 -
-          safeInsets.bottom,
-        left: animatedBackgroundLeftPosition,
-        transform: [{ scale: animatedBackgroundScale }],
-      },
-    ],
-    [
-      item,
-      animatedBackgroundLeftPosition,
-      animatedBackgroundScale,
-      screenDimensions,
-      pageBackgroundExtendedSize,
-      safeInsets,
-      indicatorSize,
-    ]
-  );
-
   return (
     <Animated.View style={styles.container}>
-      <Animated.View style={backgroundStyle} />
+      <Svg
+        style={styles.background}
+        width={screenDimensions.width}
+        height={screenDimensions.height}
+        needsOffscreenAlphaCompositing={true}
+        renderToHardwareTextureAndroid={true}
+      >
+        <AnimatedCircle
+          cx={animatedBackgroundLeftPosition}
+          cy={backgroundBottomPosition}
+          r={animatedBackgroundSize}
+          fill={item.color}
+        />
+      </Svg>
       <Animated.View style={contentContainerStyle}>
         {item.image && (
           <Animated.View style={imageContainerStyle}>

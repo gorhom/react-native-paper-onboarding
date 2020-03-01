@@ -1,5 +1,4 @@
-import { Dimensions } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, { Easing } from 'react-native-reanimated';
 import { State } from 'react-native-gesture-handler';
 import { clamp, dec, inc } from 'react-native-redash';
 
@@ -19,11 +18,10 @@ const {
   neq,
   lessThan,
   greaterOrEq,
-  spring,
-  SpringUtils,
   greaterThan,
   interpolate,
   abs,
+  timing,
 } = Animated;
 
 interface WithDecayParams {
@@ -33,41 +31,37 @@ interface WithDecayParams {
   offset?: Animated.Value<number>;
   deceleration?: number;
   size: number;
+  screenWidth: number;
 }
 
-const width = Dimensions.get('screen').width;
-
-export const withSpring = (props: WithDecayParams) => {
-  const { value, velocity, state, size } = props;
+export const withTiming = (props: WithDecayParams) => {
+  const { value, velocity, state, size, screenWidth } = props;
 
   const clock = new Clock();
+
+  const config = {
+    toValue: new Value(0),
+    duration: 500,
+    easing: Easing.out(Easing.exp),
+  };
+
   const animationState = {
     finished: new Value(0),
     position: new Value(0),
+    frameTime: new Value(0),
     time: new Value(0),
-    velocity: new Value(0),
   };
-
-  const config = SpringUtils.makeConfigFromBouncinessAndSpeed({
-    ...SpringUtils.makeDefaultConfig(),
-    bounciness: 0,
-    speed: 25,
-    mass: 0.5,
-    overshootClamping: true,
-    restSpeedThreshold: 0.01,
-    restDisplacementThreshold: 0.01,
-  });
 
   const index = new Value(0);
 
   const valueClamp = interpolate(value, {
-    inputRange: [width * -1, 0, width],
+    inputRange: [screenWidth * -1, 0, screenWidth],
     outputRange: [1, 0, -1],
     extrapolate: Animated.Extrapolate.CLAMP,
   });
 
   const velocityClamp = interpolate(velocity, {
-    inputRange: [width * -2, 0, width * 2],
+    inputRange: [screenWidth * -2, 0, screenWidth * 2],
     outputRange: [0.5, 0, -0.5],
     extrapolate: Animated.Extrapolate.CLAMP,
   });
@@ -83,6 +77,9 @@ export const withSpring = (props: WithDecayParams) => {
       cond(greaterThan(animationState.position, 0), inc(index), dec(index))
     ),
     set(animationState.position, 0),
+    set(animationState.finished, 0),
+    set(animationState.frameTime, 0),
+    set(animationState.time, 0),
   ];
 
   return block([
@@ -100,7 +97,6 @@ export const withSpring = (props: WithDecayParams) => {
     ]),
     cond(eq(state, State.END), [
       cond(and(not(clockRunning(clock)), not(animationState.finished)), [
-        set(animationState.time, 0),
         cond(
           greaterThan(abs(add(animationState.position, velocityClamp)), 0.5),
           cond(
@@ -113,9 +109,12 @@ export const withSpring = (props: WithDecayParams) => {
           // @ts-ignore
           set(config.toValue, 0)
         ),
+        set(animationState.finished, 0),
+        set(animationState.frameTime, 0),
+        set(animationState.time, 0),
         startClock(clock),
       ]),
-      spring(clock, animationState, config),
+      timing(clock, animationState, config),
       cond(animationState.finished, finishDecay),
     ]),
     clamp(add(animationState.position, index), 0, size - 1),
