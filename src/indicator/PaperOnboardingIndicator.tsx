@@ -7,6 +7,7 @@ const { interpolate, Extrapolate } = Animated;
 
 interface PaperOnboardingIndicatorProps {
   size: number;
+  color: string;
   index: number;
   item: PaperOnboardingItemType;
   currentIndex: Animated.Node<number>;
@@ -16,7 +17,7 @@ export const PaperOnboardingIndicator = (
   props: PaperOnboardingIndicatorProps
 ) => {
   // props
-  const { size, index, currentIndex, item } = props;
+  const { size, color, index, currentIndex, item } = props;
 
   // animation
   const animatedScale = interpolate(currentIndex, {
@@ -50,7 +51,6 @@ export const PaperOnboardingIndicator = (
       {
         width: size,
         height: size,
-        borderRadius: size,
         transform: [{ scale: animatedScale }],
       },
     ],
@@ -61,20 +61,24 @@ export const PaperOnboardingIndicator = (
     () => [
       styles.border,
       {
+        borderWidth: size / 5,
         borderRadius: size,
+        borderColor: color,
       },
     ],
-    [size]
+    [size, color]
   );
 
   const fillStyle = useMemo(
     () => [
       styles.fill,
       {
+        borderRadius: size,
+        backgroundColor: color,
         opacity: animatedBackgroundOpacity,
       },
     ],
-    [animatedBackgroundOpacity]
+    [color, size, animatedBackgroundOpacity]
   );
 
   const iconStyle = useMemo(

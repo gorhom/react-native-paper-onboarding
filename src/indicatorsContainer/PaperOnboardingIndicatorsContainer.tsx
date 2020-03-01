@@ -12,6 +12,7 @@ interface PaperOnboardingIndicatorsContainerProps {
   currentIndex: Animated.Node<number>;
   animatedIndicatorsContainerPosition: Animated.Node<number>;
   indicatorSize: number;
+  indicatorColor: string;
   safeInsets: PaperOnboardingSafeAreaInsetsType;
 }
 
@@ -24,6 +25,7 @@ export const PaperOnboardingIndicatorsContainer = (
     currentIndex,
     animatedIndicatorsContainerPosition,
     indicatorSize,
+    indicatorColor,
     safeInsets,
   } = props;
 
@@ -59,13 +61,14 @@ export const PaperOnboardingIndicatorsContainer = (
           <PaperOnboardingIndicator
             key={`item-${index}`}
             size={indicatorSize}
+            color={indicatorColor}
             index={index}
             item={item}
             currentIndex={currentIndex}
           />
         );
       }),
-    [data, indicatorSize, currentIndex]
+    [data, indicatorSize, indicatorColor, currentIndex]
   );
 
   return (

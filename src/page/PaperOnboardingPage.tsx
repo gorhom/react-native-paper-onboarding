@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Text } from 'react-native';
+import { Text, TextStyle } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
 import Animated, { add } from 'react-native-reanimated';
 import {
@@ -18,6 +18,8 @@ interface PaperOnboardingPageProps {
   currentIndex: Animated.Node<number>;
   animatedIndicatorsContainerPosition: Animated.Node<number>;
   indicatorSize: number;
+  titleStyle?: TextStyle;
+  descriptionStyle?: TextStyle;
   screenDimensions: PaperOnboardingScreenDimensions;
   safeInsets: PaperOnboardingSafeAreaInsetsType;
 }
@@ -30,16 +32,16 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
     currentIndex,
     animatedIndicatorsContainerPosition,
     indicatorSize,
+    titleStyle: titleStyleOverride,
+    descriptionStyle: descriptionStyleOverride,
     screenDimensions,
     safeInsets,
   } = props;
 
   // memo
-  const backgroundExtendedSize = useMemo(
-    () => screenDimensions.height,
-    // () => 40,
-    [screenDimensions]
-  );
+  const backgroundExtendedSize = useMemo(() => screenDimensions.height, [
+    screenDimensions,
+  ]);
   const backgroundBottomPosition = useMemo(
     () => screenDimensions.height - indicatorSize / 2 - safeInsets.bottom,
     [screenDimensions, indicatorSize, safeInsets]
@@ -102,16 +104,21 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
   );
 
   const titleStyle = useMemo(
-    () => [styles.title, item.titleStyle ? item.titleStyle : null],
-    [item]
+    () => [
+      styles.title,
+      titleStyleOverride,
+      item.titleStyle ? item.titleStyle : null,
+    ],
+    [item, titleStyleOverride]
   );
 
   const descriptionStyle = useMemo(
     () => [
       styles.description,
+      descriptionStyleOverride,
       item.descriptionStyle ? item.descriptionStyle : null,
     ],
-    [item]
+    [item, descriptionStyleOverride]
   );
 
   const imageContainerStyle = useMemo(
@@ -143,7 +150,7 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
       <Animated.View style={contentContainerStyle}>
         {item.image && (
           <Animated.View style={imageContainerStyle}>
-            {item.image()}
+            {typeof item.image === 'function' ? item.image() : item.image}
           </Animated.View>
         )}
         <Text style={titleStyle}>{item.title}</Text>
