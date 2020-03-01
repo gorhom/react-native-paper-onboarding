@@ -1,4 +1,4 @@
-# Paper Onboarding
+# Paper Onboarding [![npm](https://img.shields.io/npm/v/@gorhom/paper-onboarding)](https://www.npmjs.com/package/@gorhom/paper-onboarding) 
 
 Paper Onboarding is a material design UI slider for `React Native` inspired by [Ramotion Paper Onboarding](https://github.com/Ramotion/paper-onboarding).
 
@@ -9,9 +9,9 @@ Paper Onboarding is a material design UI slider for `React Native` inspired by [
 ## Installation
 
 ```sh
-yarn add react-native-paper-onboarding
+yarn add @gorhom/paper-onboarding
 # or
-npm install react-native-paper-onboarding
+npm install @gorhom/paper-onboarding
 ```
 
 ## Usage
