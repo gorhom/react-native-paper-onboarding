@@ -6,6 +6,7 @@
   "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
   "react-native": "src/index.ts",
+  "private": false,
   "files": [
     "src",
     "lib"
