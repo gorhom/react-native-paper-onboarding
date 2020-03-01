@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "react-native-paper-onboarding": ["./src/index"]
+      "@gorhom/paper-onboarding": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

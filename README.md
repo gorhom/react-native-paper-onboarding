@@ -17,7 +17,7 @@ npm install @gorhom/paper-onboarding
 ## Usage
 
 ```ts
-import PaperOnboarding, {PaperOnboardingItemType} from "react-native-paper-onboarding";
+import PaperOnboarding, {PaperOnboardingItemType} from "@gorhom/paper-onboarding";
 
 const data: PaperOnboardingItemType[] = [
   {
