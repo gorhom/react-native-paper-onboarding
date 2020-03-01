@@ -14,6 +14,8 @@ yarn add @gorhom/paper-onboarding
 npm install @gorhom/paper-onboarding
 ```
 
+Also, you need to install [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated), [react-native-gesture-handler](https://github.com/software-mansion/react-native-reanimated) & [react-native-svg](https://github.com/react-native-community/react-native-svg)
+
 ## Usage
 
 ```ts
