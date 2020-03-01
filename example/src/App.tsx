@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Default } from './Default';
 import { WithoutImage } from './WithoutImage';
 import { WithoutIcon } from './WithoutIcon';
+import { WithStyling } from './WithStyling';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,10 @@ const screens = [
   {
     title: 'Without Icon',
     screen: 'WithoutIcon',
+  },
+  {
+    title: 'With Styling',
+    screen: 'WithStyling',
   },
 ];
 
@@ -47,6 +52,7 @@ export default function App() {
         <Stack.Navigator initialRouteName="Home" headerMode="none">
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Default" component={Default} />
+          <Stack.Screen name="WithStyling" component={WithStyling} />
           <Stack.Screen name="WithoutImage" component={WithoutImage} />
           <Stack.Screen name="WithoutIcon" component={WithoutIcon} />
         </Stack.Navigator>
