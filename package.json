@@ -1,7 +1,7 @@
 {
   "name": "@gorhom/paper-onboarding",
   "version": "0.2.0",
-  "description": "to be defined",
+  "description": "Paper Onboarding is a material design UI slider for `React Native`.",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
