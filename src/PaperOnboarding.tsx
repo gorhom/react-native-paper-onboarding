@@ -127,6 +127,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
     <PanGestureHandler {...gestureHandler}>
       <Animated.View style={styles.container}>
         {renderPages()}
+
         <PaperOnboardingIndicatorsContainer
           data={data}
           currentIndex={currentIndex}

@@ -39,7 +39,7 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
   } = props;
 
   // memo
-  const backgroundExtendedSize = useMemo(() => screenDimensions.height, [
+  const backgroundExtendedSize = useMemo(() => screenDimensions.height * 1.1, [
     screenDimensions,
   ]);
   const backgroundBottomPosition = useMemo(
@@ -133,13 +133,7 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
 
   return (
     <Animated.View style={styles.container}>
-      <Svg
-        style={styles.background}
-        width={screenDimensions.width}
-        height={screenDimensions.height}
-        needsOffscreenAlphaCompositing={true}
-        renderToHardwareTextureAndroid={true}
-      >
+      <Svg style={styles.background}>
         <AnimatedCircle
           cx={animatedBackgroundLeftPosition}
           cy={backgroundBottomPosition}
