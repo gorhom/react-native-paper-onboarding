@@ -2,7 +2,9 @@
 
 Paper Onboarding is a material design UI slider for `React Native` inspired by [Ramotion Paper Onboarding](https://github.com/Ramotion/paper-onboarding).
 
-![Paper Onboarding](preview.gif 'Preview')
+<p align="center">
+<img src="./preview.gif" width="600" height="450">
+</p>
 
 ## Installation
 
