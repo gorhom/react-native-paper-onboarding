@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { StatusBar } from 'react-native';
 import PaperOnboarding, {
   PaperOnboardingItemType,
-} from 'react-native-paper-onboarding';
+} from '@gorhom/paper-onboarding';
 import { useSafeArea } from 'react-native-safe-area-context';
 import KeySVG from './svg/key';
 import WalletSVG from './svg/wallet';

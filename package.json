@@ -1,5 +1,5 @@
 {
-  "name": "react-native-paper-onboarding",
+  "name": "@gorhom/paper-onboarding",
   "version": "0.1.0",
   "description": "to be defined",
   "main": "lib/commonjs/index.js",
