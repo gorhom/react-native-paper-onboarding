@@ -51,6 +51,7 @@ export default function App() {
               left: insets?.left,
               right: insets?.right,
             }}
+            onCloseButtonPress={() => console.log('close')}
           />
         )}
       </SafeAreaConsumer>

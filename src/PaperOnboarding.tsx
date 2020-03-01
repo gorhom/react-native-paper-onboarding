@@ -1,26 +1,36 @@
 import React, { useMemo, useCallback } from 'react';
-import { View, Dimensions, StatusBar, Platform } from 'react-native';
-import { horizontalPanGestureHandler, ReText } from 'react-native-redash';
+import { Dimensions, StatusBar, Platform } from 'react-native';
+import { horizontalPanGestureHandler } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
-import Animated, { interpolate, add, concat } from 'react-native-reanimated';
+import Animated, { interpolate, add } from 'react-native-reanimated';
+
+import { PaperOnboardingButton } from './button';
+import { PaperOnboardingIndicatorsContainer } from './indicatorsContainer';
+import { PaperOnboardingPage } from './page/PaperOnboardingPage';
 import { withTiming } from './withTiming';
 import {
   PaperOnboardingItemType,
   PaperOnboardingSafeAreaInsetsType,
 } from './types';
-import { PaperOnboardingIndicatorsContainer } from './indicatorsContainer';
-import { PaperOnboardingPage } from './page/PaperOnboardingPage';
 import { styles } from './styles';
 
 interface PaperOnboardingProps {
   data: PaperOnboardingItemType[];
   safeInsets?: Partial<PaperOnboardingSafeAreaInsetsType>;
   indicatorSize?: number;
+  closeButtonText?: string;
+  onCloseButtonPress: () => void;
 }
 
 export const PaperOnboarding = (props: PaperOnboardingProps) => {
   // props
-  const { data, safeInsets: _safeInsets, indicatorSize = 40 } = props;
+  const {
+    data,
+    safeInsets: _safeInsets,
+    indicatorSize = 40,
+    closeButtonText = 'close',
+    onCloseButtonPress,
+  } = props;
   const safeInsets = useMemo<PaperOnboardingSafeAreaInsetsType>(
     () => ({
       top: _safeInsets?.top ?? 50,
@@ -114,21 +124,14 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
           indicatorSize={indicatorSize}
           safeInsets={safeInsets}
         />
-        <View style={styles.debugContainer} pointerEvents="none">
-          <ReText
-            style={styles.text}
-            text={concat(`translationX: `, translationX)}
-          />
-          <ReText style={styles.text} text={concat(`velocityX: `, velocityX)} />
-          <ReText
-            style={styles.text}
-            text={concat(`currentIndex: `, currentIndex)}
-          />
-          <ReText
-            style={styles.text}
-            text={concat(`threshold: `, screenDimensions.width / 2)}
-          />
-        </View>
+
+        <PaperOnboardingButton
+          lastIndex={data.length}
+          currentIndex={currentIndex}
+          safeInsets={safeInsets}
+          text={closeButtonText}
+          onPress={onCloseButtonPress}
+        />
       </Animated.View>
     </PanGestureHandler>
   );
