@@ -1,61 +1,72 @@
-import * as React from 'react';
-import { StatusBar } from 'react-native';
-import {
-  SafeAreaProvider,
-  SafeAreaConsumer,
-} from 'react-native-safe-area-context';
-import PaperOnboarding, {
-  PaperOnboardingItemType,
-} from 'react-native-paper-onboarding';
-import BankSVG from './svg/bank';
-import HotelSVG from './svg/hotel';
-import KeySVG from './svg/key';
-import StoreSVG from './svg/store';
-import WalletSVG from './svg/wallet';
-import ShoppingCartSVG from './svg/shopping-cart';
+import React from 'react';
+import { StatusBar, View, StyleSheet, Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Default } from './Default';
+import { WithoutImage } from './WithoutImage';
+import { WithoutIcon } from './WithoutIcon';
+import { WithStyling } from './WithStyling';
 
-const data: PaperOnboardingItemType[] = [
+const Stack = createStackNavigator();
+
+const screens = [
   {
-    title: 'Hotels',
-    description: 'All hotels and hostels are sorted by hospitality rating',
-    color: '#698FB8',
-    image: HotelSVG,
-    icon: KeySVG,
+    title: 'Default',
+    screen: 'Default',
   },
   {
-    title: 'Banks',
-    description: 'We carefully verify all banks before add them into the app',
-    color: '#6CB2B8',
-    image: BankSVG,
-    icon: WalletSVG,
+    title: 'Without Image',
+    screen: 'WithoutImage',
   },
   {
-    title: 'Stores',
-    description: 'All local stores are categorized for your convenience',
-    color: '#9D8FBF',
-    image: StoreSVG,
-    icon: ShoppingCartSVG,
+    title: 'Without Icon',
+    screen: 'WithoutIcon',
+  },
+  {
+    title: 'With Styling',
+    screen: 'WithStyling',
   },
 ];
 
+// @ts-ignore
+const HomeScreen = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      {screens.map(item => {
+        return (
+          <Button
+            title={item.title}
+            onPress={() => navigation.navigate(item.screen)}
+          />
+        );
+      })}
+    </View>
+  );
+};
+
 export default function App() {
   return (
-    <SafeAreaProvider>
-      <SafeAreaConsumer>
-        {insets => (
-          <PaperOnboarding
-            data={data}
-            safeInsets={{
-              top: insets?.top,
-              bottom: insets?.bottom,
-              left: insets?.left,
-              right: insets?.right,
-            }}
-            onCloseButtonPress={() => console.log('close')}
-          />
-        )}
-      </SafeAreaConsumer>
-      <StatusBar barStyle="light-content" />
-    </SafeAreaProvider>
+    <>
+      <StatusBar barStyle="dark-content" />
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home" headerMode="none">
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Default" component={Default} />
+          <Stack.Screen name="WithStyling" component={WithStyling} />
+          <Stack.Screen name="WithoutImage" component={WithoutImage} />
+          <Stack.Screen name="WithoutIcon" component={WithoutIcon} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignSelf: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+});

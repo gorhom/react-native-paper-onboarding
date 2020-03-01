@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, TextStyle } from 'react-native';
 import Animated, { round } from 'react-native-reanimated';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 import { PaperOnboardingSafeAreaInsetsType } from '../types';
@@ -12,12 +12,20 @@ interface PaperOnboardingButtonProps {
   safeInsets: PaperOnboardingSafeAreaInsetsType;
   currentIndex: Animated.Node<number>;
   text: string;
+  textStyle?: TextStyle;
   onPress: () => void;
 }
 
 export const PaperOnboardingButton = (props: PaperOnboardingButtonProps) => {
   // props
-  const { safeInsets, currentIndex, lastIndex, text, onPress } = props;
+  const {
+    safeInsets,
+    currentIndex,
+    lastIndex,
+    text,
+    textStyle: textStyleOverride,
+    onPress,
+  } = props;
 
   // animations
   const animatedContainerScale = interpolate(currentIndex, {
@@ -37,7 +45,9 @@ export const PaperOnboardingButton = (props: PaperOnboardingButtonProps) => {
     ],
     [safeInsets, animatedContainerScale]
   );
-  const textStyle = useMemo(() => [styles.text], []);
+  const textStyle = useMemo(() => [styles.text, textStyleOverride], [
+    textStyleOverride,
+  ]);
 
   return (
     <Animated.View style={containerStyle}>

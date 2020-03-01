@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
-import { Dimensions, StatusBar, Platform } from 'react-native';
+import { Dimensions, StatusBar, Platform, TextStyle } from 'react-native';
 import { horizontalPanGestureHandler } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated, { interpolate, add } from 'react-native-reanimated';
@@ -18,6 +18,10 @@ interface PaperOnboardingProps {
   data: PaperOnboardingItemType[];
   safeInsets?: Partial<PaperOnboardingSafeAreaInsetsType>;
   indicatorSize?: number;
+  indicatorColor?: string;
+  titleStyle?: TextStyle;
+  descriptionStyle?: TextStyle;
+  clostButtonTextStyle?: TextStyle;
   closeButtonText?: string;
   onCloseButtonPress: () => void;
 }
@@ -28,6 +32,10 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
     data,
     safeInsets: _safeInsets,
     indicatorSize = 40,
+    indicatorColor = 'white',
+    titleStyle,
+    descriptionStyle,
+    clostButtonTextStyle,
     closeButtonText = 'close',
     onCloseButtonPress,
   } = props;
@@ -96,6 +104,8 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
               animatedIndicatorsContainerPosition
             }
             indicatorSize={indicatorSize}
+            titleStyle={titleStyle}
+            descriptionStyle={descriptionStyle}
             safeInsets={safeInsets}
             screenDimensions={screenDimensions}
           />
@@ -104,6 +114,8 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
     [
       data,
       currentIndex,
+      titleStyle,
+      descriptionStyle,
       animatedIndicatorsContainerPosition,
       indicatorSize,
       screenDimensions,
@@ -115,6 +127,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
     <PanGestureHandler {...gestureHandler}>
       <Animated.View style={styles.container}>
         {renderPages()}
+
         <PaperOnboardingIndicatorsContainer
           data={data}
           currentIndex={currentIndex}
@@ -122,6 +135,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
             animatedIndicatorsContainerPosition
           }
           indicatorSize={indicatorSize}
+          indicatorColor={indicatorColor}
           safeInsets={safeInsets}
         />
 
@@ -130,6 +144,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
           currentIndex={currentIndex}
           safeInsets={safeInsets}
           text={closeButtonText}
+          textStyle={clostButtonTextStyle}
           onPress={onCloseButtonPress}
         />
       </Animated.View>

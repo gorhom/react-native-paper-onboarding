@@ -2,8 +2,8 @@ import { ReactNode } from 'react';
 import { TextStyle } from 'react-native';
 
 export interface PaperOnboardingItemType {
-  image?: () => ReactNode | ReactNode;
-  icon?: () => ReactNode | ReactNode;
+  image?: (() => ReactNode) | ReactNode;
+  icon?: (() => ReactNode) | ReactNode;
   title: string;
   titleStyle?: TextStyle;
   description: string;

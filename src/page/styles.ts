@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 34,
   },
   imageContainer: {
     overflow: 'hidden',
@@ -20,7 +21,6 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '600',
     fontSize: 36,
-    lineHeight: 36,
     marginBottom: 16,
   },
   description: {
