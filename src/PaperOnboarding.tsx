@@ -2,17 +2,19 @@ import React, { useMemo, useCallback } from 'react';
 import { Dimensions, StatusBar, Platform, TextStyle } from 'react-native';
 import { horizontalPanGestureHandler } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
-import Animated, { interpolate, add } from 'react-native-reanimated';
-
+import Animated from 'react-native-reanimated';
 import { PaperOnboardingButton } from './button';
 import { PaperOnboardingIndicatorsContainer } from './indicatorsContainer';
-import { PaperOnboardingPage } from './page/PaperOnboardingPage';
+import { PaperOnboardingPage } from './page';
 import { withTiming } from './withTiming';
 import {
   PaperOnboardingItemType,
   PaperOnboardingSafeAreaInsetsType,
 } from './types';
 import { styles } from './styles';
+
+const { interpolate, add } = Animated;
+Animated.addWhitelistedNativeProps({ cx: true, cy: true, r: true });
 
 interface PaperOnboardingProps {
   data: PaperOnboardingItemType[];
