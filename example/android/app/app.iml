@@ -101,7 +101,6 @@
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp-urlconnection:3.12.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.12.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.15.0@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:./../node_modules/hermes-engine/android/hermes-debug.aar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.react:react-native:0.61.5@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.fragment:fragment:1.2.1@aar" level="project" />
@@ -133,6 +132,7 @@
     <orderEntry type="library" name="Gradle: com.facebook.fresco:nativeimagefilters:2.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.fresco:nativeimagetranscoder:2.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.fresco:imagepipeline-okhttp3:2.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: org.webkit:android-jsc:r245459@aar" level="project" />
     <orderEntry type="module" module-name="react-native-community_masked-view" />
     <orderEntry type="module" module-name="react-native-gesture-handler-android-react-native-gesture-handler" />
     <orderEntry type="module" module-name="react-native-reanimated-android-react-native-reanimated" />
