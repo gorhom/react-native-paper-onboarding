@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { StatusBar } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import PaperOnboarding, {
   PaperOnboardingItemType,
 } from '@gorhom/paper-onboarding';
@@ -29,12 +30,13 @@ const data: PaperOnboardingItemType[] = [
   },
 ];
 
-// @ts-ignore
-export const WithoutIcon = ({ navigation }) => {
+const WithoutIconScreen = () => {
+  // hooks
+  const { goBack } = useNavigation();
   const insets = useSafeArea();
-  const handleOnClosePress = useCallback(() => navigation.popToTop(), [
-    navigation,
-  ]);
+
+  // callbacks
+  const handleOnClosePress = useCallback(() => goBack(), [goBack]);
 
   return (
     <>
@@ -54,3 +56,5 @@ export const WithoutIcon = ({ navigation }) => {
     </>
   );
 };
+
+export default WithoutIconScreen;

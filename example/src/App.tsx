@@ -3,10 +3,11 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import RootScreen from './screens/Root';
-import { Default } from './screens/Default';
-import { WithoutImage } from './screens/WithoutImage';
-import { WithoutIcon } from './screens/WithoutIcon';
-import { WithStyling } from './screens/WithStyling';
+import DefaultScreen from './screens/Default';
+import VerticalGestureScreen from './screens/VerticalGesture';
+import WithoutImageScreen from './screens/WithoutImage';
+import WithoutIconScreen from './screens/WithoutIcon';
+import WithStylingScreen from './screens/WithStyling';
 
 const Stack = createStackNavigator();
 
@@ -17,10 +18,14 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Root" headerMode="none">
           <Stack.Screen name="Root" component={RootScreen} />
-          <Stack.Screen name="Default" component={Default} />
-          <Stack.Screen name="WithStyling" component={WithStyling} />
-          <Stack.Screen name="WithoutImage" component={WithoutImage} />
-          <Stack.Screen name="WithoutIcon" component={WithoutIcon} />
+          <Stack.Screen name="Default" component={DefaultScreen} />
+          <Stack.Screen
+            name="VerticalGesture"
+            component={VerticalGestureScreen}
+          />
+          <Stack.Screen name="WithStyling" component={WithStylingScreen} />
+          <Stack.Screen name="WithoutImage" component={WithoutImageScreen} />
+          <Stack.Screen name="WithoutIcon" component={WithoutIconScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

@@ -22,3 +22,5 @@ export interface PaperOnboardingScreenDimensions {
   width: number;
   height: number;
 }
+
+export type PaperOnboardingDirectionType = 'horizontal' | 'vertical';
