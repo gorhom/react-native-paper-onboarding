@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 import { Dimensions, StatusBar, Platform, TextStyle } from 'react-native';
-import { horizontalPanGestureHandler } from 'react-native-redash';
+import { panGestureHandler } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { PaperOnboardingButton } from './button';
@@ -10,6 +10,7 @@ import { withTiming } from './withTiming';
 import {
   PaperOnboardingItemType,
   PaperOnboardingSafeAreaInsetsType,
+  PaperOnboardingDirectionType,
 } from './types';
 import { styles } from './styles';
 
@@ -19,6 +20,7 @@ Animated.addWhitelistedNativeProps({ cx: true, cy: true, r: true });
 interface PaperOnboardingProps {
   data: PaperOnboardingItemType[];
   safeInsets?: Partial<PaperOnboardingSafeAreaInsetsType>;
+  direction?: PaperOnboardingDirectionType;
   indicatorSize?: number;
   indicatorColor?: string;
   titleStyle?: TextStyle;
@@ -33,6 +35,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
   const {
     data,
     safeInsets: _safeInsets,
+    direction = 'horizontal',
     indicatorSize = 40,
     indicatorColor = 'white',
     titleStyle,
@@ -57,7 +60,9 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
     state,
     translationX,
     velocityX,
-  } = horizontalPanGestureHandler();
+    translationY,
+    velocityY,
+  } = panGestureHandler();
 
   const screenDimensions = useMemo(
     () => ({
@@ -76,8 +81,8 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
 
   // animations
   const currentIndex = withTiming({
-    value: translationX,
-    velocity: velocityX,
+    value: direction === 'horizontal' ? translationX : translationY,
+    velocity: direction === 'horizontal' ? velocityX : velocityY,
     state: state,
     size: data.length,
     screenWidth: screenDimensions.width,

@@ -9,6 +9,10 @@ const examples = [
     slug: 'Default',
   },
   {
+    name: 'Vertical Gesture',
+    slug: 'VerticalGesture',
+  },
+  {
     name: 'Without Image',
     slug: 'WithoutImage',
   },

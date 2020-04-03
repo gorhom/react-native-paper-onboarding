@@ -36,7 +36,7 @@ const data: PaperOnboardingItemType[] = [
   },
 ];
 
-const DefaultScreen = () => {
+const VerticalGestureScreen = () => {
   // hooks
   const { goBack } = useNavigation();
   const insets = useSafeArea();
@@ -49,6 +49,7 @@ const DefaultScreen = () => {
       <StatusBar barStyle="light-content" />
       <PaperOnboarding
         data={data}
+        direction="vertical"
         safeInsets={{
           top: insets?.top,
           bottom: insets?.bottom,
@@ -61,4 +62,4 @@ const DefaultScreen = () => {
   );
 };
 
-export default DefaultScreen;
+export default VerticalGestureScreen;
