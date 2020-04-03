@@ -1,4 +1,4 @@
-# Paper Onboarding [![npm](https://img.shields.io/npm/v/@gorhom/paper-onboarding)](https://www.npmjs.com/package/@gorhom/paper-onboarding) 
+# Paper Onboarding [![npm](https://img.shields.io/npm/v/@gorhom/paper-onboarding)](https://www.npmjs.com/package/@gorhom/paper-onboarding)
 
 Paper Onboarding is a material design UI slider for `React Native` inspired by [Ramotion Paper Onboarding](https://github.com/Ramotion/paper-onboarding).
 
@@ -61,27 +61,27 @@ const Screen = () => {
 | name                 | required | default                                    | description                                                          |
 | -------------------- | -------- | ------------------------------------------ | -------------------------------------------------------------------- |
 | data                 | YES      |                                            | Array of pages/slides `PaperOnboardingItemType` to present.          |
-| safeInsets           | No       | {top: 50, bottom: 50, left: 50, right: 50} | Safe area insets usually come from `react-native-safe-area-context`. |
-| indicatorSize        | No       | 40                                         | Indicator width and height.                                          |
-| indicatorColor       | No       | white                                      | Indicator border and fill color.                                     |
-| titleStyle           | No       |                                            | Text style to override `all` page/slide title default style.         |
-| descriptionStyle     | No       |                                            | Text style to override `all` page/slide description default style.   |
-| clostButtonTextStyle | No       |                                            | Text style to override close button text default style.              |
-| closeButtonText      | No       | close                                      | Text to be set in close button.                                      |
+| safeInsets           | NO       | {top: 50, bottom: 50, left: 50, right: 50} | Safe area insets usually come from `react-native-safe-area-context`. |
+| direction            | NO       | horizontal                                 | Pan gusture direction. `horizontal` or `vertical`                    |
+| indicatorSize        | NO       | 40                                         | Indicator width and height.                                          |
+| indicatorColor       | NO       | white                                      | Indicator border and fill color.                                     |
+| titleStyle           | NO       |                                            | Text style to override `all` page/slide title default style.         |
+| descriptionStyle     | NO       |                                            | Text style to override `all` page/slide description default style.   |
+| clostButtonTextStyle | NO       |                                            | Text style to override close button text default style.              |
+| closeButtonText      | NO       | close                                      | Text to be set in close button.                                      |
 | onCloseButtonPress   | YES      |                                            | Callback when user press on close button.                            |
 
 #### PaperOnboardingItemType
 
 | name             | required | default | description                                                  |
 | ---------------- | -------- | ------- | ------------------------------------------------------------ |
-| image            | No       |         | Image/component to be add the slide/page.                    |
-| icon             | No       |         | Image/component to be add the slide/page indicator.          |
-| color            | Yes      |         | Background color for the slide/page.                         |
-| title            | Yes      |         | Title for the slide/page.                                    |
-| description      | Yes      |         | Description for the slide/page.                              |
-| titleStyle       | No       |         | Text style to override page/slide title default style.       |
-| descriptionStyle | No       |         | Text style to override page/slide description default style. |
-
+| image            | NO       |         | Image/component to be add the slide/page.                    |
+| icon             | NO       |         | Image/component to be add the slide/page indicator.          |
+| color            | YES      |         | Background color for the slide/page.                         |
+| title            | YES      |         | Title for the slide/page.                                    |
+| description      | YES      |         | Description for the slide/page.                              |
+| titleStyle       | NO       |         | Text style to override page/slide title default style.       |
+| descriptionStyle | NO       |         | Text style to override page/slide description default style. |
 
 ## Built With ❤️
 
@@ -94,7 +94,6 @@ const Screen = () => {
 ## Author
 
 - [Mo Gorhom](https://twitter.com/gorhom)
-
 
 ## License
 
