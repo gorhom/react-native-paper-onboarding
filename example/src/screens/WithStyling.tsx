@@ -4,9 +4,9 @@ import PaperOnboarding, {
   PaperOnboardingItemType,
 } from '@gorhom/paper-onboarding';
 import { useSafeArea } from 'react-native-safe-area-context';
-import BankSVG from './svg/bank';
-import HotelSVG from './svg/hotel';
-import StoreSVG from './svg/store';
+import BankSVG from '../svg/bank';
+import HotelSVG from '../svg/hotel';
+import StoreSVG from '../svg/store';
 
 const data: PaperOnboardingItemType[] = [
   {
