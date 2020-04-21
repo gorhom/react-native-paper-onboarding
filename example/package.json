@@ -8,22 +8,25 @@
     "start": "react-native start"
   },
   "dependencies": {
-    "@gorhom/showcase-template": "^0.2.1",
-    "@react-native-community/masked-view": "^0.1.6",
-    "@react-navigation/native": "^5.0.8",
-    "@react-navigation/stack": "^5.1.0",
-    "react": "16.9.0",
-    "react-native": "0.61.5",
-    "react-native-gesture-handler": "^1.6.0",
-    "react-native-reanimated": "^1.7.0",
+    "@gorhom/showcase-template": "^0.2.2",
+    "@react-native-community/masked-view": "^0.1.9",
+    "@react-navigation/native": "^5.1.6",
+    "@react-navigation/stack": "^5.2.11",
+    "react": "16.11.0",
+    "react-native": "0.62.2",
+    "react-native-gesture-handler": "^1.6.1",
+    "react-native-reanimated": "^1.8.0",
     "react-native-redash": "^9.6.0",
     "react-native-safe-area-context": "^0.7.3",
-    "react-native-screens": "^2.2.0",
-    "react-native-svg": "^11.0.1"
+    "react-native-screens": "^2.5.0",
+    "react-native-svg": "^12.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/runtime": "^7.8.4",
-    "metro-react-native-babel-preset": "^0.58.0"
+    "@babel/core": "^7.9.0",
+    "@babel/runtime": "^7.9.2",
+    "@types/react": "^16.9.34",
+    "@types/react-native": "^0.62.2",
+    "metro-react-native-babel-preset": "^0.59.0",
+    "typescript": "^3.8.3"
   }
 }
