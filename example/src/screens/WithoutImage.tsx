@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import PaperOnboarding, {
@@ -33,7 +33,18 @@ const data: PaperOnboardingItemType[] = [
 const WithoutImage = () => {
   // hooks
   const { goBack } = useNavigation();
-  const insets = useSafeArea();
+  const safeInsets = useSafeArea();
+
+  // variable
+  const insets = useMemo(
+    () => ({
+      top: Math.max(safeInsets.top, 20),
+      bottom: Math.max(safeInsets.bottom, 20),
+      left: Math.max(safeInsets.left, 20),
+      right: Math.max(safeInsets.right, 20),
+    }),
+    [safeInsets]
+  );
 
   // callbacks
   const handleOnClosePress = useCallback(() => goBack(), [goBack]);
@@ -44,10 +55,10 @@ const WithoutImage = () => {
       <PaperOnboarding
         data={data}
         safeInsets={{
-          top: insets?.top,
-          bottom: insets?.bottom,
-          left: insets?.left,
-          right: insets?.right,
+          top: insets.top,
+          bottom: insets.bottom,
+          left: insets.left,
+          right: insets.right,
         }}
         onCloseButtonPress={handleOnClosePress}
       />
