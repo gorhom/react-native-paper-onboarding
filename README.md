@@ -68,7 +68,7 @@ const Screen = () => {
 
 | name                 | required | default                                    | description                                                          |
 | -------------------- | -------- | ------------------------------------------ | -------------------------------------------------------------------- |
-| data                 | YES      |                                            | Array of pages/slides `PaperOnboardingItemType` to present.          |
+| data                 | YES      |                                            | Array of pages/slides [PaperOnboardingItemType](#paperonboardingitemtype) to present.          |
 | safeInsets           | NO       | {top: 50, bottom: 50, left: 50, right: 50} | Safe area insets usually come from `react-native-safe-area-context`. |
 | direction            | NO       | horizontal                                 | Pan gusture direction. `horizontal` or `vertical`                    |
 | indicatorSize        | NO       | 40                                         | Indicator width and height.                                          |
@@ -80,43 +80,6 @@ const Screen = () => {
 | onCloseButtonPress   | YES      |                                            | Callback when user press on close button.                            |
 
 #### PaperOnboardingItemType
-
-```ts
-interface PaperOnboardingItemType {
-  /**
-   * Custom component to be added to the slide/page.
-   */
-  content?: (() => ReactNode) | ReactNode;
-  /**
-   * SVG/Image/component to be added to the slide/page.
-   */
-  image?: (() => ReactNode) | ReactNode;
-  /**
-   * SVG/Image/component to be added to the slide/page.
-   */
-  icon?: (() => ReactNode) | ReactNode;
-  /**
-   * Title for the slide/page.
-   */
-  title?: string;
-  /**
-   * Text style to override page/slide title default style.
-   */
-  titleStyle?: TextStyle;
-  /**
-   * Description for the slide/page.
-   */
-  description?: string;
-  /**
-   * Text style to override page/slide description default style.
-   */
-  descriptionStyle?: TextStyle;
-  /**
-   * Background color for the slide/page.
-   */
-  color: string;
-}
-```
 
 | name             | required | default | description                                                  |
 | ---------------- | -------- | ------- | ------------------------------------------------------------ |
