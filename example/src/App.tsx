@@ -8,6 +8,7 @@ import VerticalGestureScreen from './screens/VerticalGesture';
 import WithoutImageScreen from './screens/WithoutImage';
 import WithoutIconScreen from './screens/WithoutIcon';
 import WithStylingScreen from './screens/WithStyling';
+import CustomContentScreen from './screens/CustomContent';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ const App = () => {
           <Stack.Screen name="WithStyling" component={WithStylingScreen} />
           <Stack.Screen name="WithoutImage" component={WithoutImageScreen} />
           <Stack.Screen name="WithoutIcon" component={WithoutIconScreen} />
+          <Stack.Screen name="CustomContent" component={CustomContentScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

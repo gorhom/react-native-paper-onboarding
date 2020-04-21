@@ -66,8 +66,8 @@ export const withTiming = (props: WithDecayParams) => {
     extrapolate: Animated.Extrapolate.CLAMP,
   });
 
-  const isDecayInterrupted = and(eq(state, State.BEGAN), clockRunning(clock));
-  const finishDecay = [
+  const isTimingInterrupted = and(eq(state, State.BEGAN), clockRunning(clock));
+  const finishTiming = [
     stopClock(clock),
     cond(
       and(
@@ -83,7 +83,7 @@ export const withTiming = (props: WithDecayParams) => {
   ];
 
   return block([
-    cond(isDecayInterrupted, finishDecay),
+    cond(isTimingInterrupted, finishTiming),
     cond(neq(state, State.END), [
       set(animationState.finished, 0),
       cond(
@@ -115,7 +115,7 @@ export const withTiming = (props: WithDecayParams) => {
         startClock(clock),
       ]),
       timing(clock, animationState, config),
-      cond(animationState.finished, finishDecay),
+      cond(animationState.finished, finishTiming),
     ]),
     clamp(add(animationState.position, index), 0, size - 1),
   ]);

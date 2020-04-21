@@ -24,6 +24,10 @@ const examples = [
     name: 'With Styling',
     slug: 'WithStyling',
   },
+  {
+    name: 'Custom Content',
+    slug: 'CustomContent',
+  },
 ];
 
 const RootScreen = () => {
