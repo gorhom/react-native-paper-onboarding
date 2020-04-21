@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo } from 'react';
 import { Dimensions, StatusBar, Platform, TextStyle } from 'react-native';
 import { panGestureHandler } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
@@ -98,10 +98,10 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
   );
 
   // renders
-  const renderPages = useCallback(
-    () =>
-      data.map((item, index) => {
-        return (
+  return (
+    <PanGestureHandler {...gestureHandler}>
+      <Animated.View style={styles.container}>
+        {data.map((item, index) => (
           <PaperOnboardingPage
             key={`page-${index}`}
             index={index}
@@ -116,24 +116,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
             safeInsets={safeInsets}
             screenDimensions={screenDimensions}
           />
-        );
-      }),
-    [
-      data,
-      currentIndex,
-      titleStyle,
-      descriptionStyle,
-      animatedIndicatorsContainerPosition,
-      indicatorSize,
-      screenDimensions,
-      safeInsets,
-    ]
-  );
-
-  return (
-    <PanGestureHandler {...gestureHandler}>
-      <Animated.View style={styles.container}>
-        {renderPages()}
+        ))}
 
         <PaperOnboardingIndicatorsContainer
           data={data}

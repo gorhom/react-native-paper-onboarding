@@ -142,13 +142,23 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
         />
       </Svg>
       <Animated.View style={contentContainerStyle}>
-        {item.image && (
-          <Animated.View style={imageContainerStyle}>
-            {typeof item.image === 'function' ? item.image() : item.image}
-          </Animated.View>
+        {item.content ? (
+          typeof item.content === 'function' ? (
+            item.content()
+          ) : (
+            item.content
+          )
+        ) : (
+          <>
+            {item.image && (
+              <Animated.View style={imageContainerStyle}>
+                {typeof item.image === 'function' ? item.image() : item.image}
+              </Animated.View>
+            )}
+            <Text style={titleStyle}>{item.title}</Text>
+            <Text style={descriptionStyle}>{item.description}</Text>
+          </>
         )}
-        <Text style={titleStyle}>{item.title}</Text>
-        <Text style={descriptionStyle}>{item.description}</Text>
       </Animated.View>
     </Animated.View>
   );

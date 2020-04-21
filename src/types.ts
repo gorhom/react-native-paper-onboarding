@@ -4,9 +4,10 @@ import { TextStyle } from 'react-native';
 export interface PaperOnboardingItemType {
   image?: (() => ReactNode) | ReactNode;
   icon?: (() => ReactNode) | ReactNode;
-  title: string;
+  content?: (() => ReactNode) | ReactNode;
+  title?: string;
   titleStyle?: TextStyle;
-  description: string;
+  description?: string;
   descriptionStyle?: TextStyle;
   color: string;
 }
