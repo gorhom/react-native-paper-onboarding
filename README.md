@@ -33,6 +33,7 @@ const data: PaperOnboardingItemType[] = [
     color: '#698FB8',
     image: /* IMAGE COMPONENT */,
     icon: /* ICON COMPONENT */,
+    content: /* CUSTOM COMPONENT */,
   },
   {
     title: 'Banks',
@@ -40,6 +41,7 @@ const data: PaperOnboardingItemType[] = [
     color: '#6CB2B8',
     image: /* IMAGE COMPONENT */,
     icon: /* ICON COMPONENT */,
+    content: /* CUSTOM COMPONENT */,
   },
   {
     title: 'Stores',
@@ -47,6 +49,7 @@ const data: PaperOnboardingItemType[] = [
     color: '#9D8FBF',
     image: /* IMAGE COMPONENT */,
     icon: /* ICON COMPONENT */,
+    content: /* CUSTOM COMPONENT */,
   },
 ];
 
@@ -78,13 +81,51 @@ const Screen = () => {
 
 #### PaperOnboardingItemType
 
+```ts
+interface PaperOnboardingItemType {
+  /**
+   * Custom component to be added to the slide/page.
+   */
+  content?: (() => ReactNode) | ReactNode;
+  /**
+   * SVG/Image/component to be added to the slide/page.
+   */
+  image?: (() => ReactNode) | ReactNode;
+  /**
+   * SVG/Image/component to be added to the slide/page.
+   */
+  icon?: (() => ReactNode) | ReactNode;
+  /**
+   * Title for the slide/page.
+   */
+  title?: string;
+  /**
+   * Text style to override page/slide title default style.
+   */
+  titleStyle?: TextStyle;
+  /**
+   * Description for the slide/page.
+   */
+  description?: string;
+  /**
+   * Text style to override page/slide description default style.
+   */
+  descriptionStyle?: TextStyle;
+  /**
+   * Background color for the slide/page.
+   */
+  color: string;
+}
+```
+
 | name             | required | default | description                                                  |
 | ---------------- | -------- | ------- | ------------------------------------------------------------ |
-| image            | NO       |         | Image/component to be add the slide/page.                    |
-| icon             | NO       |         | Image/component to be add the slide/page indicator.          |
+| content          | NO       |         | Custom component to be added to the slide/page.              |
+| image            | NO       |         | SVG/Image/component to be added to the slide/page.           |
+| icon             | NO       |         | SVG/Image/component to be added to the slide/page indicator. |
 | color            | YES      |         | Background color for the slide/page.                         |
-| title            | YES      |         | Title for the slide/page.                                    |
-| description      | YES      |         | Description for the slide/page.                              |
+| title            | NO       |         | Title for the slide/page.                                    |
+| description      | NO       |         | Description for the slide/page.                              |
 | titleStyle       | NO       |         | Text style to override page/slide title default style.       |
 | descriptionStyle | NO       |         | Text style to override page/slide description default style. |
 
