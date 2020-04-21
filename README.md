@@ -1,10 +1,15 @@
-# Paper Onboarding [![npm](https://img.shields.io/npm/v/@gorhom/paper-onboarding)](https://www.npmjs.com/package/@gorhom/paper-onboarding)
+<div align="center">
+<h1>Paper Onboarding</h1>
+
+[![npm](https://badgen.net/npm/v/@gorhom/paper-onboarding)](https://www.npmjs.com/package/@gorhom/paper-onboarding) [![npm](https://badgen.net/npm/license/@gorhom/paper-onboarding)](https://www.npmjs.com/package/@gorhom/paper-onboarding) [![npm](https://badgen.net/npm/types/@gorhom/paper-onboarding)](https://www.npmjs.com/package/@gorhom/paper-onboarding)
+
+<img src="./preview.gif">
 
 Paper Onboarding is a material design UI slider for `React Native` inspired by [Ramotion Paper Onboarding](https://github.com/Ramotion/paper-onboarding).
 
-<p align="center">
-<img src="./preview.gif" width="600" height="450">
-</p>
+</div>
+
+---
 
 ## Installation
 
@@ -14,11 +19,11 @@ yarn add @gorhom/paper-onboarding
 npm install @gorhom/paper-onboarding
 ```
 
-Also, you need to install [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated), [react-native-gesture-handler](https://github.com/software-mansion/react-native-reanimated) & [react-native-svg](https://github.com/react-native-community/react-native-svg)
+> Also, you need to install [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated), [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler) & [react-native-svg](https://github.com/react-native-community/react-native-svg), and follow theirs installation instructions.
 
 ## Usage
 
-```ts
+```tsx
 import PaperOnboarding, {PaperOnboardingItemType} from "@gorhom/paper-onboarding";
 
 const data: PaperOnboardingItemType[] = [
@@ -85,7 +90,7 @@ const Screen = () => {
 
 ## Built With ❤️
 
-- [react-native-gesture-handler](https://github.com/software-mansion/react-native-reanimated)
+- [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler)
 - [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated)
 - [react-native-redash](https://github.com/wcandillon/react-native-redash)
 - [react-native-svg](https://github.com/react-native-community/react-native-svg)
@@ -98,3 +103,9 @@ const Screen = () => {
 ## License
 
 MIT
+
+---
+
+<p align="center">
+<a href="https://twitter.com/gorhom"><img src="./logo.png"></a>
+</p>
