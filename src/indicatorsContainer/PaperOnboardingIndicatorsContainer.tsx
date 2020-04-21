@@ -35,7 +35,7 @@ export const PaperOnboardingIndicatorsContainer = (
   }, [data, indicatorSize]);
 
   // style
-  const containerStyle = useMemo(
+  const containerStyle: any = useMemo(
     () => [
       styles.container,
       {

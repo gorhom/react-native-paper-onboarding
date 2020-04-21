@@ -69,7 +69,7 @@ export const PaperOnboardingIndicator = (
     [size, color]
   );
 
-  const fillStyle = useMemo(
+  const fillStyle: any = useMemo(
     () => [
       styles.fill,
       {
@@ -81,7 +81,7 @@ export const PaperOnboardingIndicator = (
     [color, size, animatedBackgroundOpacity]
   );
 
-  const iconStyle = useMemo(
+  const iconStyle: any = useMemo(
     () => [
       styles.iconContainer,
       {

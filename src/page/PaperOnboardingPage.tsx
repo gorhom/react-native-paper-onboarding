@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Text, TextStyle } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
-import Animated, { add } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import {
   PaperOnboardingItemType,
   PaperOnboardingSafeAreaInsetsType,
@@ -9,7 +9,7 @@ import {
 } from '../types';
 import { styles } from './styles';
 
-const { interpolate, Extrapolate } = Animated;
+const { interpolate, add, Extrapolate } = Animated;
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 interface PaperOnboardingPageProps {
@@ -83,7 +83,7 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
   );
 
   // styles
-  const contentContainerStyle = useMemo(
+  const contentContainerStyle: any = useMemo(
     () => [
       styles.contentContainer,
       {
@@ -121,7 +121,7 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
     [item, descriptionStyleOverride]
   );
 
-  const imageContainerStyle = useMemo(
+  const imageContainerStyle: any = useMemo(
     () => [
       styles.imageContainer,
       {
@@ -135,8 +135,10 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
     <Animated.View style={styles.container}>
       <Svg style={styles.background}>
         <AnimatedCircle
+          // @ts-ignore
           cx={animatedBackgroundLeftPosition}
           cy={backgroundBottomPosition}
+          // @ts-ignore
           r={animatedBackgroundSize}
           fill={item.color}
         />

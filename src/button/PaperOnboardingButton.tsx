@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { Text, TouchableOpacity, TextStyle } from 'react-native';
 import Animated, { round } from 'react-native-reanimated';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
 import { PaperOnboardingSafeAreaInsetsType } from '../types';
 import { styles } from './styles';
 
@@ -35,7 +34,7 @@ export const PaperOnboardingButton = (props: PaperOnboardingButtonProps) => {
   });
 
   // styles
-  const containerStyle = useMemo(
+  const containerStyle: any = useMemo(
     () => [
       styles.container,
       {
