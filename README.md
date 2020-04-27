@@ -108,6 +108,14 @@ const Screen = () => {
 
 MIT
 
+<div align="center">
+
+Liked the library? 😇
+
+<a href="https://www.buymeacoffee.com/gorhom" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-red.png" alt="Buy Me A Coffee" height="50" ></a>
+
+</div>
+
 ---
 
 <p align="center">
