@@ -35,8 +35,8 @@
     "release": "release-it"
   },
   "dependencies": {
-    "react-native-redash": "^9.6.0",
-    "react-native-svg": "^11.0.1"
+    "react-native-redash": "12.1.0",
+    "react-native-svg": "12.6.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
