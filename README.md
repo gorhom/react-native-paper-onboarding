@@ -77,6 +77,7 @@ const Screen = () => {
 | descriptionStyle     | NO       |                                            | Text style to override `all` page/slide description default style.   |
 | clostButtonTextStyle | NO       |                                            | Text style to override close button text default style.              |
 | closeButtonText      | NO       | close                                      | Text to be set in close button.                                      |
+| closeButton          | NO       |                                            | Custom component to be used instead of the default close button.      |
 | onCloseButtonPress   | YES      |                                            | Callback when user press on close button.                            |
 
 #### PaperOnboardingItemType

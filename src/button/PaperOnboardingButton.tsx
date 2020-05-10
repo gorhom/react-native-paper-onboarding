@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, ReactNode } from 'react';
 import { Text, TouchableOpacity, TextStyle } from 'react-native';
 import Animated, { round } from 'react-native-reanimated';
 import { PaperOnboardingSafeAreaInsetsType } from '../types';
@@ -13,6 +13,7 @@ interface PaperOnboardingButtonProps {
   text: string;
   textStyle?: TextStyle;
   onPress: () => void;
+  customButton?: (() => ReactNode) | ReactNode;
 }
 
 export const PaperOnboardingButton = (props: PaperOnboardingButtonProps) => {
@@ -24,6 +25,7 @@ export const PaperOnboardingButton = (props: PaperOnboardingButtonProps) => {
     text,
     textStyle: textStyleOverride,
     onPress,
+    customButton,
   } = props;
 
   // animations
@@ -50,9 +52,17 @@ export const PaperOnboardingButton = (props: PaperOnboardingButtonProps) => {
 
   return (
     <Animated.View style={containerStyle}>
-      <TouchableOpacity onPress={onPress}>
-        <Text style={textStyle}>{text}</Text>
-      </TouchableOpacity>
+      {customButton ? (
+        typeof customButton === 'function' ? (
+          customButton()
+        ) : (
+          customButton
+        )
+      ) : (
+        <TouchableOpacity onPress={onPress}>
+          <Text style={textStyle}>{text}</Text>
+        </TouchableOpacity>
+      )}
     </Animated.View>
   );
 };

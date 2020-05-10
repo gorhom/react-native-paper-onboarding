@@ -6,6 +6,7 @@ import PaperOnboarding, {
 } from '@gorhom/paper-onboarding';
 import { useSafeArea } from 'react-native-safe-area-context';
 import CustomView from '../components/CustomView';
+import CustomButton from '../components/CustomButton';
 
 const data: PaperOnboardingItemType[] = [
   {
@@ -54,6 +55,7 @@ const CustomContentScreen = () => {
           right: insets.right,
         }}
         onCloseButtonPress={handleOnClosePress}
+        closeButton={<CustomButton onPress={handleOnClosePress} />}
       />
     </>
   );
