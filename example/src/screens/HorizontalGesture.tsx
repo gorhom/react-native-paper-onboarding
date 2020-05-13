@@ -36,7 +36,7 @@ const data: PaperOnboardingItemType[] = [
   },
 ];
 
-const DefaultScreen = () => {
+const HorizontalGesture = () => {
   // hooks
   const { goBack } = useNavigation();
   const safeInsets = useSafeArea();
@@ -72,4 +72,4 @@ const DefaultScreen = () => {
   );
 };
 
-export default DefaultScreen;
+export default HorizontalGesture;

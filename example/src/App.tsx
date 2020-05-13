@@ -3,7 +3,7 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import RootScreen from './screens/Root';
-import DefaultScreen from './screens/Default';
+import HorizontalGestureScreen from './screens/HorizontalGesture';
 import VerticalGestureScreen from './screens/VerticalGesture';
 import WithoutImageScreen from './screens/WithoutImage';
 import WithoutIconScreen from './screens/WithoutIcon';
@@ -19,7 +19,10 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Root" headerMode="none">
           <Stack.Screen name="Root" component={RootScreen} />
-          <Stack.Screen name="Default" component={DefaultScreen} />
+          <Stack.Screen
+            name="HorizontalGesture"
+            component={HorizontalGestureScreen}
+          />
           <Stack.Screen
             name="VerticalGesture"
             component={VerticalGestureScreen}

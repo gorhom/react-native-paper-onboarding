@@ -5,28 +5,38 @@ import { useNavigation } from '@react-navigation/native';
 
 const examples = [
   {
-    name: 'Default',
-    slug: 'Default',
+    title: 'default',
+    data: [
+      {
+        name: 'Horizontal Gesture',
+        slug: 'HorizontalGesture',
+      },
+      {
+        name: 'Vertical Gesture',
+        slug: 'VerticalGesture',
+      },
+    ],
   },
   {
-    name: 'Vertical Gesture',
-    slug: 'VerticalGesture',
-  },
-  {
-    name: 'Without Image',
-    slug: 'WithoutImage',
-  },
-  {
-    name: 'Without Icon',
-    slug: 'WithoutIcon',
-  },
-  {
-    name: 'With Styling',
-    slug: 'WithStyling',
-  },
-  {
-    name: 'Custom Content',
-    slug: 'CustomContent',
+    title: 'Customisation',
+    data: [
+      {
+        name: 'Without Image',
+        slug: 'WithoutImage',
+      },
+      {
+        name: 'Without Icon',
+        slug: 'WithoutIcon',
+      },
+      {
+        name: 'With Styling',
+        slug: 'WithStyling',
+      },
+      {
+        name: 'Custom Content',
+        slug: 'CustomContent',
+      },
+    ],
   },
 ];
 
