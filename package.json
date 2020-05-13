@@ -35,8 +35,8 @@
     "release": "release-it"
   },
   "dependencies": {
-    "react-native-redash": "^9.6.0",
-    "react-native-svg": "^11.0.1"
+    "react-native-redash": "^14.0.4",
+    "react-native-svg": "^12.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
@@ -54,9 +54,9 @@
     "prettier": "^1.19.1",
     "react": "~16.9.0",
     "react-native": "~0.61.5",
-    "react-native-gesture-handler": "^1.6.0",
-    "react-native-reanimated": "^1.7.0",
-    "react-native-svg": "^11.0.1",
+    "react-native-gesture-handler": "^1.6.1",
+    "react-native-reanimated": "^1.8.0",
+    "react-native-svg": "^12.1.0",
     "release-it": "^12.6.2",
     "typescript": "^3.8.3"
   },

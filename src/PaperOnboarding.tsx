@@ -1,6 +1,6 @@
 import React, { useMemo, ReactNode, useRef, useCallback } from 'react';
 import { Dimensions, StatusBar, Platform, TextStyle } from 'react-native';
-import { panGestureHandler } from 'react-native-redash';
+import { usePanGestureHandler } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { PaperOnboardingButton } from './button';
@@ -63,11 +63,9 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
   const {
     gestureHandler,
     state,
-    translationX,
-    velocityX,
-    translationY,
-    velocityY,
-  } = panGestureHandler();
+    translation,
+    velocity,
+  } = usePanGestureHandler();
 
   const screenDimensions = useMemo(
     () => ({
@@ -86,8 +84,8 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
 
   // animations
   const currentIndex = withTiming({
-    value: direction === 'horizontal' ? translationX : translationY,
-    velocity: direction === 'horizontal' ? velocityX : velocityY,
+    value: direction === 'horizontal' ? translation.x : translation.y,
+    velocity: direction === 'horizontal' ? velocity.x : velocity.y,
     state: state,
     size: data.length,
     screenWidth: screenDimensions.width,
