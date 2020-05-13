@@ -68,7 +68,6 @@ export const withTiming = (props: WithDecayParams) => {
 
   const isTimingInterrupted = and(eq(state, State.BEGAN), clockRunning(clock));
   const finishTiming = [
-    stopClock(clock),
     cond(
       and(
         greaterThan(abs(animationState.position), 0.5),
@@ -80,6 +79,7 @@ export const withTiming = (props: WithDecayParams) => {
     set(animationState.finished, 0),
     set(animationState.frameTime, 0),
     set(animationState.time, 0),
+    stopClock(clock),
   ];
 
   return block([

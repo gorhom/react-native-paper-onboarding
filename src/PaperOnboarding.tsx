@@ -1,4 +1,4 @@
-import React, { useMemo, ReactNode } from 'react';
+import React, { useMemo, ReactNode, useRef, useCallback } from 'react';
 import { Dimensions, StatusBar, Platform, TextStyle } from 'react-native';
 import { panGestureHandler } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
@@ -14,7 +14,7 @@ import {
 } from './types';
 import { styles } from './styles';
 
-const { interpolate, add } = Animated;
+const { interpolate, add, useCode, onChange, call, round } = Animated;
 Animated.addWhitelistedNativeProps({ cx: true, cy: true, r: true });
 
 interface PaperOnboardingProps {
@@ -55,6 +55,9 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
     }),
     [_safeInsets]
   );
+
+  // refs
+  const pagesRef = useRef<Array<Animated.View | null>>(data.map(() => null));
 
   // memo
   const {
@@ -99,6 +102,31 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
     indicatorsContainerLeftPadding
   );
 
+  // callbacks
+  const handlePageRef = useCallback((ref, index) => {
+    pagesRef.current[index] = ref;
+  }, []);
+
+  /**
+   * @DEV
+   * here we directly manipulate pages native props, by setting `pointerEvents` to `auto` for selected page and `none` for others.
+   */
+  useCode(
+    () =>
+      onChange(
+        round(currentIndex),
+        call([currentIndex], args => {
+          pagesRef.current.map((pageRef, index) => {
+            // @ts-ignore
+            pageRef.setNativeProps({
+              pointerEvents: index === Math.round(args[0]) ? 'auto' : 'none',
+            });
+          });
+        })
+      ),
+    []
+  );
+
   // renders
   return (
     <PanGestureHandler {...gestureHandler}>
@@ -117,6 +145,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
             descriptionStyle={descriptionStyle}
             safeInsets={safeInsets}
             screenDimensions={screenDimensions}
+            handleRef={handlePageRef}
           />
         ))}
 

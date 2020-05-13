@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,15 +26,27 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     backgroundColor: '#333',
   },
+
+  buttonText: {
+    padding: 15,
+    color: 'white',
+    backgroundColor: '#333',
+  },
 });
 
 const CustomView = () => {
+  const handleButtonPress = () => {
+    Alert.alert('Button Clicked !');
+  };
   return (
     <View style={styles.container}>
       <View style={styles.box} />
       <View style={styles.item} />
       <View style={styles.item} />
       <View style={styles.item2} />
+      <TouchableOpacity onPress={handleButtonPress}>
+        <Text style={styles.buttonText}>Button</Text>
+      </TouchableOpacity>
     </View>
   );
 };

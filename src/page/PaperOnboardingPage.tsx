@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, MutableRefObject, useCallback } from 'react';
 import { Text, TextStyle } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
 import Animated from 'react-native-reanimated';
@@ -22,6 +22,7 @@ interface PaperOnboardingPageProps {
   descriptionStyle?: TextStyle;
   screenDimensions: PaperOnboardingScreenDimensions;
   safeInsets: PaperOnboardingSafeAreaInsetsType;
+  handleRef: (ref: MutableRefObject<Animated.View>, index: number) => void;
 }
 
 export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
@@ -36,6 +37,7 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
     descriptionStyle: descriptionStyleOverride,
     screenDimensions,
     safeInsets,
+    handleRef,
   } = props;
 
   // memo
@@ -131,8 +133,45 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
     [animatedImageTopPosition]
   );
 
+  // useCode(
+  //   () =>
+  //     onChange(
+  //       currentIndex,
+  //       cond(
+  //         eq(currentIndex, index),
+  //         call([], () => {
+  //           if (containerRef.current) {
+  //             console.log(containerRef.current.getNativeProp)
+  //             // @ts-ignore
+  //             containerRef.current.setNativeProps({
+  //               pointerEvents: 'auto',
+  //             });
+  //           }
+  //         }),
+  //         call([], () => {
+  //           if (containerRef.current) {
+  //             console.log(containerRef.current.props.pointerEvents)
+  //             // @ts-ignore
+  //             containerRef.current.setNativeProps({
+  //               pointerEvents: 'none',
+  //             });
+  //           }
+  //         })
+  //       )
+  //     ),
+  //   []
+  // );
+  const handleContainerRef = useCallback(ref => handleRef(ref, index), [
+    index,
+    handleRef,
+  ]);
+
   return (
-    <Animated.View style={styles.container}>
+    <Animated.View
+      pointerEvents={index === 0 ? 'auto' : 'none'}
+      ref={handleContainerRef}
+      style={styles.container}
+    >
       <Svg style={styles.background}>
         <AnimatedCircle
           // @ts-ignore
