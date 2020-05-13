@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, ReactNode } from 'react';
 import { Dimensions, StatusBar, Platform, TextStyle } from 'react-native';
 import { panGestureHandler } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
@@ -27,6 +27,7 @@ interface PaperOnboardingProps {
   descriptionStyle?: TextStyle;
   clostButtonTextStyle?: TextStyle;
   closeButtonText?: string;
+  closeButton?: (() => ReactNode) | ReactNode;
   onCloseButtonPress: () => void;
 }
 
@@ -43,6 +44,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
     clostButtonTextStyle,
     closeButtonText = 'close',
     onCloseButtonPress,
+    closeButton,
   } = props;
   const safeInsets = useMemo<PaperOnboardingSafeAreaInsetsType>(
     () => ({
@@ -136,6 +138,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
           text={closeButtonText}
           textStyle={clostButtonTextStyle}
           onPress={onCloseButtonPress}
+          customButton={closeButton}
         />
       </Animated.View>
     </PanGestureHandler>
