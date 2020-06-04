@@ -5,6 +5,7 @@ import Animated from 'react-native-reanimated';
 import { calculateRectangleCircleRadius } from '../../utils/math';
 import { PageProps } from '../../types';
 import { styles } from './styles';
+import { calculateRectangleCircleRadius } from '../utils/math';
 
 const { interpolate, add, Extrapolate } = Animated;
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
