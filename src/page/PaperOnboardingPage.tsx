@@ -8,6 +8,7 @@ import {
   PaperOnboardingScreenDimensions,
 } from '../types';
 import { styles } from './styles';
+import { calculateRectangleCircleRadius } from '../utils/math';
 
 const { interpolate, add, Extrapolate } = Animated;
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
@@ -41,9 +42,14 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
   } = props;
 
   // memo
-  const backgroundExtendedSize = useMemo(() => screenDimensions.height * 1.1, [
-    screenDimensions,
-  ]);
+  const backgroundExtendedSize = useMemo(() => {
+    return calculateRectangleCircleRadius({
+      width: screenDimensions.width,
+      height: screenDimensions.height,
+      indicatorX: safeInsets.bottom,
+      indicatorY: 0,
+    });
+  }, [screenDimensions, safeInsets]);
   const backgroundBottomPosition = useMemo(
     () => screenDimensions.height - indicatorSize / 2 - safeInsets.bottom,
     [screenDimensions, indicatorSize, safeInsets]
@@ -133,34 +139,6 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
     [animatedImageTopPosition]
   );
 
-  // useCode(
-  //   () =>
-  //     onChange(
-  //       currentIndex,
-  //       cond(
-  //         eq(currentIndex, index),
-  //         call([], () => {
-  //           if (containerRef.current) {
-  //             console.log(containerRef.current.getNativeProp)
-  //             // @ts-ignore
-  //             containerRef.current.setNativeProps({
-  //               pointerEvents: 'auto',
-  //             });
-  //           }
-  //         }),
-  //         call([], () => {
-  //           if (containerRef.current) {
-  //             console.log(containerRef.current.props.pointerEvents)
-  //             // @ts-ignore
-  //             containerRef.current.setNativeProps({
-  //               pointerEvents: 'none',
-  //             });
-  //           }
-  //         })
-  //       )
-  //     ),
-  //   []
-  // );
   const handleContainerRef = useCallback(ref => handleRef(ref, index), [
     index,
     handleRef,
