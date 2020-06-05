@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { TextStyle } from 'react-native';
+import { TextStyle, Insets } from 'react-native';
 
 export interface PaperOnboardingItemType {
   /**
@@ -36,16 +36,25 @@ export interface PaperOnboardingItemType {
   color: string;
 }
 
-export interface PaperOnboardingSafeAreaInsetsType {
-  top: number;
-  bottom: number;
-  right: number;
-  left: number;
-}
-
 export interface PaperOnboardingScreenDimensions {
   width: number;
   height: number;
 }
 
 export type PaperOnboardingDirectionType = 'horizontal' | 'vertical';
+
+export interface PaperOnboardingProps
+  extends Pick<
+    Partial<PaperOnboardingItemType>,
+    'titleStyle' | 'descriptionStyle'
+  > {
+  data: PaperOnboardingItemType[];
+  safeInsets?: Partial<Insets>;
+  direction?: PaperOnboardingDirectionType;
+  indicatorSize?: number;
+  indicatorColor?: string;
+  clostButtonTextStyle?: TextStyle;
+  closeButtonText?: string;
+  closeButton?: (() => ReactNode) | ReactNode;
+  onCloseButtonPress: () => void;
+}

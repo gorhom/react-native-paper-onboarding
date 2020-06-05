@@ -1,11 +1,11 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, memo } from 'react';
 import Animated from 'react-native-reanimated';
 import { styles } from './styles';
 import { PaperOnboardingItemType } from 'src/types';
 
 const { interpolate, Extrapolate } = Animated;
 
-interface PaperOnboardingIndicatorProps {
+interface IndicatorProps {
   size: number;
   color: string;
   index: number;
@@ -13,12 +13,13 @@ interface PaperOnboardingIndicatorProps {
   currentIndex: Animated.Node<number>;
 }
 
-export const PaperOnboardingIndicator = (
-  props: PaperOnboardingIndicatorProps
-) => {
-  // props
-  const { size, color, index, currentIndex, item } = props;
-
+const IndicatorComponent = ({
+  size,
+  color,
+  index,
+  currentIndex,
+  item,
+}: IndicatorProps) => {
   // animation
   const animatedScale = interpolate(currentIndex, {
     inputRange: [index - 1, index, index + 1],
@@ -113,3 +114,7 @@ export const PaperOnboardingIndicator = (
     </Animated.View>
   );
 };
+
+const Indicator = memo(IndicatorComponent);
+
+export default Indicator;

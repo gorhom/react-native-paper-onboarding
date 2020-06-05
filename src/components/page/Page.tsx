@@ -1,14 +1,13 @@
-import React, { useMemo, MutableRefObject, useCallback } from 'react';
-import { Text, TextStyle } from 'react-native';
+import React, { useMemo, MutableRefObject, useCallback, memo } from 'react';
+import { Text, TextStyle, Insets } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
 import Animated from 'react-native-reanimated';
 import {
   PaperOnboardingItemType,
-  PaperOnboardingSafeAreaInsetsType,
   PaperOnboardingScreenDimensions,
-} from '../types';
+} from '../../types';
 import { styles } from './styles';
-import { calculateRectangleCircleRadius } from '../utils/math';
+import { calculateRectangleCircleRadius } from '../../utils/math';
 
 const { interpolate, add, Extrapolate } = Animated;
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
@@ -22,25 +21,22 @@ interface PaperOnboardingPageProps {
   titleStyle?: TextStyle;
   descriptionStyle?: TextStyle;
   screenDimensions: PaperOnboardingScreenDimensions;
-  safeInsets: PaperOnboardingSafeAreaInsetsType;
+  safeInsets: Required<Insets>;
   handleRef: (ref: MutableRefObject<Animated.View>, index: number) => void;
 }
 
-export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
-  // props
-  const {
-    index,
-    item,
-    currentIndex,
-    animatedIndicatorsContainerPosition,
-    indicatorSize,
-    titleStyle: titleStyleOverride,
-    descriptionStyle: descriptionStyleOverride,
-    screenDimensions,
-    safeInsets,
-    handleRef,
-  } = props;
-
+const PageComponent = ({
+  index,
+  item,
+  currentIndex,
+  animatedIndicatorsContainerPosition,
+  indicatorSize,
+  titleStyle: titleStyleOverride,
+  descriptionStyle: descriptionStyleOverride,
+  screenDimensions,
+  safeInsets,
+  handleRef,
+}: PaperOnboardingPageProps) => {
   // memo
   const backgroundExtendedSize = useMemo(() => {
     return calculateRectangleCircleRadius({
@@ -182,3 +178,7 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
     </Animated.View>
   );
 };
+
+const Page = memo(PageComponent);
+
+export default Page;

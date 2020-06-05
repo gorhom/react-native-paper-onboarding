@@ -1,14 +1,13 @@
-import React, { useMemo, ReactNode } from 'react';
-import { Text, TouchableOpacity, TextStyle } from 'react-native';
+import React, { useMemo, ReactNode, memo } from 'react';
+import { Text, TouchableOpacity, TextStyle, Insets } from 'react-native';
 import Animated, { round } from 'react-native-reanimated';
-import { PaperOnboardingSafeAreaInsetsType } from '../types';
 import { styles } from './styles';
 
 const { interpolate, Extrapolate } = Animated;
 
-interface PaperOnboardingButtonProps {
+interface SkipButtonProps {
   lastIndex: number;
-  safeInsets: PaperOnboardingSafeAreaInsetsType;
+  safeInsets: Required<Insets>;
   currentIndex: Animated.Node<number>;
   text: string;
   textStyle?: TextStyle;
@@ -16,18 +15,15 @@ interface PaperOnboardingButtonProps {
   customButton?: (() => ReactNode) | ReactNode;
 }
 
-export const PaperOnboardingButton = (props: PaperOnboardingButtonProps) => {
-  // props
-  const {
-    safeInsets,
-    currentIndex,
-    lastIndex,
-    text,
-    textStyle: textStyleOverride,
-    onPress,
-    customButton,
-  } = props;
-
+export const SkipButtonComponent = ({
+  safeInsets,
+  currentIndex,
+  lastIndex,
+  text,
+  textStyle: textStyleOverride,
+  onPress,
+  customButton,
+}: SkipButtonProps) => {
   // animations
   const animatedContainerScale = interpolate(currentIndex, {
     inputRange: [lastIndex - 2, lastIndex - 1],
@@ -66,3 +62,7 @@ export const PaperOnboardingButton = (props: PaperOnboardingButtonProps) => {
     </Animated.View>
   );
 };
+
+const SkipButton = memo(SkipButtonComponent);
+
+export default SkipButton;

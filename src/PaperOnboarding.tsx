@@ -1,35 +1,17 @@
-import React, { useMemo, ReactNode, useRef, useCallback } from 'react';
-import { Dimensions, StatusBar, Platform, TextStyle } from 'react-native';
+import React, { useMemo, useRef, useCallback } from 'react';
+import { Dimensions, StatusBar, Platform, Insets } from 'react-native';
 import { usePanGestureHandler } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-import { PaperOnboardingButton } from './button';
-import { PaperOnboardingIndicatorsContainer } from './indicatorsContainer';
-import { PaperOnboardingPage } from './page';
+import Page from './components/page';
+import IndicatorsContainer from './components/indicatorsContainer';
+import SkipButton from './components/skipButton';
 import { withTiming } from './withTiming';
-import {
-  PaperOnboardingItemType,
-  PaperOnboardingSafeAreaInsetsType,
-  PaperOnboardingDirectionType,
-} from './types';
+import { PaperOnboardingProps } from './types';
 import { styles } from './styles';
 
 const { interpolate, add, useCode, onChange, call, round } = Animated;
 Animated.addWhitelistedNativeProps({ cx: true, cy: true, r: true });
-
-interface PaperOnboardingProps {
-  data: PaperOnboardingItemType[];
-  safeInsets?: Partial<PaperOnboardingSafeAreaInsetsType>;
-  direction?: PaperOnboardingDirectionType;
-  indicatorSize?: number;
-  indicatorColor?: string;
-  titleStyle?: TextStyle;
-  descriptionStyle?: TextStyle;
-  clostButtonTextStyle?: TextStyle;
-  closeButtonText?: string;
-  closeButton?: (() => ReactNode) | ReactNode;
-  onCloseButtonPress: () => void;
-}
 
 export const PaperOnboarding = (props: PaperOnboardingProps) => {
   // props
@@ -46,7 +28,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
     onCloseButtonPress,
     closeButton,
   } = props;
-  const safeInsets = useMemo<PaperOnboardingSafeAreaInsetsType>(
+  const safeInsets = useMemo<Required<Insets>>(
     () => ({
       top: _safeInsets?.top ?? 50,
       bottom: _safeInsets?.bottom ?? 50,
@@ -130,7 +112,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
     <PanGestureHandler {...gestureHandler}>
       <Animated.View style={styles.container}>
         {data.map((item, index) => (
-          <PaperOnboardingPage
+          <Page
             key={`page-${index}`}
             index={index}
             item={item}
@@ -147,7 +129,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
           />
         ))}
 
-        <PaperOnboardingIndicatorsContainer
+        <IndicatorsContainer
           data={data}
           currentIndex={currentIndex}
           animatedIndicatorsContainerPosition={
@@ -158,7 +140,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
           safeInsets={safeInsets}
         />
 
-        <PaperOnboardingButton
+        <SkipButton
           lastIndex={data.length}
           currentIndex={currentIndex}
           safeInsets={safeInsets}
