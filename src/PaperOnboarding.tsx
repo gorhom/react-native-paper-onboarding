@@ -8,32 +8,37 @@ import IndicatorsContainer from './components/indicatorsContainer';
 import CloseButton from './components/closeButton';
 import { withTiming } from './withTiming';
 import { PaperOnboardingProps } from './types';
+import {
+  DEFAULT_SAFE_INSET,
+  DEFAULT_DIRECTION,
+  DEFAULT_INDICATOR_SIZE,
+  DEFAULT_INDICATOR_COLOR,
+  DEFAULT_CLOSE_BUTTON_TEXT,
+} from './constants';
 import { styles } from './styles';
 
 const { interpolate, add, useCode, onChange, call, round } = Animated;
 Animated.addWhitelistedNativeProps({ cx: true, cy: true, r: true });
 
-export const PaperOnboarding = (props: PaperOnboardingProps) => {
-  // props
-  const {
-    data,
-    safeInsets: _safeInsets,
-    direction = 'horizontal',
-    indicatorSize = 40,
-    indicatorColor = 'white',
-    titleStyle,
-    descriptionStyle,
-    closeButton,
-    closeButtonTextStyle,
-    closeButtonText = 'close',
-    onCloseButtonPress,
-  } = props;
+export const PaperOnboarding = ({
+  data,
+  safeInsets: _safeInsets,
+  direction = DEFAULT_DIRECTION,
+  indicatorSize = DEFAULT_INDICATOR_SIZE,
+  indicatorColor = DEFAULT_INDICATOR_COLOR,
+  titleStyle,
+  descriptionStyle,
+  closeButton,
+  closeButtonTextStyle,
+  closeButtonText = DEFAULT_CLOSE_BUTTON_TEXT,
+  onCloseButtonPress,
+}: PaperOnboardingProps) => {
   const safeInsets = useMemo<Required<Insets>>(
     () => ({
-      top: _safeInsets?.top ?? 50,
-      bottom: _safeInsets?.bottom ?? 50,
-      left: _safeInsets?.left ?? 50,
-      right: _safeInsets?.right ?? 50,
+      top: _safeInsets?.top ?? DEFAULT_SAFE_INSET,
+      bottom: _safeInsets?.bottom ?? DEFAULT_SAFE_INSET,
+      left: _safeInsets?.left ?? DEFAULT_SAFE_INSET,
+      right: _safeInsets?.right ?? DEFAULT_SAFE_INSET,
     }),
     [_safeInsets]
   );
