@@ -16,10 +16,15 @@ const data: PaperOnboardingItemType[] = [
   {
     content: CustomView,
     backgroundColor: '#666',
+    showCloseButton: true,
   },
   {
     content: CustomView,
     backgroundColor: '#000',
+  },
+  {
+    content: CustomView,
+    backgroundColor: '#666',
   },
 ];
 

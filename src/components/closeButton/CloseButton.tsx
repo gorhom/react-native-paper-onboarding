@@ -1,44 +1,73 @@
-import React, { useMemo, memo } from 'react';
+import React, { useMemo, memo, useRef, useEffect, useCallback } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import Animated, { round } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { CloseButtonProps } from '../../types';
 import { styles } from './styles';
 
-const { interpolate, Extrapolate } = Animated;
+const { round, onChange, call, useCode } = Animated;
 
 export const CloseButtonComponent = ({
+  data,
   safeInsets,
   currentIndex,
-  lastIndex,
   text,
   textStyle: textStyleOverride,
   onPress,
   customButton,
 }: CloseButtonProps) => {
-  // animations
-  const animatedContainerScale = interpolate(currentIndex, {
-    inputRange: [lastIndex - 2, lastIndex - 1],
-    outputRange: [0, 1],
-    extrapolate: Extrapolate.CLAMP,
-  });
+  const containerRef = useRef<Animated.View>(null);
 
-  // styles
+  //#region styles
   const containerStyle: any = useMemo(
     () => [
       styles.container,
       {
         top: safeInsets.top,
-        transform: [{ scale: round(animatedContainerScale) }],
       },
     ],
-    [safeInsets, animatedContainerScale]
+    [safeInsets]
   );
   const textStyle = useMemo(() => [styles.text, textStyleOverride], [
     textStyleOverride,
   ]);
+  //#endregion
+
+  //#region callbacks
+  const handleShowingButton = useCallback(
+    (index: number) => {
+      const shouldShowButton =
+        index === data.length - 1 || data[index].showCloseButton === true;
+
+      // @ts-ignore
+      containerRef.current.setNativeProps({
+        pointerEvents: shouldShowButton ? 'auto' : 'none',
+        opacity: shouldShowButton ? 1 : 0,
+      });
+    },
+    [data]
+  );
+  //#endregion
+
+  //#region effects
+  useEffect(() => {
+    handleShowingButton(0);
+  }, [handleShowingButton]);
+
+  useCode(
+    () => [
+      onChange(
+        round(currentIndex),
+        call([round(currentIndex)], args => {
+          handleShowingButton(args[0]);
+        })
+      ),
+    ],
+    [handleShowingButton]
+  );
+  //#endregion
 
   return (
-    <Animated.View style={containerStyle}>
+    <Animated.View ref={containerRef} style={containerStyle}>
       {customButton ? (
         typeof customButton === 'function' ? (
           customButton()

@@ -146,7 +146,7 @@ export const PaperOnboarding = ({
         />
 
         <CloseButton
-          lastIndex={data.length}
+          data={data}
           currentIndex={currentIndex}
           safeInsets={safeInsets}
           text={closeButtonText}

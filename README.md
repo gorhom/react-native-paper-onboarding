@@ -82,16 +82,17 @@ const Screen = () => {
 
 #### PaperOnboardingItemType
 
-| name             | description                                                  | required | type                                       |
-| ---------------- | ------------------------------------------------------------ | -------- | ------------------------------------------ |
-| content          | Slide/page content, this will replace default content.       | NO       | (() => React.ReactNode) \| React.ReactNode |
-| image            | Image cover.                                                 | NO       | (() => React.ReactNode) \| React.ReactNode |
-| icon             | Indicator icon.                                              | NO       | (() => React.ReactNode) \| React.ReactNode |
-| color            | Background color.                                            | YES      | string                                     |
-| title            | Title text.                                                  | NO       | string                                     |
-| description      | Description text.                                            | NO       | string                                     |
-| titleStyle       | Text style to override page/slide title default style.       | NO       | StyleProp<TextStyle>                       |
-| descriptionStyle | Text style to override page/slide description default style. | NO       | StyleProp<TextStyle>                       |
+| name             | description                                                                                   | required | type                                       |
+| ---------------- | --------------------------------------------------------------------------------------------- | -------- | ------------------------------------------ |
+| content          | Slide/page content, this will replace default content.                                        | NO       | (() => React.ReactNode) \| React.ReactNode |
+| image            | Image cover.                                                                                  | NO       | (() => React.ReactNode) \| React.ReactNode |
+| icon             | Indicator icon.                                                                               | NO       | (() => React.ReactNode) \| React.ReactNode |
+| backgroundColor  | Background color.                                                                             | YES      | string                                     |
+| title            | Title text.                                                                                   | NO       | string                                     |
+| description      | Description text.                                                                             | NO       | string                                     |
+| titleStyle       | Text style to override page/slide title default style.                                        | NO       | StyleProp<TextStyle>                       |
+| descriptionStyle | Text style to override page/slide description default style.                                  | NO       | StyleProp<TextStyle>                       |
+| showCloseButton  | Show close button when page/slide is active, _note: last page will always show close button._ | NO       | boolean                                    |
 
 ## Built With ❤️
 

@@ -43,6 +43,13 @@ export interface PaperOnboardingItemType {
    * @type {string}
    */
   backgroundColor: string;
+  /**
+   * Show close button when page active.
+   * `note: last page will always show close button.`
+   * @type {boolean}
+   * @default false
+   */
+  showCloseButton?: boolean;
 }
 
 export interface PaperOnboardingScreenDimensions {
@@ -55,7 +62,7 @@ export type PaperOnboardingDirectionType = 'horizontal' | 'vertical';
 // PROPS
 
 export interface CloseButtonProps {
-  lastIndex: number;
+  data: Array<PaperOnboardingItemType>;
   safeInsets: Required<Insets>;
   currentIndex: Animated.Node<number>;
   text: string;
@@ -86,7 +93,7 @@ export interface PaperOnboardingProps
    * Array of pages/slides to present.
    * @type {Array<PaperOnboardingItemType>}
    */
-  data: PaperOnboardingItemType[];
+  data: Array<PaperOnboardingItemType>;
   /**
    * Safe area insets, usually come from `react-native-safe-area-context`.
    * @type {Insets}
