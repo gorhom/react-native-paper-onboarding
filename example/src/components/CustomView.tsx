@@ -1,6 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, ViewStyle } from 'react-native';
+import Animated, { interpolate, Extrapolate } from 'react-native-reanimated';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { PageContentProps } from '@gorhom/paper-onboarding';
+import { TouchableOpacityProps } from 'react-native';
+
+const AnimatedTouchableOpacity: React.FC<Animated.AnimateProps<
+  ViewStyle,
+  TouchableOpacityProps
+>> = Animated.createAnimatedComponent(TouchableOpacity) as any;
 
 const styles = StyleSheet.create({
   container: {
@@ -34,19 +42,79 @@ const styles = StyleSheet.create({
   },
 });
 
-const CustomView = () => {
+const CustomView = ({ animatedFocus }: PageContentProps) => {
+  //#region animations
+  const animatedBoxTranslateY = interpolate(animatedFocus, {
+    inputRange: [0, 1],
+    outputRange: [100, 0],
+    extrapolate: Extrapolate.CLAMP,
+  });
+  //#endregion
+
+  //#region styles
+  const boxStyle = [
+    styles.box,
+    {
+      transform: [
+        { translateY: animatedBoxTranslateY },
+      ] as Animated.AnimatedTransform,
+    },
+  ];
+  const item1Style = [
+    styles.item,
+    {
+      opacity: interpolate(animatedFocus, {
+        inputRange: [0.5, 1],
+        outputRange: [0, 1],
+        extrapolate: Extrapolate.CLAMP,
+      }),
+    },
+  ];
+  const item2Style = [
+    styles.item,
+    {
+      opacity: interpolate(animatedFocus, {
+        inputRange: [0.625, 1],
+        outputRange: [0, 1],
+        extrapolate: Extrapolate.CLAMP,
+      }),
+    },
+  ];
+  const item3Style = [
+    styles.item2,
+    {
+      opacity: interpolate(animatedFocus, {
+        inputRange: [0.75, 1],
+        outputRange: [0, 1],
+        extrapolate: Extrapolate.CLAMP,
+      }),
+    },
+  ];
+  const buttonStyle = {
+    opacity: interpolate(animatedFocus, {
+      inputRange: [0.875, 1],
+      outputRange: [0, 1],
+      extrapolate: Extrapolate.CLAMP,
+    }),
+  };
+  //#endregion
+
   const handleButtonPress = () => {
     Alert.alert('Button Clicked !');
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.box} />
-      <View style={styles.item} />
-      <View style={styles.item} />
-      <View style={styles.item2} />
-      <TouchableOpacity onPress={handleButtonPress}>
+    <View
+      style={styles.container}
+      shouldRasterizeIOS={true}
+      needsOffscreenAlphaCompositing={true}
+    >
+      <Animated.View style={boxStyle} />
+      <Animated.View style={item1Style} />
+      <Animated.View style={item2Style} />
+      <Animated.View style={item3Style} />
+      <AnimatedTouchableOpacity style={buttonStyle} onPress={handleButtonPress}>
         <Text style={styles.buttonText}>Button</Text>
-      </TouchableOpacity>
+      </AnimatedTouchableOpacity>
     </View>
   );
 };
