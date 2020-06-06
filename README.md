@@ -30,7 +30,7 @@ const data: PaperOnboardingItemType[] = [
   {
     title: 'Hotels',
     description: 'All hotels and hostels are sorted by hospitality rating',
-    color: '#698FB8',
+    backgroundColor: '#698FB8',
     image: /* IMAGE COMPONENT */,
     icon: /* ICON COMPONENT */,
     content: /* CUSTOM COMPONENT */,
@@ -38,7 +38,7 @@ const data: PaperOnboardingItemType[] = [
   {
     title: 'Banks',
     description: 'We carefully verify all banks before add them into the app',
-    color: '#6CB2B8',
+    backgroundColor: '#6CB2B8',
     image: /* IMAGE COMPONENT */,
     icon: /* ICON COMPONENT */,
     content: /* CUSTOM COMPONENT */,
@@ -46,7 +46,7 @@ const data: PaperOnboardingItemType[] = [
   {
     title: 'Stores',
     description: 'All local stores are categorized for your convenience',
-    color: '#9D8FBF',
+    backgroundColor: '#9D8FBF',
     image: /* IMAGE COMPONENT */,
     icon: /* ICON COMPONENT */,
     content: /* CUSTOM COMPONENT */,
