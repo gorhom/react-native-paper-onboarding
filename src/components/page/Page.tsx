@@ -1,8 +1,8 @@
 import React, { useMemo, useCallback, memo } from 'react';
-import { Text } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
 import Animated from 'react-native-reanimated';
 import { calculateRectangleCircleRadius } from '../../utils/math';
+import PageContent from '../pageContent/PageContent';
 import { PageProps } from '../../types';
 import { styles } from './styles';
 
@@ -35,15 +35,20 @@ const PageComponent = ({
     [screenDimensions, indicatorSize, safeInsets]
   );
 
-  // animations
-  const animatedContentOpacity = interpolate(currentIndex, {
-    inputRange: [index - 0.5, index, index + 0.5],
+  //#region animation
+  const animatedFocus = interpolate(currentIndex, {
+    inputRange: [index - 1, index, index + 1],
+    outputRange: [0, 1, 2],
+    extrapolate: Extrapolate.CLAMP,
+  });
+  const animatedContentOpacity = interpolate(animatedFocus, {
+    inputRange: [0.5, 1, 1.5],
     outputRange: [0, 1, 0],
     extrapolate: Extrapolate.CLAMP,
   });
 
-  const animatedContentTopPosition = interpolate(currentIndex, {
-    inputRange: [index - 1, index, index + 1],
+  const animatedContentTopPosition = interpolate(animatedFocus, {
+    inputRange: [0, 1, 2],
     outputRange: [
       screenDimensions.height / 8,
       0,
@@ -52,14 +57,8 @@ const PageComponent = ({
     extrapolate: Extrapolate.CLAMP,
   });
 
-  const animatedImageTopPosition = interpolate(currentIndex, {
-    inputRange: [index - 1, index],
-    outputRange: [screenDimensions.height / 8, 0],
-    extrapolate: Extrapolate.CLAMP,
-  });
-
-  const animatedBackgroundSize = interpolate(currentIndex, {
-    inputRange: [index - 1, index],
+  const animatedBackgroundSize = interpolate(animatedFocus, {
+    inputRange: [0, 1],
     outputRange: [0, backgroundExtendedSize],
     extrapolate: Extrapolate.CLAMP,
   });
@@ -69,8 +68,9 @@ const PageComponent = ({
     indicatorSize / 2,
     index * indicatorSize
   );
+  //#endregion
 
-  // styles
+  //#region styles
   const contentContainerStyle: any = useMemo(
     () => [
       styles.contentContainer,
@@ -90,40 +90,54 @@ const PageComponent = ({
       indicatorSize,
     ]
   );
-
   const titleStyle = useMemo(
-    () => [
-      styles.title,
-      titleStyleOverride,
-      item.titleStyle ? item.titleStyle : null,
-    ],
+    () => [titleStyleOverride, item.titleStyle ? item.titleStyle : null],
     [item, titleStyleOverride]
   );
-
   const descriptionStyle = useMemo(
     () => [
-      styles.description,
       descriptionStyleOverride,
       item.descriptionStyle ? item.descriptionStyle : null,
     ],
     [item, descriptionStyleOverride]
   );
+  //#endregion
 
-  const imageContainerStyle: any = useMemo(
-    () => [
-      styles.imageContainer,
-      {
-        transform: [{ translateY: animatedImageTopPosition }],
-      },
-    ],
-    [animatedImageTopPosition]
-  );
-
+  //#region callbacks
   const handleContainerRef = useCallback(ref => handleRef(ref, index), [
     index,
     handleRef,
   ]);
+  //#endregion
 
+  //#region memo
+  const pageContentProps = useMemo(
+    () => ({
+      index,
+      animatedFocus,
+      image: item.image,
+      title: item.title,
+      description: item.description,
+      titleStyle,
+      descriptionStyle,
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [index, item, titleStyle, descriptionStyle]
+  );
+  //#endregion
+
+  const renderContent = useCallback(() => {
+    const ContentComponent: any = item.content;
+    return ContentComponent ? (
+      typeof ContentComponent === 'function' ? (
+        ContentComponent(pageContentProps)
+      ) : (
+        <ContentComponent {...pageContentProps} />
+      )
+    ) : (
+      <PageContent {...pageContentProps} />
+    );
+  }, [item, pageContentProps]);
   return (
     <Animated.View
       pointerEvents={index === 0 ? 'auto' : 'none'}
@@ -141,23 +155,7 @@ const PageComponent = ({
         />
       </Svg>
       <Animated.View style={contentContainerStyle}>
-        {item.content ? (
-          typeof item.content === 'function' ? (
-            item.content()
-          ) : (
-            item.content
-          )
-        ) : (
-          <>
-            {item.image && (
-              <Animated.View style={imageContainerStyle}>
-                {typeof item.image === 'function' ? item.image() : item.image}
-              </Animated.View>
-            )}
-            <Text style={titleStyle}>{item.title}</Text>
-            <Text style={descriptionStyle}>{item.description}</Text>
-          </>
-        )}
+        {renderContent()}
       </Animated.View>
     </Animated.View>
   );

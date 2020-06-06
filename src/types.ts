@@ -1,4 +1,4 @@
-import { ReactNode, MutableRefObject } from 'react';
+import { ReactNode, MutableRefObject, FC, ComponentClass } from 'react';
 import { TextStyle, Insets, StyleProp } from 'react-native';
 import Animated from 'react-native-reanimated';
 
@@ -15,9 +15,9 @@ export interface PaperOnboardingItemType {
   icon?: (() => ReactNode) | ReactNode;
   /**
    * Slide/page content.
-   * @type {(() => React.ReactNode) | React.ReactNode}
+   * @type {((props: PageContentProps) => React.ReactNode) | React.ReactNode}
    */
-  content?: (() => ReactNode) | ReactNode;
+  content?: FC<PageContentProps> | ComponentClass<PageContentProps>;
   /**
    * Title text.
    * @type {string}
@@ -82,6 +82,15 @@ export interface PageProps {
   screenDimensions: PaperOnboardingScreenDimensions;
   safeInsets: Required<Insets>;
   handleRef: (ref: MutableRefObject<Animated.View>, index: number) => void;
+}
+
+export interface PageContentProps
+  extends Pick<
+    PaperOnboardingItemType,
+    'title' | 'titleStyle' | 'description' | 'descriptionStyle' | 'image'
+  > {
+  index: number;
+  animatedFocus: Animated.Node<number>;
 }
 
 export interface PaperOnboardingProps
