@@ -66,32 +66,32 @@ const Screen = () => {
 
 ## Props
 
-| name                 | required | default                                    | description                                                          |
-| -------------------- | -------- | ------------------------------------------ | -------------------------------------------------------------------- |
-| data                 | YES      |                                            | Array of pages/slides [PaperOnboardingItemType](#paperonboardingitemtype) to present.          |
-| safeInsets           | NO       | {top: 50, bottom: 50, left: 50, right: 50} | Safe area insets usually come from `react-native-safe-area-context`. |
-| direction            | NO       | horizontal                                 | Pan gusture direction. `horizontal` or `vertical`                    |
-| indicatorSize        | NO       | 40                                         | Indicator width and height.                                          |
-| indicatorColor       | NO       | white                                      | Indicator border and fill color.                                     |
-| titleStyle           | NO       |                                            | Text style to override `all` page/slide title default style.         |
-| descriptionStyle     | NO       |                                            | Text style to override `all` page/slide description default style.   |
-| clostButtonTextStyle | NO       |                                            | Text style to override close button text default style.              |
-| closeButtonText      | NO       | close                                      | Text to be set in close button.                                      |
-| closeButton          | NO       |                                            | Custom component to be used instead of the default close button.      |
-| onCloseButtonPress   | YES      |                                            | Callback when user press on close button.                            |
+| name                 | description                                                          | required | type                                                       | default                                    |
+| -------------------- | -------------------------------------------------------------------- | -------- | ---------------------------------------------------------- | ------------------------------------------ |
+| data                 | Array of pages/slides to present.                                    | YES      | Array<[PaperOnboardingItemType](#paperonboardingitemtype)> |                                            |
+| safeInsets           | Safe area insets usually come from `react-native-safe-area-context`. | NO       | Insets                                                     | {top: 50, bottom: 50, left: 50, right: 50} |
+| direction            | Pan gesture direction.                                               | NO       | 'horizontal' \| 'vertical'                                 | horizontal                                 |
+| indicatorSize        | Indicator size (width and height).                                   | NO       | number                                                     | 40                                         |
+| indicatorColor       | Indicator border and fill color.                                     | NO       | string                                                     | white                                      |
+| titleStyle           | Text style to override `all` page/slide title style.                 | NO       | StyleProp<TextStyle>                                       |                                            |
+| descriptionStyle     | Text style to override `all` page/slide description style.           | NO       | StyleProp<TextStyle>                                       |                                            |
+| closeButton          | Custom component to be used instead of the default close button.     | NO       | (() => React.ReactNode) \| React.ReactNode                 |                                            |
+| closeButtonText      | Close button text.                                                   | NO       | string                                                     | close                                      |
+| closeButtonTextStyle | Close button text style.                                             | NO       | StyleProp<TextStyle>                                       |                                            |
+| onCloseButtonPress   | Callback on close button pressed.                                    | YES      | () => void                                                 |                                            |
 
 #### PaperOnboardingItemType
 
-| name             | required | default | description                                                  |
-| ---------------- | -------- | ------- | ------------------------------------------------------------ |
-| content          | NO       |         | Custom component to be added to the slide/page.              |
-| image            | NO       |         | SVG/Image/component to be added to the slide/page.           |
-| icon             | NO       |         | SVG/Image/component to be added to the slide/page indicator. |
-| color            | YES      |         | Background color for the slide/page.                         |
-| title            | NO       |         | Title for the slide/page.                                    |
-| description      | NO       |         | Description for the slide/page.                              |
-| titleStyle       | NO       |         | Text style to override page/slide title default style.       |
-| descriptionStyle | NO       |         | Text style to override page/slide description default style. |
+| name             | description                                                  | required | type                                       |
+| ---------------- | ------------------------------------------------------------ | -------- | ------------------------------------------ |
+| content          | Slide/page content, this will replace default content.       | NO       | (() => React.ReactNode) \| React.ReactNode |
+| image            | Image cover.                                                 | NO       | (() => React.ReactNode) \| React.ReactNode |
+| icon             | Indicator icon.                                              | NO       | (() => React.ReactNode) \| React.ReactNode |
+| color            | Background color.                                            | YES      | string                                     |
+| title            | Title text.                                                  | NO       | string                                     |
+| description      | Description text.                                            | NO       | string                                     |
+| titleStyle       | Text style to override page/slide title default style.       | NO       | StyleProp<TextStyle>                       |
+| descriptionStyle | Text style to override page/slide description default style. | NO       | StyleProp<TextStyle>                       |
 
 ## Built With ❤️
 

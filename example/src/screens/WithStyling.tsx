@@ -13,7 +13,7 @@ const data: PaperOnboardingItemType[] = [
   {
     title: 'Hotels',
     description: 'All hotels and hostels are sorted by hospitality rating',
-    color: '#fff',
+    backgroundColor: '#fff',
     image: <HotelSVG color={'#F7B500'} />,
   },
   {
@@ -22,7 +22,7 @@ const data: PaperOnboardingItemType[] = [
       color: '#b21f66',
     },
     description: 'We carefully verify all banks before add them into the app',
-    color: '#ccc',
+    backgroundColor: '#ccc',
     image: <BankSVG color={'#b21f66'} />,
   },
   {
@@ -31,7 +31,7 @@ const data: PaperOnboardingItemType[] = [
       color: '#dc2f2f',
     },
     description: 'All local stores are categorized for your convenience',
-    color: '#9E9E9E',
+    backgroundColor: '#9E9E9E',
     image: <StoreSVG color={'#dc2f2f'} />,
   },
 ];
@@ -62,7 +62,7 @@ const WithStylingScreen = () => {
         data={data}
         titleStyle={styles.title}
         descriptionStyle={styles.description}
-        clostButtonTextStyle={styles.closeTextStyle}
+        closeButtonTextStyle={styles.closeTextStyle}
         indicatorColor={'black'}
         indicatorSize={24}
         safeInsets={{

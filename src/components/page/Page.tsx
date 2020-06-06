@@ -1,49 +1,35 @@
-import React, { useMemo, MutableRefObject, useCallback } from 'react';
-import { Text, TextStyle } from 'react-native';
+import React, { useMemo, useCallback, memo } from 'react';
+import { Text } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
 import Animated from 'react-native-reanimated';
-import {
-  PaperOnboardingItemType,
-  PaperOnboardingSafeAreaInsetsType,
-  PaperOnboardingScreenDimensions,
-} from '../types';
+import { calculateRectangleCircleRadius } from '../../utils/math';
+import { PageProps } from '../../types';
 import { styles } from './styles';
 
 const { interpolate, add, Extrapolate } = Animated;
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-interface PaperOnboardingPageProps {
-  index: number;
-  item: PaperOnboardingItemType;
-  currentIndex: Animated.Node<number>;
-  animatedIndicatorsContainerPosition: Animated.Node<number>;
-  indicatorSize: number;
-  titleStyle?: TextStyle;
-  descriptionStyle?: TextStyle;
-  screenDimensions: PaperOnboardingScreenDimensions;
-  safeInsets: PaperOnboardingSafeAreaInsetsType;
-  handleRef: (ref: MutableRefObject<Animated.View>, index: number) => void;
-}
-
-export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
-  // props
-  const {
-    index,
-    item,
-    currentIndex,
-    animatedIndicatorsContainerPosition,
-    indicatorSize,
-    titleStyle: titleStyleOverride,
-    descriptionStyle: descriptionStyleOverride,
-    screenDimensions,
-    safeInsets,
-    handleRef,
-  } = props;
-
+const PageComponent = ({
+  index,
+  item,
+  currentIndex,
+  animatedIndicatorsContainerPosition,
+  indicatorSize,
+  titleStyle: titleStyleOverride,
+  descriptionStyle: descriptionStyleOverride,
+  screenDimensions,
+  safeInsets,
+  handleRef,
+}: PageProps) => {
   // memo
-  const backgroundExtendedSize = useMemo(() => screenDimensions.height * 1.1, [
-    screenDimensions,
-  ]);
+  const backgroundExtendedSize = useMemo(() => {
+    return calculateRectangleCircleRadius({
+      width: screenDimensions.width,
+      height: screenDimensions.height,
+      indicatorX: safeInsets.bottom,
+      indicatorY: 0,
+    });
+  }, [screenDimensions, safeInsets]);
   const backgroundBottomPosition = useMemo(
     () => screenDimensions.height - indicatorSize / 2 - safeInsets.bottom,
     [screenDimensions, indicatorSize, safeInsets]
@@ -133,34 +119,6 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
     [animatedImageTopPosition]
   );
 
-  // useCode(
-  //   () =>
-  //     onChange(
-  //       currentIndex,
-  //       cond(
-  //         eq(currentIndex, index),
-  //         call([], () => {
-  //           if (containerRef.current) {
-  //             console.log(containerRef.current.getNativeProp)
-  //             // @ts-ignore
-  //             containerRef.current.setNativeProps({
-  //               pointerEvents: 'auto',
-  //             });
-  //           }
-  //         }),
-  //         call([], () => {
-  //           if (containerRef.current) {
-  //             console.log(containerRef.current.props.pointerEvents)
-  //             // @ts-ignore
-  //             containerRef.current.setNativeProps({
-  //               pointerEvents: 'none',
-  //             });
-  //           }
-  //         })
-  //       )
-  //     ),
-  //   []
-  // );
   const handleContainerRef = useCallback(ref => handleRef(ref, index), [
     index,
     handleRef,
@@ -179,7 +137,7 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
           cy={backgroundBottomPosition}
           // @ts-ignore
           r={animatedBackgroundSize}
-          fill={item.color}
+          fill={item.backgroundColor}
         />
       </Svg>
       <Animated.View style={contentContainerStyle}>
@@ -204,3 +162,7 @@ export const PaperOnboardingPage = (props: PaperOnboardingPageProps) => {
     </Animated.View>
   );
 };
+
+const Page = memo(PageComponent);
+
+export default Page;

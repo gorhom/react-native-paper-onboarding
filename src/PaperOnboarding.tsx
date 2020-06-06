@@ -1,57 +1,44 @@
-import React, { useMemo, ReactNode, useRef, useCallback } from 'react';
-import { Dimensions, StatusBar, Platform, TextStyle } from 'react-native';
+import React, { useMemo, useRef, useCallback } from 'react';
+import { Dimensions, StatusBar, Platform, Insets } from 'react-native';
 import { usePanGestureHandler } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-import { PaperOnboardingButton } from './button';
-import { PaperOnboardingIndicatorsContainer } from './indicatorsContainer';
-import { PaperOnboardingPage } from './page';
+import Page from './components/page';
+import IndicatorsContainer from './components/indicatorsContainer';
+import CloseButton from './components/closeButton';
 import { withTiming } from './withTiming';
+import { PaperOnboardingProps } from './types';
 import {
-  PaperOnboardingItemType,
-  PaperOnboardingSafeAreaInsetsType,
-  PaperOnboardingDirectionType,
-} from './types';
+  DEFAULT_SAFE_INSET,
+  DEFAULT_DIRECTION,
+  DEFAULT_INDICATOR_SIZE,
+  DEFAULT_INDICATOR_COLOR,
+  DEFAULT_CLOSE_BUTTON_TEXT,
+} from './constants';
 import { styles } from './styles';
 
 const { interpolate, add, useCode, onChange, call, round } = Animated;
 Animated.addWhitelistedNativeProps({ cx: true, cy: true, r: true });
 
-interface PaperOnboardingProps {
-  data: PaperOnboardingItemType[];
-  safeInsets?: Partial<PaperOnboardingSafeAreaInsetsType>;
-  direction?: PaperOnboardingDirectionType;
-  indicatorSize?: number;
-  indicatorColor?: string;
-  titleStyle?: TextStyle;
-  descriptionStyle?: TextStyle;
-  clostButtonTextStyle?: TextStyle;
-  closeButtonText?: string;
-  closeButton?: (() => ReactNode) | ReactNode;
-  onCloseButtonPress: () => void;
-}
-
-export const PaperOnboarding = (props: PaperOnboardingProps) => {
-  // props
-  const {
-    data,
-    safeInsets: _safeInsets,
-    direction = 'horizontal',
-    indicatorSize = 40,
-    indicatorColor = 'white',
-    titleStyle,
-    descriptionStyle,
-    clostButtonTextStyle,
-    closeButtonText = 'close',
-    onCloseButtonPress,
-    closeButton,
-  } = props;
-  const safeInsets = useMemo<PaperOnboardingSafeAreaInsetsType>(
+export const PaperOnboarding = ({
+  data,
+  safeInsets: _safeInsets,
+  direction = DEFAULT_DIRECTION,
+  indicatorSize = DEFAULT_INDICATOR_SIZE,
+  indicatorColor = DEFAULT_INDICATOR_COLOR,
+  titleStyle,
+  descriptionStyle,
+  closeButton,
+  closeButtonTextStyle,
+  closeButtonText = DEFAULT_CLOSE_BUTTON_TEXT,
+  onCloseButtonPress,
+}: PaperOnboardingProps) => {
+  const safeInsets = useMemo<Required<Insets>>(
     () => ({
-      top: _safeInsets?.top ?? 50,
-      bottom: _safeInsets?.bottom ?? 50,
-      left: _safeInsets?.left ?? 50,
-      right: _safeInsets?.right ?? 50,
+      top: _safeInsets?.top ?? DEFAULT_SAFE_INSET,
+      bottom: _safeInsets?.bottom ?? DEFAULT_SAFE_INSET,
+      left: _safeInsets?.left ?? DEFAULT_SAFE_INSET,
+      right: _safeInsets?.right ?? DEFAULT_SAFE_INSET,
     }),
     [_safeInsets]
   );
@@ -130,7 +117,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
     <PanGestureHandler {...gestureHandler}>
       <Animated.View style={styles.container}>
         {data.map((item, index) => (
-          <PaperOnboardingPage
+          <Page
             key={`page-${index}`}
             index={index}
             item={item}
@@ -147,7 +134,7 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
           />
         ))}
 
-        <PaperOnboardingIndicatorsContainer
+        <IndicatorsContainer
           data={data}
           currentIndex={currentIndex}
           animatedIndicatorsContainerPosition={
@@ -158,14 +145,14 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
           safeInsets={safeInsets}
         />
 
-        <PaperOnboardingButton
+        <CloseButton
           lastIndex={data.length}
           currentIndex={currentIndex}
           safeInsets={safeInsets}
           text={closeButtonText}
-          textStyle={clostButtonTextStyle}
-          onPress={onCloseButtonPress}
+          textStyle={closeButtonTextStyle}
           customButton={closeButton}
+          onPress={onCloseButtonPress}
         />
       </Animated.View>
     </PanGestureHandler>

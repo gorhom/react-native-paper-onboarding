@@ -1,33 +1,20 @@
-import React, { useMemo, ReactNode } from 'react';
-import { Text, TouchableOpacity, TextStyle } from 'react-native';
+import React, { useMemo, memo } from 'react';
+import { Text, TouchableOpacity } from 'react-native';
 import Animated, { round } from 'react-native-reanimated';
-import { PaperOnboardingSafeAreaInsetsType } from '../types';
+import { CloseButtonProps } from '../../types';
 import { styles } from './styles';
 
 const { interpolate, Extrapolate } = Animated;
 
-interface PaperOnboardingButtonProps {
-  lastIndex: number;
-  safeInsets: PaperOnboardingSafeAreaInsetsType;
-  currentIndex: Animated.Node<number>;
-  text: string;
-  textStyle?: TextStyle;
-  onPress: () => void;
-  customButton?: (() => ReactNode) | ReactNode;
-}
-
-export const PaperOnboardingButton = (props: PaperOnboardingButtonProps) => {
-  // props
-  const {
-    safeInsets,
-    currentIndex,
-    lastIndex,
-    text,
-    textStyle: textStyleOverride,
-    onPress,
-    customButton,
-  } = props;
-
+export const CloseButtonComponent = ({
+  safeInsets,
+  currentIndex,
+  lastIndex,
+  text,
+  textStyle: textStyleOverride,
+  onPress,
+  customButton,
+}: CloseButtonProps) => {
   // animations
   const animatedContainerScale = interpolate(currentIndex, {
     inputRange: [lastIndex - 2, lastIndex - 1],
@@ -66,3 +53,7 @@ export const PaperOnboardingButton = (props: PaperOnboardingButtonProps) => {
     </Animated.View>
   );
 };
+
+const CloseButton = memo(CloseButtonComponent);
+
+export default CloseButton;

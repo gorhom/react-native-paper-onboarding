@@ -1,34 +1,27 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, memo } from 'react';
+import { Insets } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { PaperOnboardingIndicator } from '../indicator';
-import {
-  PaperOnboardingItemType,
-  PaperOnboardingSafeAreaInsetsType,
-} from '../types';
+import Indicator from '../indicator';
+import { PaperOnboardingItemType } from '../../types';
 import { styles } from './styles';
 
-interface PaperOnboardingIndicatorsContainerProps {
+interface IndicatorsContainerProps {
   data: PaperOnboardingItemType[];
   currentIndex: Animated.Node<number>;
   animatedIndicatorsContainerPosition: Animated.Node<number>;
   indicatorSize: number;
   indicatorColor: string;
-  safeInsets: PaperOnboardingSafeAreaInsetsType;
+  safeInsets: Required<Insets>;
 }
 
-export const PaperOnboardingIndicatorsContainer = (
-  props: PaperOnboardingIndicatorsContainerProps
-) => {
-  // props
-  const {
-    data,
-    currentIndex,
-    animatedIndicatorsContainerPosition,
-    indicatorSize,
-    indicatorColor,
-    safeInsets,
-  } = props;
-
+const IndicatorsContainerComponent = ({
+  data,
+  currentIndex,
+  animatedIndicatorsContainerPosition,
+  indicatorSize,
+  indicatorColor,
+  safeInsets,
+}: IndicatorsContainerProps) => {
   // variables
   const containerWidth = useMemo(() => {
     return data.length * indicatorSize;
@@ -58,7 +51,7 @@ export const PaperOnboardingIndicatorsContainer = (
     () =>
       data.map((item, index) => {
         return (
-          <PaperOnboardingIndicator
+          <Indicator
             key={`item-${index}`}
             size={indicatorSize}
             color={indicatorColor}
@@ -75,3 +68,7 @@ export const PaperOnboardingIndicatorsContainer = (
     <Animated.View style={containerStyle}>{renderIndicators()}</Animated.View>
   );
 };
+
+const IndicatorsContainer = memo(IndicatorsContainerComponent);
+
+export default IndicatorsContainer;
