@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
-import { TextStyle, Insets } from 'react-native';
+import { TextStyle, Insets, StyleProp } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 export interface PaperOnboardingItemType {
   /**
@@ -43,6 +44,18 @@ export interface PaperOnboardingScreenDimensions {
 
 export type PaperOnboardingDirectionType = 'horizontal' | 'vertical';
 
+// PROPS
+
+export interface CloseButtonProps {
+  lastIndex: number;
+  safeInsets: Required<Insets>;
+  currentIndex: Animated.Node<number>;
+  text: string;
+  textStyle?: StyleProp<TextStyle>;
+  customButton?: (() => ReactNode) | ReactNode;
+  onPress: () => void;
+}
+
 export interface PaperOnboardingProps
   extends Pick<
     Partial<PaperOnboardingItemType>,
@@ -53,7 +66,7 @@ export interface PaperOnboardingProps
   direction?: PaperOnboardingDirectionType;
   indicatorSize?: number;
   indicatorColor?: string;
-  clostButtonTextStyle?: TextStyle;
+  closeButtonTextStyle?: TextStyle;
   closeButtonText?: string;
   closeButton?: (() => ReactNode) | ReactNode;
   onCloseButtonPress: () => void;

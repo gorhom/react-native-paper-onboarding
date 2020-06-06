@@ -5,7 +5,7 @@ import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import Page from './components/page';
 import IndicatorsContainer from './components/indicatorsContainer';
-import SkipButton from './components/skipButton';
+import CloseButton from './components/closeButton';
 import { withTiming } from './withTiming';
 import { PaperOnboardingProps } from './types';
 import { styles } from './styles';
@@ -23,10 +23,10 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
     indicatorColor = 'white',
     titleStyle,
     descriptionStyle,
-    clostButtonTextStyle,
+    closeButton,
+    closeButtonTextStyle,
     closeButtonText = 'close',
     onCloseButtonPress,
-    closeButton,
   } = props;
   const safeInsets = useMemo<Required<Insets>>(
     () => ({
@@ -140,14 +140,14 @@ export const PaperOnboarding = (props: PaperOnboardingProps) => {
           safeInsets={safeInsets}
         />
 
-        <SkipButton
+        <CloseButton
           lastIndex={data.length}
           currentIndex={currentIndex}
           safeInsets={safeInsets}
           text={closeButtonText}
-          textStyle={clostButtonTextStyle}
-          onPress={onCloseButtonPress}
+          textStyle={closeButtonTextStyle}
           customButton={closeButton}
+          onPress={onCloseButtonPress}
         />
       </Animated.View>
     </PanGestureHandler>

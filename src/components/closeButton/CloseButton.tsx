@@ -1,21 +1,12 @@
-import React, { useMemo, ReactNode, memo } from 'react';
-import { Text, TouchableOpacity, TextStyle, Insets } from 'react-native';
+import React, { useMemo, memo } from 'react';
+import { Text, TouchableOpacity } from 'react-native';
 import Animated, { round } from 'react-native-reanimated';
+import { CloseButtonProps } from '../../types';
 import { styles } from './styles';
 
 const { interpolate, Extrapolate } = Animated;
 
-interface SkipButtonProps {
-  lastIndex: number;
-  safeInsets: Required<Insets>;
-  currentIndex: Animated.Node<number>;
-  text: string;
-  textStyle?: TextStyle;
-  onPress: () => void;
-  customButton?: (() => ReactNode) | ReactNode;
-}
-
-export const SkipButtonComponent = ({
+export const CloseButtonComponent = ({
   safeInsets,
   currentIndex,
   lastIndex,
@@ -23,7 +14,7 @@ export const SkipButtonComponent = ({
   textStyle: textStyleOverride,
   onPress,
   customButton,
-}: SkipButtonProps) => {
+}: CloseButtonProps) => {
   // animations
   const animatedContainerScale = interpolate(currentIndex, {
     inputRange: [lastIndex - 2, lastIndex - 1],
@@ -63,6 +54,6 @@ export const SkipButtonComponent = ({
   );
 };
 
-const SkipButton = memo(SkipButtonComponent);
+const CloseButton = memo(CloseButtonComponent);
 
-export default SkipButton;
+export default CloseButton;
