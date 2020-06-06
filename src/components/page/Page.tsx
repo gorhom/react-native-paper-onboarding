@@ -1,29 +1,13 @@
-import React, { useMemo, MutableRefObject, useCallback, memo } from 'react';
-import { Text, TextStyle, Insets } from 'react-native';
+import React, { useMemo, useCallback, memo } from 'react';
+import { Text } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
 import Animated from 'react-native-reanimated';
-import {
-  PaperOnboardingItemType,
-  PaperOnboardingScreenDimensions,
-} from '../../types';
-import { styles } from './styles';
 import { calculateRectangleCircleRadius } from '../../utils/math';
+import { PageProps } from '../../types';
+import { styles } from './styles';
 
 const { interpolate, add, Extrapolate } = Animated;
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
-
-interface PaperOnboardingPageProps {
-  index: number;
-  item: PaperOnboardingItemType;
-  currentIndex: Animated.Node<number>;
-  animatedIndicatorsContainerPosition: Animated.Node<number>;
-  indicatorSize: number;
-  titleStyle?: TextStyle;
-  descriptionStyle?: TextStyle;
-  screenDimensions: PaperOnboardingScreenDimensions;
-  safeInsets: Required<Insets>;
-  handleRef: (ref: MutableRefObject<Animated.View>, index: number) => void;
-}
 
 const PageComponent = ({
   index,
@@ -36,7 +20,7 @@ const PageComponent = ({
   screenDimensions,
   safeInsets,
   handleRef,
-}: PaperOnboardingPageProps) => {
+}: PageProps) => {
   // memo
   const backgroundExtendedSize = useMemo(() => {
     return calculateRectangleCircleRadius({
@@ -153,7 +137,7 @@ const PageComponent = ({
           cy={backgroundBottomPosition}
           // @ts-ignore
           r={animatedBackgroundSize}
-          fill={item.color}
+          fill={item.backgroundColor}
         />
       </Svg>
       <Animated.View style={contentContainerStyle}>

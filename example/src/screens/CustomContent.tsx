@@ -11,15 +11,15 @@ import CustomButton from '../components/CustomButton';
 const data: PaperOnboardingItemType[] = [
   {
     content: CustomView,
-    color: '#000',
+    backgroundColor: '#000',
   },
   {
     content: CustomView,
-    color: '#666',
+    backgroundColor: '#666',
   },
   {
     content: CustomView,
-    color: '#000',
+    backgroundColor: '#000',
   },
 ];
 
