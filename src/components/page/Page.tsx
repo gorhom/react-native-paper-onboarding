@@ -1,19 +1,15 @@
 import React, { useMemo, useCallback, memo } from 'react';
-import { Svg, Circle } from 'react-native-svg';
 import Animated from 'react-native-reanimated';
-import { calculateRectangleCircleRadius } from '../../utils/math';
 import PageContent from '../pageContent/PageContent';
 import { PageProps } from '../../types';
 import { styles } from './styles';
 
-const { interpolate, add, Extrapolate } = Animated;
-const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+const { interpolate, Extrapolate } = Animated;
 
 const PageComponent = ({
   index,
   item,
-  currentIndex,
-  animatedIndicatorsContainerPosition,
+  animatedIndex,
   indicatorSize,
   titleStyle: titleStyleOverride,
   descriptionStyle: descriptionStyleOverride,
@@ -21,22 +17,8 @@ const PageComponent = ({
   safeInsets,
   handleRef,
 }: PageProps) => {
-  // memo
-  const backgroundExtendedSize = useMemo(() => {
-    return calculateRectangleCircleRadius({
-      width: screenDimensions.width,
-      height: screenDimensions.height,
-      indicatorX: safeInsets.bottom,
-      indicatorY: 0,
-    });
-  }, [screenDimensions, safeInsets]);
-  const backgroundBottomPosition = useMemo(
-    () => screenDimensions.height - indicatorSize / 2 - safeInsets.bottom,
-    [screenDimensions, indicatorSize, safeInsets]
-  );
-
   //#region animation
-  const animatedFocus = interpolate(currentIndex, {
+  const animatedFocus = interpolate(animatedIndex, {
     inputRange: [index - 1, index, index + 1],
     outputRange: [0, 1, 2],
     extrapolate: Extrapolate.CLAMP,
@@ -56,18 +38,6 @@ const PageComponent = ({
     ],
     extrapolate: Extrapolate.CLAMP,
   });
-
-  const animatedBackgroundSize = interpolate(animatedFocus, {
-    inputRange: [0, 1],
-    outputRange: [0, backgroundExtendedSize],
-    extrapolate: Extrapolate.CLAMP,
-  });
-
-  const animatedBackgroundLeftPosition = add(
-    animatedIndicatorsContainerPosition,
-    indicatorSize / 2,
-    index * indicatorSize
-  );
   //#endregion
 
   //#region styles
@@ -103,13 +73,6 @@ const PageComponent = ({
   );
   //#endregion
 
-  //#region callbacks
-  const handleContainerRef = useCallback(ref => handleRef(ref, index), [
-    index,
-    handleRef,
-  ]);
-  //#endregion
-
   //#region memo
   const pageContentProps = useMemo(
     () => ({
@@ -126,6 +89,14 @@ const PageComponent = ({
   );
   //#endregion
 
+  //#region callbacks
+  const handleContainerRef = useCallback(ref => handleRef(ref, index), [
+    index,
+    handleRef,
+  ]);
+  //#endregion
+
+  // render
   const renderContent = useCallback(() => {
     const ContentComponent: any = item.content;
     return ContentComponent ? (
@@ -144,16 +115,6 @@ const PageComponent = ({
       ref={handleContainerRef}
       style={styles.container}
     >
-      <Svg style={styles.background}>
-        <AnimatedCircle
-          // @ts-ignore
-          cx={animatedBackgroundLeftPosition}
-          cy={backgroundBottomPosition}
-          // @ts-ignore
-          r={animatedBackgroundSize}
-          fill={item.backgroundColor}
-        />
-      </Svg>
       <Animated.View style={contentContainerStyle}>
         {renderContent()}
       </Animated.View>

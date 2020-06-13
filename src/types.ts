@@ -109,14 +109,13 @@ export type PaperOnboardingDirectionType = 'horizontal' | 'vertical';
 export interface CloseButtonProps extends PaperOnboardingCloseButtonConfig {
   data: Array<PaperOnboardingItemType>;
   safeInsets: Required<Insets>;
-  currentIndex: Animated.Node<number>;
+  animatedIndex: Animated.Node<number>;
 }
 
 export interface PageProps {
   index: number;
   item: PaperOnboardingItemType;
-  currentIndex: Animated.Node<number>;
-  animatedIndicatorsContainerPosition: Animated.Node<number>;
+  animatedIndex: Animated.Node<number>;
   indicatorSize: number;
   titleStyle?: StyleProp<TextStyle>;
   descriptionStyle?: StyleProp<TextStyle>;
@@ -145,6 +144,8 @@ export interface PaperOnboardingProps
     >,
     Partial<PaperOnboardingIndicatorConfig>,
     Partial<PaperOnboardingCloseButtonConfig> {
+  index?: number;
+  onIndexChange?: (index: number) => void;
   /**
    * Array of pages/slides to present.
    * @type {Array<PaperOnboardingItemType>}
@@ -166,7 +167,7 @@ export interface PaperOnboardingProps
 
 export interface IndicatorsContainerProps
   extends PaperOnboardingIndicatorConfig {
-  currentIndex: Animated.Node<number>;
+  animatedIndex: Animated.Node<number>;
   data: PaperOnboardingItemType[];
   animatedIndicatorsContainerPosition: Animated.Node<number>;
   safeInsets: Required<Insets>;
@@ -175,5 +176,28 @@ export interface IndicatorsContainerProps
 export interface IndicatorProps extends PaperOnboardingIndicatorConfig {
   index: number;
   item: PaperOnboardingItemType;
-  currentIndex: Animated.Node<number>;
+  animatedIndex: Animated.Node<number>;
+}
+
+export interface BackgroundProps
+  extends Pick<PaperOnboardingIndicatorConfig, 'indicatorSize'> {
+  /**
+   * Array of pages/slides to present.
+   * @type {Array<PaperOnboardingItemType>}
+   */
+  data: Array<PaperOnboardingItemType>;
+  animatedIndex: Animated.Node<number>;
+  animatedIndicatorsContainerPosition: Animated.Node<number>;
+  screenDimensions: PaperOnboardingScreenDimensions;
+  safeInsets: Required<Insets>;
+}
+
+export interface BackgroundCircleProps
+  extends Pick<PaperOnboardingIndicatorConfig, 'indicatorSize'> {
+  index: number;
+  animatedIndex: Animated.Node<number>;
+  animatedIndicatorsContainerPosition: Animated.Node<number>;
+  color: string;
+  extendedSize: number;
+  bottomPosition: number;
 }

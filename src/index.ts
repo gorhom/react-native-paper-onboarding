@@ -1,4 +1,2 @@
-import { PaperOnboarding } from './PaperOnboarding';
+export { default } from './PaperOnboarding';
 export { PaperOnboardingItemType, PageContentProps } from './types';
-
-export default PaperOnboarding;

@@ -1,13 +1,16 @@
-import React, { useMemo, useRef, useCallback } from 'react';
-import { Dimensions, StatusBar, Platform, Insets } from 'react-native';
-import { usePanGestureHandler } from 'react-native-redash';
+import React, { useMemo, useRef, useCallback, memo, useState } from 'react';
+import { Dimensions, Insets, LayoutChangeEvent } from 'react-native';
+import { usePanGestureHandler, useValue } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
+// @ts-ignore 😞
+import isEqual from 'lodash.isequal';
+import Background from './components/background';
 import Page from './components/page';
 import IndicatorsContainer from './components/indicatorsContainer';
 import CloseButton from './components/closeButton';
-import { withTiming } from './withTiming';
-import { PaperOnboardingProps } from './types';
+import { useTiming } from './useTiming';
+import { PaperOnboardingProps, PaperOnboardingScreenDimensions } from './types';
 import {
   DEFAULT_SAFE_INSET,
   DEFAULT_DIRECTION,
@@ -28,9 +31,9 @@ Animated.addWhitelistedUIProps({
   pointerEvents: true,
 });
 
-const { interpolate, add, useCode, onChange, call, round } = Animated;
+const { interpolate, add, useCode, onChange, call } = Animated;
 
-export const PaperOnboarding = ({
+const PaperOnboardingComponent = ({
   data,
   safeInsets: _safeInsets,
   direction = DEFAULT_DIRECTION,
@@ -46,7 +49,20 @@ export const PaperOnboarding = ({
   closeButtonTextStyle,
   closeButtonText = DEFAULT_CLOSE_BUTTON_TEXT,
   onCloseButtonPress = DEFAULT_CLOSE_BUTTON_CALLBACK,
+  onIndexChange,
 }: PaperOnboardingProps) => {
+  // state
+  const [dimensions, setDimensions] = useState<PaperOnboardingScreenDimensions>(
+    {
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,
+    }
+  );
+
+  // refs
+  const pagesRef = useRef<Array<Animated.View | null>>(data.map(() => null));
+
+  //#region variables
   const safeInsets = useMemo<Required<Insets>>(
     () => ({
       top: _safeInsets?.top ?? DEFAULT_SAFE_INSET,
@@ -56,9 +72,7 @@ export const PaperOnboarding = ({
     }),
     [_safeInsets]
   );
-
-  // refs
-  const pagesRef = useRef<Array<Animated.View | null>>(data.map(() => null));
+  //#endregion
 
   // memo
   const {
@@ -68,32 +82,24 @@ export const PaperOnboarding = ({
     velocity,
   } = usePanGestureHandler();
 
-  const screenDimensions = useMemo(
-    () => ({
-      width: Dimensions.get('window').width,
-      height:
-        Dimensions.get('window').height -
-        (Platform.OS === 'android' ? StatusBar.currentHeight ?? 0 : 0),
-    }),
-    []
-  );
-
   const indicatorsContainerLeftPadding = useMemo(
-    () => screenDimensions.width / 2 - indicatorSize / 2,
-    [screenDimensions, indicatorSize]
+    () => dimensions.width / 2 - indicatorSize / 2,
+    [dimensions.width, indicatorSize]
   );
 
   // animations
-  const currentIndex = withTiming({
+  const animatedStaticIndex = useValue(0);
+  const animatedIndex = useTiming({
+    animatedStaticIndex,
     value: direction === 'horizontal' ? translation.x : translation.y,
     velocity: direction === 'horizontal' ? velocity.x : velocity.y,
     state: state,
     size: data.length,
-    screenWidth: screenDimensions.width,
+    screenWidth: dimensions.width,
   });
 
   const animatedIndicatorsContainerPosition = add(
-    interpolate(currentIndex, {
+    interpolate(animatedIndex, {
       inputRange: data.map((_, index) => index),
       outputRange: data.map((_, index) => index * indicatorSize * -1),
       extrapolate: Animated.Extrapolate.CLAMP,
@@ -106,51 +112,80 @@ export const PaperOnboarding = ({
     pagesRef.current[index] = ref;
   }, []);
 
-  /**
-   * @DEV
-   * here we directly manipulate pages native props, by setting `pointerEvents` to `auto` for selected page and `none` for others.
-   */
+  const handleOnLayout = useCallback(
+    ({
+      nativeEvent: {
+        layout: { width, height },
+      },
+    }: LayoutChangeEvent) => {
+      setDimensions({
+        width,
+        height,
+      });
+    },
+    []
+  );
+
+  //#region effects
   useCode(
     () =>
       onChange(
-        round(currentIndex),
-        call([currentIndex], args => {
-          pagesRef.current.map((pageRef, index) => {
+        animatedStaticIndex,
+        call([animatedStaticIndex], args => {
+          /**
+           * @DEV
+           * here we directly manipulate pages native props by setting `pointerEvents`
+           * to `auto` for current page and `none` for others.
+           */
+          pagesRef.current.map((pageRef, _index) => {
             // @ts-ignore
             pageRef.setNativeProps({
-              pointerEvents: index === Math.round(args[0]) ? 'auto' : 'none',
+              pointerEvents: _index === args[0] ? 'auto' : 'none',
             });
           });
+
+          if (onIndexChange) {
+            onIndexChange(args[0]);
+          }
         })
       ),
     []
   );
+  //#endregion
 
   // renders
   return (
     <PanGestureHandler {...gestureHandler}>
-      <Animated.View style={styles.container}>
+      <Animated.View onLayout={handleOnLayout} style={styles.container}>
+        <Background
+          animatedIndex={animatedIndex}
+          data={data}
+          safeInsets={safeInsets}
+          screenDimensions={dimensions}
+          indicatorSize={indicatorSize}
+          animatedIndicatorsContainerPosition={
+            animatedIndicatorsContainerPosition
+          }
+        />
+
         {data.map((item, index) => (
           <Page
             key={`page-${index}`}
             index={index}
             item={item}
-            currentIndex={currentIndex}
-            animatedIndicatorsContainerPosition={
-              animatedIndicatorsContainerPosition
-            }
+            animatedIndex={animatedIndex}
             indicatorSize={indicatorSize}
             titleStyle={titleStyle}
             descriptionStyle={descriptionStyle}
             safeInsets={safeInsets}
-            screenDimensions={screenDimensions}
+            screenDimensions={dimensions}
             handleRef={handlePageRef}
           />
         ))}
 
         <IndicatorsContainer
           data={data}
-          currentIndex={currentIndex}
+          animatedIndex={animatedIndex}
           animatedIndicatorsContainerPosition={
             animatedIndicatorsContainerPosition
           }
@@ -162,7 +197,7 @@ export const PaperOnboarding = ({
 
         <CloseButton
           data={data}
-          currentIndex={currentIndex}
+          animatedIndex={animatedIndex}
           safeInsets={safeInsets}
           closeButtonText={closeButtonText}
           closeButtonTextStyle={closeButtonTextStyle}
@@ -173,3 +208,7 @@ export const PaperOnboarding = ({
     </PanGestureHandler>
   );
 };
+
+const PaperOnboarding = memo(PaperOnboardingComponent, isEqual);
+
+export default PaperOnboarding;

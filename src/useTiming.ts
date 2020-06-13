@@ -1,11 +1,10 @@
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, { Easing, sub } from 'react-native-reanimated';
 import { State } from 'react-native-gesture-handler';
-import { clamp, dec, inc } from 'react-native-redash';
+import { useClock, useValue } from 'react-native-redash';
 
 const {
-  Clock,
-  Value,
   add,
+  or,
   block,
   cond,
   eq,
@@ -15,17 +14,16 @@ const {
   not,
   clockRunning,
   startClock,
-  neq,
   lessThan,
-  greaterOrEq,
   greaterThan,
   interpolate,
   abs,
   timing,
 } = Animated;
 
-interface WithDecayParams {
+interface useTimingProps {
   value: Animated.Adaptable<number>;
+  animatedStaticIndex: Animated.Value<number>;
   velocity: Animated.Adaptable<number>;
   state: Animated.Value<State>;
   offset?: Animated.Value<number>;
@@ -34,25 +32,28 @@ interface WithDecayParams {
   screenWidth: number;
 }
 
-export const withTiming = (props: WithDecayParams) => {
-  const { value, velocity, state, size, screenWidth } = props;
-
-  const clock = new Clock();
+export const useTiming = ({
+  animatedStaticIndex,
+  value,
+  velocity,
+  state,
+  size,
+  screenWidth,
+}: useTimingProps) => {
+  const clock = useClock();
 
   const config = {
-    toValue: new Value(0),
+    toValue: useValue(0),
     duration: 500,
     easing: Easing.out(Easing.exp),
   };
 
   const animationState = {
-    finished: new Value(0),
-    position: new Value(0),
-    frameTime: new Value(0),
-    time: new Value(0),
+    finished: useValue(0),
+    position: useValue(0),
+    frameTime: useValue(0),
+    time: useValue(0),
   };
-
-  const index = new Value(0);
 
   const valueClamp = interpolate(value, {
     inputRange: [screenWidth * -1, 0, screenWidth],
@@ -68,46 +69,53 @@ export const withTiming = (props: WithDecayParams) => {
 
   const isTimingInterrupted = and(eq(state, State.BEGAN), clockRunning(clock));
   const finishTiming = [
-    cond(
-      and(
-        greaterThan(abs(animationState.position), 0.5),
-        greaterOrEq(index, 0)
-      ),
-      cond(greaterThan(animationState.position, 0), inc(index), dec(index))
-    ),
-    set(animationState.position, 0),
-    set(animationState.finished, 0),
+    set(animatedStaticIndex, config.toValue),
     set(animationState.frameTime, 0),
     set(animationState.time, 0),
     stopClock(clock),
   ];
 
+  const shouldAnimate = and(
+    not(and(eq(animatedStaticIndex, 0), lessThan(valueClamp, 0))),
+    not(and(eq(animatedStaticIndex, size - 1), greaterThan(valueClamp, 0)))
+  );
+  const shouldReset = not(
+    greaterThan(add(abs(valueClamp), abs(velocityClamp)), 0.5)
+  );
+
+  const shouldAnimateNext = greaterThan(
+    add(animationState.position, velocityClamp),
+    animatedStaticIndex
+  );
+
   return block([
     cond(isTimingInterrupted, finishTiming),
-    cond(neq(state, State.END), [
-      set(animationState.finished, 0),
+    cond(
+      eq(state, State.ACTIVE),
       cond(
         and(
-          not(and(eq(index, 0), lessThan(valueClamp, 0))),
-          not(and(eq(index, size - 1), greaterThan(valueClamp, 0)))
+          not(and(eq(animatedStaticIndex, 0), lessThan(valueClamp, 0))),
+          not(
+            and(eq(animatedStaticIndex, size - 1), greaterThan(valueClamp, 0))
+          )
         ),
-        set(animationState.position, valueClamp),
-        set(animationState.position, 0)
-      ),
-    ]),
+        [
+          set(animationState.finished, 0),
+          set(animationState.position, add(animatedStaticIndex, valueClamp)),
+        ]
+      )
+    ),
+
     cond(eq(state, State.END), [
       cond(and(not(clockRunning(clock)), not(animationState.finished)), [
         cond(
-          greaterThan(abs(add(animationState.position, velocityClamp)), 0.5),
+          or(shouldReset, not(shouldAnimate)),
+          set(config.toValue, animatedStaticIndex),
           cond(
-            greaterThan(add(animationState.position, velocityClamp), 0),
-            // @ts-ignore
-            set(config.toValue, 1),
-            // @ts-ignore
-            set(config.toValue, -1)
-          ),
-          // @ts-ignore
-          set(config.toValue, 0)
+            shouldAnimateNext,
+            set(config.toValue, add(animatedStaticIndex, 1)),
+            set(config.toValue, sub(animatedStaticIndex, 1))
+          )
         ),
         set(animationState.finished, 0),
         set(animationState.frameTime, 0),
@@ -117,6 +125,7 @@ export const withTiming = (props: WithDecayParams) => {
       timing(clock, animationState, config),
       cond(animationState.finished, finishTiming),
     ]),
-    clamp(add(animationState.position, index), 0, size - 1),
+
+    animationState.position,
   ]);
 };

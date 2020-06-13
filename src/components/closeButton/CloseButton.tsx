@@ -12,7 +12,7 @@ const { round } = Animated;
 export const CloseButtonComponent = ({
   data,
   safeInsets,
-  currentIndex,
+  animatedIndex,
   closeButton,
   closeButtonText,
   closeButtonTextStyle: textStyleOverride,
@@ -37,14 +37,14 @@ export const CloseButtonComponent = ({
 
   const animatedShowButtonOpacity = get(
     animatedShowButtonOpacityValues,
-    round(currentIndex),
+    round(animatedIndex),
     defaultShowButtonOpacity
   );
 
   const animatedShowButtonPointerEvent = (get(
     // @ts-ignore
     animatedShowButtonPointerEventValues,
-    round(currentIndex),
+    round(animatedIndex),
     defaultShowButtonPointerEvent
   ) as any) as Animated.Value<'auto' | 'none'>;
   //#endregion
