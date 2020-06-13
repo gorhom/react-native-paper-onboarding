@@ -30,7 +30,7 @@ const data: PaperOnboardingItemType[] = [
   {
     title: 'Hotels',
     description: 'All hotels and hostels are sorted by hospitality rating',
-    color: '#698FB8',
+    backgroundColor: '#698FB8',
     image: /* IMAGE COMPONENT */,
     icon: /* ICON COMPONENT */,
     content: /* CUSTOM COMPONENT */,
@@ -38,7 +38,7 @@ const data: PaperOnboardingItemType[] = [
   {
     title: 'Banks',
     description: 'We carefully verify all banks before add them into the app',
-    color: '#6CB2B8',
+    backgroundColor: '#6CB2B8',
     image: /* IMAGE COMPONENT */,
     icon: /* ICON COMPONENT */,
     content: /* CUSTOM COMPONENT */,
@@ -46,7 +46,7 @@ const data: PaperOnboardingItemType[] = [
   {
     title: 'Stores',
     description: 'All local stores are categorized for your convenience',
-    color: '#9D8FBF',
+    backgroundColor: '#9D8FBF',
     image: /* IMAGE COMPONENT */,
     icon: /* ICON COMPONENT */,
     content: /* CUSTOM COMPONENT */,
@@ -66,19 +66,20 @@ const Screen = () => {
 
 ## Props
 
-| name                 | description                                                          | required | type                                                       | default                                    |
-| -------------------- | -------------------------------------------------------------------- | -------- | ---------------------------------------------------------- | ------------------------------------------ |
-| data                 | Array of pages/slides to present.                                    | YES      | Array<[PaperOnboardingItemType](#paperonboardingitemtype)> |                                            |
-| safeInsets           | Safe area insets usually come from `react-native-safe-area-context`. | NO       | Insets                                                     | {top: 50, bottom: 50, left: 50, right: 50} |
-| direction            | Pan gesture direction.                                               | NO       | 'horizontal' \| 'vertical'                                 | horizontal                                 |
-| indicatorSize        | Indicator size (width and height).                                   | NO       | number                                                     | 40                                         |
-| indicatorColor       | Indicator border and fill color.                                     | NO       | string                                                     | white                                      |
-| titleStyle           | Text style to override `all` page/slide title style.                 | NO       | StyleProp<TextStyle>                                       |                                            |
-| descriptionStyle     | Text style to override `all` page/slide description style.           | NO       | StyleProp<TextStyle>                                       |                                            |
-| closeButton          | Custom component to be used instead of the default close button.     | NO       | (() => React.ReactNode) \| React.ReactNode                 |                                            |
-| closeButtonText      | Close button text.                                                   | NO       | string                                                     | close                                      |
-| closeButtonTextStyle | Close button text style.                                             | NO       | StyleProp<TextStyle>                                       |                                            |
-| onCloseButtonPress   | Callback on close button pressed.                                    | YES      | () => void                                                 |                                            |
+| name                     | description                                                          | required | type                                                       | default                                    |
+| ------------------------ | -------------------------------------------------------------------- | -------- | ---------------------------------------------------------- | ------------------------------------------ |
+| data                     | Array of pages/slides to present.                                    | YES      | Array<[PaperOnboardingItemType](#paperonboardingitemtype)> |                                            |
+| safeInsets               | Safe area insets usually come from `react-native-safe-area-context`. | NO       | Insets                                                     | {top: 50, bottom: 50, left: 50, right: 50} |
+| direction                | Pan gesture direction.                                               | NO       | 'horizontal' \| 'vertical'                                 | horizontal                                 |
+| indicatorSize            | Indicator size (width and height).                                   | NO       | number                                                     | 40                                         |
+| indicatorBackgroundColor | Indicator background color.                                          | NO       | string                                                     | white                                      |
+| indicatorBorderColor     | Indicator border color.                                              | NO       | string                                                     | white                                      |
+| titleStyle               | Text style to override `all` page/slide title style.                 | NO       | StyleProp<TextStyle>                                       |                                            |
+| descriptionStyle         | Text style to override `all` page/slide description style.           | NO       | StyleProp<TextStyle>                                       |                                            |
+| closeButton              | Custom component to be used instead of the default close button.     | NO       | (() => React.ReactNode) \| React.ReactNode                 |                                            |
+| closeButtonText          | Close button text.                                                   | NO       | string                                                     | close                                      |
+| closeButtonTextStyle     | Close button text style.                                             | NO       | StyleProp<TextStyle>                                       |                                            |
+| onCloseButtonPress       | Callback on close button pressed.                                    | NO       | () => void                                                 |                                            |
 
 #### PaperOnboardingItemType
 

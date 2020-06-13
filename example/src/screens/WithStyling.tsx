@@ -63,7 +63,8 @@ const WithStylingScreen = () => {
         titleStyle={styles.title}
         descriptionStyle={styles.description}
         closeButtonTextStyle={styles.closeTextStyle}
-        indicatorColor={'black'}
+        indicatorBorderColor="black"
+        indicatorBackgroundColor="black"
         indicatorSize={24}
         safeInsets={{
           top: insets.top,

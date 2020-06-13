@@ -12,26 +12,40 @@ import {
   DEFAULT_SAFE_INSET,
   DEFAULT_DIRECTION,
   DEFAULT_INDICATOR_SIZE,
-  DEFAULT_INDICATOR_COLOR,
+  DEFAULT_INDICATOR_BORDER_COLOR,
+  DEFAULT_INDICATOR_BACKGROUND_COLOR,
   DEFAULT_CLOSE_BUTTON_TEXT,
+  DEFAULT_CLOSE_BUTTON_CALLBACK,
 } from './constants';
 import { styles } from './styles';
 
+// @ts-ignore
+Animated.addWhitelistedUIProps({
+  cx: true,
+  cy: true,
+  r: true,
+  fillOpacity: true,
+  pointerEvents: true,
+});
+
 const { interpolate, add, useCode, onChange, call, round } = Animated;
-Animated.addWhitelistedNativeProps({ cx: true, cy: true, r: true });
 
 export const PaperOnboarding = ({
   data,
   safeInsets: _safeInsets,
   direction = DEFAULT_DIRECTION,
+  // indicator config
   indicatorSize = DEFAULT_INDICATOR_SIZE,
-  indicatorColor = DEFAULT_INDICATOR_COLOR,
+  indicatorBackgroundColor = DEFAULT_INDICATOR_BACKGROUND_COLOR,
+  indicatorBorderColor = DEFAULT_INDICATOR_BORDER_COLOR,
+  // override styles
   titleStyle,
   descriptionStyle,
+  // close button config
   closeButton,
   closeButtonTextStyle,
   closeButtonText = DEFAULT_CLOSE_BUTTON_TEXT,
-  onCloseButtonPress,
+  onCloseButtonPress = DEFAULT_CLOSE_BUTTON_CALLBACK,
 }: PaperOnboardingProps) => {
   const safeInsets = useMemo<Required<Insets>>(
     () => ({
@@ -141,7 +155,8 @@ export const PaperOnboarding = ({
             animatedIndicatorsContainerPosition
           }
           indicatorSize={indicatorSize}
-          indicatorColor={indicatorColor}
+          indicatorBackgroundColor={indicatorBackgroundColor}
+          indicatorBorderColor={indicatorBorderColor}
           safeInsets={safeInsets}
         />
 
@@ -149,10 +164,10 @@ export const PaperOnboarding = ({
           data={data}
           currentIndex={currentIndex}
           safeInsets={safeInsets}
-          text={closeButtonText}
-          textStyle={closeButtonTextStyle}
-          customButton={closeButton}
-          onPress={onCloseButtonPress}
+          closeButtonText={closeButtonText}
+          closeButtonTextStyle={closeButtonTextStyle}
+          closeButton={closeButton}
+          onCloseButtonPress={onCloseButtonPress}
         />
       </Animated.View>
     </PanGestureHandler>

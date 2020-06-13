@@ -1,25 +1,16 @@
 import React, { useMemo, useCallback, memo } from 'react';
-import { Insets } from 'react-native';
 import Animated from 'react-native-reanimated';
 import Indicator from '../indicator';
-import { PaperOnboardingItemType } from '../../types';
+import { IndicatorsContainerProps } from '../../types';
 import { styles } from './styles';
-
-interface IndicatorsContainerProps {
-  data: PaperOnboardingItemType[];
-  currentIndex: Animated.Node<number>;
-  animatedIndicatorsContainerPosition: Animated.Node<number>;
-  indicatorSize: number;
-  indicatorColor: string;
-  safeInsets: Required<Insets>;
-}
 
 const IndicatorsContainerComponent = ({
   data,
   currentIndex,
   animatedIndicatorsContainerPosition,
   indicatorSize,
-  indicatorColor,
+  indicatorBackgroundColor,
+  indicatorBorderColor,
   safeInsets,
 }: IndicatorsContainerProps) => {
   // variables
@@ -53,15 +44,22 @@ const IndicatorsContainerComponent = ({
         return (
           <Indicator
             key={`item-${index}`}
-            size={indicatorSize}
-            color={indicatorColor}
+            indicatorSize={indicatorSize}
+            indicatorBackgroundColor={indicatorBackgroundColor}
+            indicatorBorderColor={indicatorBorderColor}
             index={index}
             item={item}
             currentIndex={currentIndex}
           />
         );
       }),
-    [data, indicatorSize, indicatorColor, currentIndex]
+    [
+      data,
+      indicatorSize,
+      indicatorBackgroundColor,
+      indicatorBorderColor,
+      currentIndex,
+    ]
   );
 
   return (

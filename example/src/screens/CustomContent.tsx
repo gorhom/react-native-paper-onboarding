@@ -52,7 +52,9 @@ const CustomContentScreen = () => {
       <StatusBar barStyle="light-content" />
       <PaperOnboarding
         data={data}
-        indicatorSize={20}
+        indicatorSize={24}
+        indicatorBackgroundColor="#333"
+        indicatorBorderColor="#333"
         safeInsets={{
           top: insets.top,
           bottom: insets.bottom,
