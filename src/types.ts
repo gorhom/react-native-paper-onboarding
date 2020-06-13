@@ -10,9 +10,9 @@ export interface PaperOnboardingItemType {
   image?: (() => ReactNode) | ReactNode;
   /**
    * Indicator icon.
-   * @type {(() => React.ReactNode) | React.ReactNode}
+   * @type {((props: IndicatorIconProps) => React.ReactNode) | React.ReactNode}
    */
-  icon?: (() => ReactNode) | ReactNode;
+  icon?: FC<IndicatorIconProps> | ComponentClass<IndicatorIconProps>;
   /**
    * Slide/page content.
    * @type {((props: PageContentProps) => React.ReactNode) | React.ReactNode}
@@ -57,18 +57,59 @@ export interface PaperOnboardingScreenDimensions {
   height: number;
 }
 
+export interface PaperOnboardingIndicatorConfig {
+  /**
+   * Indicator size (width and height).
+   * @type {number}
+   * @default 40
+   */
+  indicatorSize: number;
+  /**
+   * Indicator background color.
+   * @type {string}
+   * @default 'white'
+   */
+  indicatorBackgroundColor: string;
+  /**
+   * Indicator border color.
+   * @type {string}
+   * @default 'white'
+   */
+  indicatorBorderColor: string;
+}
+
+export interface PaperOnboardingCloseButtonConfig {
+  /**
+   * Custom component to be used instead of the default close button.
+   * @type {(() => React.ReactNode) | React.ReactNode}
+   */
+  closeButton: (() => ReactNode) | ReactNode;
+  /**
+   * Close button text.
+   * @type {string}
+   * @default close
+   */
+  closeButtonText: string;
+  /**
+   * Close button text style.
+   * @type {StyleProp<TextStyle>}
+   */
+  closeButtonTextStyle: StyleProp<TextStyle>;
+  /**
+   * Callback on close button pressed.
+   * @type {() => void}
+   */
+  onCloseButtonPress: () => void;
+}
+
 export type PaperOnboardingDirectionType = 'horizontal' | 'vertical';
 
 // PROPS
 
-export interface CloseButtonProps {
+export interface CloseButtonProps extends PaperOnboardingCloseButtonConfig {
   data: Array<PaperOnboardingItemType>;
   safeInsets: Required<Insets>;
   currentIndex: Animated.Node<number>;
-  text: string;
-  textStyle?: StyleProp<TextStyle>;
-  customButton?: (() => ReactNode) | ReactNode;
-  onPress: () => void;
 }
 
 export interface PageProps {
@@ -93,11 +134,17 @@ export interface PageContentProps
   animatedFocus: Animated.Node<number>;
 }
 
+export interface IndicatorIconProps {
+  size: number;
+}
+
 export interface PaperOnboardingProps
   extends Pick<
-    Partial<PaperOnboardingItemType>,
-    'titleStyle' | 'descriptionStyle'
-  > {
+      Partial<PaperOnboardingItemType>,
+      'titleStyle' | 'descriptionStyle'
+    >,
+    Partial<PaperOnboardingIndicatorConfig>,
+    Partial<PaperOnboardingCloseButtonConfig> {
   /**
    * Array of pages/slides to present.
    * @type {Array<PaperOnboardingItemType>}
@@ -115,37 +162,18 @@ export interface PaperOnboardingProps
    * @default 'horizontal'
    */
   direction?: PaperOnboardingDirectionType;
-  /**
-   * Indicator size (width and height).
-   * @type {number}
-   * @default 40
-   */
-  indicatorSize?: number;
-  /**
-   * Indicator border and fill color.
-   * @type {string}
-   * @default 'white'
-   */
-  indicatorColor?: string;
-  /**
-   * Custom component to be used instead of the default close button.
-   * @type {(() => React.ReactNode) | React.ReactNode}
-   */
-  closeButton?: (() => ReactNode) | ReactNode;
-  /**
-   * Close button text.
-   * @type {string}
-   * @default close
-   */
-  closeButtonText?: string;
-  /**
-   * Close button text style.
-   * @type {StyleProp<TextStyle>}
-   */
-  closeButtonTextStyle?: StyleProp<TextStyle>;
-  /**
-   * Callback on close button pressed.
-   * @type {() => void}
-   */
-  onCloseButtonPress: () => void;
+}
+
+export interface IndicatorsContainerProps
+  extends PaperOnboardingIndicatorConfig {
+  currentIndex: Animated.Node<number>;
+  data: PaperOnboardingItemType[];
+  animatedIndicatorsContainerPosition: Animated.Node<number>;
+  safeInsets: Required<Insets>;
+}
+
+export interface IndicatorProps extends PaperOnboardingIndicatorConfig {
+  index: number;
+  item: PaperOnboardingItemType;
+  currentIndex: Animated.Node<number>;
 }
