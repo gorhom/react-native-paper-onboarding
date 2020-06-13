@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import PaperOnboarding, {
@@ -33,6 +33,10 @@ const CustomContentScreen = () => {
   const { goBack } = useNavigation();
   const safeInsets = useSafeArea();
 
+  // refs
+  const goBackRef = useRef<any>(null);
+  goBackRef.current = goBack;
+
   // variable
   const insets = useMemo(
     () => ({
@@ -45,24 +49,27 @@ const CustomContentScreen = () => {
   );
 
   // callbacks
-  const handleOnClosePress = useCallback(() => goBack(), [goBack]);
+  const handleOnIndexChange = useCallback(_index => {
+    console.log(`Index changed: ${_index}`);
+  }, []);
+  const handleOnClosePress = useCallback(() => goBackRef.current(), []);
 
+  // renders
+  const renderCloseButton = useCallback(
+    () => <CustomButton text={'X'} onPress={handleOnClosePress} />,
+    [handleOnClosePress]
+  );
   return (
     <>
       <StatusBar barStyle="light-content" />
       <PaperOnboarding
+        onIndexChange={handleOnIndexChange}
         data={data}
         indicatorSize={24}
         indicatorBackgroundColor="#333"
         indicatorBorderColor="#333"
-        safeInsets={{
-          top: insets.top,
-          bottom: insets.bottom,
-          left: insets.left,
-          right: insets.right,
-        }}
-        onCloseButtonPress={handleOnClosePress}
-        closeButton={<CustomButton onPress={handleOnClosePress} />}
+        safeInsets={insets}
+        closeButton={renderCloseButton}
       />
     </>
   );
