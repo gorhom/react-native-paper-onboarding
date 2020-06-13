@@ -14,19 +14,19 @@ const data: PaperOnboardingItemType[] = [
     title: 'Hotels',
     description: 'All hotels and hostels are sorted by hospitality rating',
     backgroundColor: '#698FB8',
-    icon: KeySVG,
+    icon: ({ size }) => <KeySVG size={size} color={'#698FB8'} />,
   },
   {
     title: 'Banks',
     description: 'We carefully verify all banks before add them into the app',
     backgroundColor: '#6CB2B8',
-    icon: WalletSVG,
+    icon: ({ size }) => <WalletSVG size={size} color={'#6CB2B8'} />,
   },
   {
     title: 'Stores',
     description: 'All local stores are categorized for your convenience',
     backgroundColor: '#9D8FBF',
-    icon: ShoppingCartSVG,
+    icon: ({ size }) => <ShoppingCartSVG size={size} color={'#9D8FBF'} />,
   },
 ];
 

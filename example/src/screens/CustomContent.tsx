@@ -7,25 +7,29 @@ import PaperOnboarding, {
 import { useSafeArea } from 'react-native-safe-area-context';
 import CustomView from '../components/CustomView';
 import CustomButton from '../components/CustomButton';
+import WalletSVG from '../svg/wallet';
+import ShoppingCartSVG from '../svg/shopping-cart';
 
 const data: PaperOnboardingItemType[] = [
   {
     content: CustomView,
     backgroundColor: '#000',
+    icon: ({ size }) => <WalletSVG size={size} color={'black'} />,
   },
   {
     content: CustomView,
     backgroundColor: '#666',
     showCloseButton: true,
+    icon: ({ size }) => <ShoppingCartSVG size={size} color={'black'} />,
   },
-  {
-    content: CustomView,
-    backgroundColor: '#000',
-  },
-  {
-    content: CustomView,
-    backgroundColor: '#666',
-  },
+  // {
+  //   content: CustomView,
+  //   backgroundColor: '#000',
+  // },
+  // {
+  //   content: CustomView,
+  //   backgroundColor: '#666',
+  // },
 ];
 
 const CustomContentScreen = () => {
@@ -52,7 +56,8 @@ const CustomContentScreen = () => {
       <StatusBar barStyle="light-content" />
       <PaperOnboarding
         data={data}
-        indicatorSize={20}
+        indicatorSize={24}
+        indicatorBackgroundColor="#fff"
         safeInsets={{
           top: insets.top,
           bottom: insets.bottom,
