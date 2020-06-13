@@ -24,6 +24,7 @@ Animated.addWhitelistedUIProps({
   cx: true,
   cy: true,
   r: true,
+  fillOpacity: true,
   pointerEvents: true,
 });
 
