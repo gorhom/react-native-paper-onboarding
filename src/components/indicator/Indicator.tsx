@@ -1,35 +1,43 @@
 import React, { useMemo, useCallback, memo } from 'react';
+import { ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { Svg, Circle, CircleProps } from 'react-native-svg';
+// @ts-ignore 😞
+import isEqual from 'lodash.isequal';
+import { IndicatorProps } from '../../types';
 import { styles } from './styles';
-import { PaperOnboardingItemType } from 'src/types';
 
 const { interpolate, Extrapolate } = Animated;
 
-interface IndicatorProps {
-  size: number;
-  color: string;
-  index: number;
-  item: PaperOnboardingItemType;
-  currentIndex: Animated.Node<number>;
-}
+const AnimatedCircle = Animated.createAnimatedComponent(
+  Circle
+) as React.ComponentClass<
+  Animated.AnimateProps<ViewStyle, CircleProps & { style?: any }>
+>;
+const AnimatedSvg = Animated.createAnimatedComponent(Svg);
+
+const BORDER_WIDTH = 2;
 
 const IndicatorComponent = ({
-  size,
-  color,
   index,
+  indicatorSize,
+  indicatorBackgroundColor,
+  indicatorBorderColor,
   currentIndex,
   item,
 }: IndicatorProps) => {
-  // animation
-  const animatedScale = interpolate(currentIndex, {
+  const radius = useMemo(() => (indicatorSize - 2) / 2, [indicatorSize]);
+
+  //#region animation
+  const animatedRadius = interpolate(currentIndex, {
     inputRange: [index - 1, index, index + 1],
-    outputRange: [0.33, 1, 0.33],
+    outputRange: [radius * 0.33, radius, radius * 0.33],
     extrapolate: Extrapolate.CLAMP,
   });
 
-  const animatedBackgroundOpacity = interpolate(currentIndex, {
-    inputRange: [index - 1, index],
-    outputRange: [0, 1],
+  const animatedIconScale = interpolate(currentIndex, {
+    inputRange: [index - 1, index, index + 1],
+    outputRange: [1 * 0.33, 1, 1 * 0.33],
     extrapolate: Extrapolate.CLAMP,
   });
 
@@ -39,82 +47,83 @@ const IndicatorComponent = ({
     extrapolate: Extrapolate.CLAMP,
   });
 
-  const animatedIconScale = interpolate(currentIndex, {
-    inputRange: [index - 0.25, index, index + 0.25],
-    outputRange: [0.33, 1, 0.33],
-    extrapolate: Extrapolate.CLAMP,
+  const animatedCircleFillOpacity = interpolate(currentIndex, {
+    inputRange: [index - 1, index],
+    outputRange: [0, 1],
   });
+  //#endregion
 
-  // styles
+  //#region styles
   const containerStyle = useMemo(
-    () => [
-      styles.container,
-      {
-        width: size,
-        height: size,
-        transform: [{ scale: animatedScale }],
+    () => ({
+      ...styles.container,
+      ...{
+        width: indicatorSize,
+        height: indicatorSize,
       },
-    ],
-    [size, animatedScale]
-  );
-
-  const borderStyle = useMemo(
-    () => [
-      styles.border,
-      {
-        borderWidth: size / 5,
-        borderRadius: size,
-        borderColor: color,
-      },
-    ],
-    [size, color]
-  );
-
-  const fillStyle: any = useMemo(
-    () => [
-      styles.fill,
-      {
-        borderRadius: size,
-        backgroundColor: color,
-        opacity: animatedBackgroundOpacity,
-      },
-    ],
-    [color, size, animatedBackgroundOpacity]
+    }),
+    [indicatorSize]
   );
 
   const iconStyle: any = useMemo(
-    () => [
-      styles.iconContainer,
-      {
-        borderRadius: size,
+    () => ({
+      ...styles.iconContainer,
+      ...{
+        left: BORDER_WIDTH * 2,
+        right: BORDER_WIDTH * 2,
+        top: BORDER_WIDTH * 2,
+        bottom: BORDER_WIDTH * 2,
+        borderRadius: indicatorSize,
         opacity: animatedIconOpacity,
         transform: [{ scale: animatedIconScale }],
       },
-    ],
-    [animatedIconOpacity, animatedIconScale, size]
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [indicatorSize]
   );
+  //#endregion
 
   // renders
   const renderIcon = useCallback(() => {
     if (item.icon) {
+      const IconComponent: any = item.icon;
       return (
         <Animated.View style={iconStyle}>
-          {typeof item.icon === 'function' ? item.icon() : item.icon}
+          {typeof IconComponent === 'function' ? (
+            IconComponent({
+              size: indicatorSize / 2,
+            })
+          ) : (
+            <IconComponent size={indicatorSize / 2} />
+          )}
         </Animated.View>
       );
     }
     return null;
-  }, [item, iconStyle]);
+  }, [item, indicatorSize, iconStyle]);
 
   return (
     <Animated.View style={containerStyle}>
-      <Animated.View style={fillStyle} />
-      <Animated.View style={borderStyle} />
+      <AnimatedSvg
+        width={indicatorSize}
+        height={indicatorSize}
+        viewBox={`0 0 ${indicatorSize} ${indicatorSize}`}
+      >
+        <AnimatedCircle
+          r={animatedRadius}
+          cx={indicatorSize / 2}
+          cy={indicatorSize / 2}
+          // @ts-ignore
+          fill={indicatorBackgroundColor}
+          fillOpacity={animatedCircleFillOpacity}
+          stroke={indicatorBorderColor}
+          strokeWidth={BORDER_WIDTH}
+        />
+      </AnimatedSvg>
       {renderIcon()}
     </Animated.View>
   );
 };
-
-const Indicator = memo(IndicatorComponent);
+const Indicator = memo(IndicatorComponent, isEqual);
 
 export default Indicator;

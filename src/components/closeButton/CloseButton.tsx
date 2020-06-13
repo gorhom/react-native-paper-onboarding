@@ -1,88 +1,91 @@
-import React, { useMemo, memo, useRef, useEffect, useCallback } from 'react';
+import React, { useMemo, memo, useRef } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { useValues, get } from 'react-native-redash';
+// @ts-ignore 😞
+import isEqual from 'lodash.isequal';
 import { CloseButtonProps } from '../../types';
 import { styles } from './styles';
 
-const { round, onChange, call, useCode } = Animated;
+const { round } = Animated;
 
 export const CloseButtonComponent = ({
   data,
   safeInsets,
   currentIndex,
-  text,
-  textStyle: textStyleOverride,
-  onPress,
-  customButton,
+  closeButton,
+  closeButtonText,
+  closeButtonTextStyle: textStyleOverride,
+  onCloseButtonPress,
 }: CloseButtonProps) => {
   const containerRef = useRef<Animated.View>(null);
+
+  //#region animations
+  const animatedShowButtonOpacityValues = useValues(
+    ...data.map((item, index) =>
+      index === data.length - 1 || item.showCloseButton ? 1 : 0
+    )
+  );
+  const animatedShowButtonPointerEventValues = useValues(
+    ...data.map((item, index) =>
+      index === data.length - 1 || item.showCloseButton ? 'auto' : 'none'
+    )
+  );
+
+  const defaultShowButtonOpacity = new Animated.Value(0);
+  const defaultShowButtonPointerEvent = new Animated.Value('none');
+
+  const animatedShowButtonOpacity = get(
+    animatedShowButtonOpacityValues,
+    round(currentIndex),
+    defaultShowButtonOpacity
+  );
+
+  const animatedShowButtonPointerEvent = (get(
+    // @ts-ignore
+    animatedShowButtonPointerEventValues,
+    round(currentIndex),
+    defaultShowButtonPointerEvent
+  ) as any) as Animated.Value<'auto' | 'none'>;
+  //#endregion
 
   //#region styles
   const containerStyle: any = useMemo(
     () => [
       styles.container,
       {
+        opacity: animatedShowButtonOpacity,
         top: safeInsets.top,
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [safeInsets]
   );
   const textStyle = useMemo(() => [styles.text, textStyleOverride], [
     textStyleOverride,
   ]);
   //#endregion
-
-  //#region callbacks
-  const handleShowingButton = useCallback(
-    (index: number) => {
-      const shouldShowButton =
-        index === data.length - 1 || data[index].showCloseButton === true;
-
-      // @ts-ignore
-      containerRef.current.setNativeProps({
-        pointerEvents: shouldShowButton ? 'auto' : 'none',
-        opacity: shouldShowButton ? 1 : 0,
-      });
-    },
-    [data]
-  );
-  //#endregion
-
-  //#region effects
-  useEffect(() => {
-    handleShowingButton(0);
-  }, [handleShowingButton]);
-
-  useCode(
-    () => [
-      onChange(
-        round(currentIndex),
-        call([round(currentIndex)], args => {
-          handleShowingButton(args[0]);
-        })
-      ),
-    ],
-    [handleShowingButton]
-  );
-  //#endregion
-
   return (
-    <Animated.View ref={containerRef} style={containerStyle}>
-      {customButton ? (
-        typeof customButton === 'function' ? (
-          customButton()
+    <Animated.View
+      ref={containerRef}
+      pointerEvents={animatedShowButtonPointerEvent}
+      style={containerStyle}
+    >
+      {closeButton ? (
+        typeof closeButton === 'function' ? (
+          closeButton()
         ) : (
-          customButton
+          closeButton
         )
       ) : (
-        <TouchableOpacity onPress={onPress}>
-          <Text style={textStyle}>{text}</Text>
+        <TouchableOpacity onPress={onCloseButtonPress}>
+          <Text style={textStyle}>{closeButtonText}</Text>
         </TouchableOpacity>
       )}
     </Animated.View>
   );
 };
 
-const CloseButton = memo(CloseButtonComponent);
+const CloseButton = memo(CloseButtonComponent, isEqual);
 
 export default CloseButton;
