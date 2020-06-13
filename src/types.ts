@@ -144,6 +144,11 @@ export interface PaperOnboardingProps
     >,
     Partial<PaperOnboardingIndicatorConfig>,
     Partial<PaperOnboardingCloseButtonConfig> {
+  /**
+   * Callback when index change.
+   * @type {() => void}
+   * @default noop
+   */
   onIndexChange?: (index: number) => void;
   /**
    * Array of pages/slides to present.
