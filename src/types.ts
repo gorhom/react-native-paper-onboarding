@@ -144,7 +144,6 @@ export interface PaperOnboardingProps
     >,
     Partial<PaperOnboardingIndicatorConfig>,
     Partial<PaperOnboardingCloseButtonConfig> {
-  index?: number;
   onIndexChange?: (index: number) => void;
   /**
    * Array of pages/slides to present.

@@ -80,6 +80,7 @@ const Screen = () => {
 | closeButtonText          | Close button text.                                                   | NO       | string                                                     | close                                      |
 | closeButtonTextStyle     | Close button text style.                                             | NO       | StyleProp<TextStyle>                                       |                                            |
 | onCloseButtonPress       | Callback on close button pressed.                                    | NO       | () => void                                                 |                                            |
+| onIndexChange            | Callback when index change.                                          | NO       | () => void                                                 |                                            |
 
 #### PaperOnboardingItemType
 
