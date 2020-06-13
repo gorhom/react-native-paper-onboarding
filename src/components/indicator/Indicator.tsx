@@ -14,7 +14,6 @@ const AnimatedCircle = Animated.createAnimatedComponent(
 ) as React.ComponentClass<
   Animated.AnimateProps<ViewStyle, CircleProps & { style?: any }>
 >;
-const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
 const BORDER_WIDTH = 2;
 
@@ -50,6 +49,7 @@ const IndicatorComponent = ({
   const animatedCircleFillOpacity = interpolate(currentIndex, {
     inputRange: [index - 1, index],
     outputRange: [0, 1],
+    extrapolate: Extrapolate.CLAMP,
   });
   //#endregion
 
@@ -104,7 +104,7 @@ const IndicatorComponent = ({
 
   return (
     <Animated.View style={containerStyle}>
-      <AnimatedSvg
+      <Svg
         width={indicatorSize}
         height={indicatorSize}
         viewBox={`0 0 ${indicatorSize} ${indicatorSize}`}
@@ -119,7 +119,7 @@ const IndicatorComponent = ({
           stroke={indicatorBorderColor}
           strokeWidth={BORDER_WIDTH}
         />
-      </AnimatedSvg>
+      </Svg>
       {renderIcon()}
     </Animated.View>
   );
