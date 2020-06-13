@@ -22,31 +22,31 @@ const IndicatorComponent = ({
   indicatorSize,
   indicatorBackgroundColor,
   indicatorBorderColor,
-  currentIndex,
+  animatedIndex,
   item,
 }: IndicatorProps) => {
   const radius = useMemo(() => (indicatorSize - 2) / 2, [indicatorSize]);
 
   //#region animation
-  const animatedRadius = interpolate(currentIndex, {
+  const animatedRadius = interpolate(animatedIndex, {
     inputRange: [index - 1, index, index + 1],
     outputRange: [radius * 0.33, radius, radius * 0.33],
     extrapolate: Extrapolate.CLAMP,
   });
 
-  const animatedIconScale = interpolate(currentIndex, {
+  const animatedIconScale = interpolate(animatedIndex, {
     inputRange: [index - 1, index, index + 1],
     outputRange: [1 * 0.33, 1, 1 * 0.33],
     extrapolate: Extrapolate.CLAMP,
   });
 
-  const animatedIconOpacity = interpolate(currentIndex, {
+  const animatedIconOpacity = interpolate(animatedIndex, {
     inputRange: [index - 0.25, index, index + 0.25],
     outputRange: [0, 1, 0],
     extrapolate: Extrapolate.CLAMP,
   });
 
-  const animatedCircleFillOpacity = interpolate(currentIndex, {
+  const animatedCircleFillOpacity = interpolate(animatedIndex, {
     inputRange: [index - 1, index],
     outputRange: [0, 1],
     extrapolate: Extrapolate.CLAMP,

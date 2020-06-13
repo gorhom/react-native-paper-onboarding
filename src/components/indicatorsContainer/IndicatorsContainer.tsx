@@ -6,7 +6,7 @@ import { styles } from './styles';
 
 const IndicatorsContainerComponent = ({
   data,
-  currentIndex,
+  animatedIndex,
   animatedIndicatorsContainerPosition,
   indicatorSize,
   indicatorBackgroundColor,
@@ -49,17 +49,12 @@ const IndicatorsContainerComponent = ({
             indicatorBorderColor={indicatorBorderColor}
             index={index}
             item={item}
-            currentIndex={currentIndex}
+            animatedIndex={animatedIndex}
           />
         );
       }),
-    [
-      data,
-      indicatorSize,
-      indicatorBackgroundColor,
-      indicatorBorderColor,
-      currentIndex,
-    ]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [data, indicatorSize, indicatorBackgroundColor, indicatorBorderColor]
   );
 
   return (

@@ -17,14 +17,15 @@ const styles = StyleSheet.create({
 });
 
 interface CustomButtonProps {
+  text: string;
   onPress: () => void;
 }
 
-const CustomButton = (props: CustomButtonProps) => {
+const CustomButton = ({ text, onPress }: CustomButtonProps) => {
   return (
-    <TouchableOpacity onPress={props.onPress}>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <Text style={styles.text}>X</Text>
+        <Text style={styles.text}>{text}</Text>
       </View>
     </TouchableOpacity>
   );
