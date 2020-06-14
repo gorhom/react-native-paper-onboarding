@@ -63,15 +63,15 @@ const PaperOnboardingComponent = ({
   const pagesRef = useRef<Array<Animated.View | null>>(data.map(() => null));
 
   //#region variables
-  const safeInsets = useMemo<Required<Insets>>(
-    () => ({
+  const safeInsets = useMemo<Required<Insets>>(() => {
+    return {
       top: _safeInsets?.top ?? DEFAULT_SAFE_INSET,
       bottom: _safeInsets?.bottom ?? DEFAULT_SAFE_INSET,
       left: _safeInsets?.left ?? DEFAULT_SAFE_INSET,
       right: _safeInsets?.right ?? DEFAULT_SAFE_INSET,
-    }),
-    [_safeInsets]
-  );
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [_safeInsets]);
   //#endregion
 
   // memo
