@@ -1,12 +1,14 @@
 import React, { memo } from 'react';
 import { ViewStyle } from 'react-native';
 import { Circle, CircleProps } from 'react-native-svg';
-import Animated, {
-  interpolate,
-  add,
-  Extrapolate,
-} from 'react-native-reanimated';
-import { BackgroundCircleProps } from '../../types';
+import Animated, { add, Extrapolate } from 'react-native-reanimated';
+import type { BackgroundCircleProps } from '../../types';
+
+const {
+  interpolate: interpolateV1,
+  interpolateNode: interpolateV2,
+} = require('react-native-reanimated');
+const interpolate = interpolateV2 || interpolateV1;
 
 const AnimatedCircle = Animated.createAnimatedComponent(
   Circle

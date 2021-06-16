@@ -1,8 +1,5 @@
-import Animated, { Easing, sub } from 'react-native-reanimated';
-import { State } from 'react-native-gesture-handler';
-import { useClock, useValue } from 'react-native-redash';
-
-const {
+import Animated, {
+  sub,
   add,
   or,
   block,
@@ -16,10 +13,23 @@ const {
   startClock,
   lessThan,
   greaterThan,
-  interpolate,
   abs,
   timing,
-} = Animated;
+} from 'react-native-reanimated';
+import { State } from 'react-native-gesture-handler';
+import { useClock, useValue } from 'react-native-redash';
+
+const {
+  interpolate: interpolateV1,
+  interpolateNode: interpolateV2,
+} = require('react-native-reanimated');
+const interpolate = interpolateV2 || interpolateV1;
+
+const {
+  Easing: EasingV1,
+  EasingNode: EasingV2,
+} = require('react-native-reanimated');
+const Easing = EasingV2 || EasingV1;
 
 interface useTimingProps {
   value: Animated.Adaptable<number>;

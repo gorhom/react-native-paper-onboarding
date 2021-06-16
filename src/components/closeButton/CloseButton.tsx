@@ -1,11 +1,9 @@
 import React, { useMemo, memo, useRef } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, { round } from 'react-native-reanimated';
 import { useValues, get } from 'react-native-redash';
-import { CloseButtonProps } from '../../types';
 import { styles } from './styles';
-
-const { round } = Animated;
+import type { CloseButtonProps } from '../../types';
 
 export const CloseButtonComponent = ({
   data,

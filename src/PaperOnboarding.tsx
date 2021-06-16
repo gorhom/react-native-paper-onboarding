@@ -2,7 +2,12 @@ import React, { useMemo, useRef, useCallback, memo, useState } from 'react';
 import { Dimensions, Insets, LayoutChangeEvent } from 'react-native';
 import { usePanGestureHandler, useValue } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
+import Animated, {
+  add,
+  useCode,
+  onChange,
+  call,
+} from 'react-native-reanimated';
 import Background from './components/background';
 import Page from './components/page';
 import IndicatorsContainer from './components/indicatorsContainer';
@@ -32,7 +37,11 @@ Animated.addWhitelistedUIProps({
   pointerEvents: true,
 });
 
-const { interpolate, add, useCode, onChange, call } = Animated;
+const {
+  interpolate: interpolateV1,
+  interpolateNode: interpolateV2,
+} = require('react-native-reanimated');
+const interpolate = interpolateV2 || interpolateV1;
 
 const PaperOnboardingComponent = ({
   data,

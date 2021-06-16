@@ -1,10 +1,14 @@
 import React, { useMemo, useCallback, memo } from 'react';
-import Animated from 'react-native-reanimated';
+import Animated, { Extrapolate } from 'react-native-reanimated';
 import PageContent from '../pageContent/PageContent';
-import { PageProps } from '../../types';
 import { styles } from './styles';
+import type { PageProps } from '../../types';
 
-const { interpolate, Extrapolate } = Animated;
+const {
+  interpolate: interpolateV1,
+  interpolateNode: interpolateV2,
+} = require('react-native-reanimated');
+const interpolate = interpolateV2 || interpolateV1;
 
 const PageComponent = ({
   index,

@@ -1,10 +1,14 @@
 import React, { useMemo, memo } from 'react';
 import { Text, Dimensions } from 'react-native';
-import Animated from 'react-native-reanimated';
-import { PageContentProps } from '../../types';
+import Animated, { Extrapolate } from 'react-native-reanimated';
 import { styles } from './styles';
+import type { PageContentProps } from '../../types';
 
-const { interpolate, Extrapolate } = Animated;
+const {
+  interpolate: interpolateV1,
+  interpolateNode: interpolateV2,
+} = require('react-native-reanimated');
+const interpolate = interpolateV2 || interpolateV1;
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 

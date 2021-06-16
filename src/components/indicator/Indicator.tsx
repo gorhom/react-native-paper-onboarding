@@ -1,11 +1,15 @@
 import React, { useMemo, useCallback, memo } from 'react';
 import { ViewStyle } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, { Extrapolate } from 'react-native-reanimated';
 import { Svg, Circle, CircleProps } from 'react-native-svg';
-import { IndicatorProps } from '../../types';
 import { styles } from './styles';
+import type { IndicatorProps } from '../../types';
 
-const { interpolate, Extrapolate } = Animated;
+const {
+  interpolate: interpolateV1,
+  interpolateNode: interpolateV2,
+} = require('react-native-reanimated');
+const interpolate = interpolateV2 || interpolateV1;
 
 const AnimatedCircle = Animated.createAnimatedComponent(
   Circle

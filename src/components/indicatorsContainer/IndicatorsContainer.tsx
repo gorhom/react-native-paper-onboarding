@@ -1,8 +1,8 @@
 import React, { useMemo, useCallback, memo } from 'react';
 import Animated from 'react-native-reanimated';
 import Indicator from '../indicator';
-import { IndicatorsContainerProps } from '../../types';
 import { styles } from './styles';
+import type { IndicatorsContainerProps } from '../../types';
 
 const IndicatorsContainerComponent = ({
   data,

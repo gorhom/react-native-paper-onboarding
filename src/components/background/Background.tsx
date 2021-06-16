@@ -2,8 +2,8 @@ import React, { memo, useMemo } from 'react';
 import Svg from 'react-native-svg';
 import BackgroundCircle from '../backgroundCircle';
 import { calculateRectangleCircleRadius } from '../../utils/math';
-import { BackgroundProps } from '../../types';
 import { styles } from './styles';
+import type { BackgroundProps } from '../../types';
 
 const BackgroundComponent = ({
   animatedIndex,

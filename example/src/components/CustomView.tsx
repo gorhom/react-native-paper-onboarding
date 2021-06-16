@@ -1,9 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, Alert, ViewStyle } from 'react-native';
-import Animated, { interpolate, Extrapolate } from 'react-native-reanimated';
+import Animated, { Extrapolate } from 'react-native-reanimated';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { PageContentProps } from '@gorhom/paper-onboarding';
 import { TouchableOpacityProps } from 'react-native';
+
+const {
+  interpolate: interpolateV1,
+  interpolateNode: interpolateV2,
+} = require('react-native-reanimated');
+const interpolate = interpolateV2 || interpolateV1;
 
 const AnimatedTouchableOpacity: React.FC<
   Animated.AnimateProps<ViewStyle, TouchableOpacityProps>
