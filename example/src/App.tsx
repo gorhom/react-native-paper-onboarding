@@ -1,39 +1,26 @@
-import React from 'react';
-import { StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import RootScreen from './screens/Root';
-import HorizontalGestureScreen from './screens/HorizontalGesture';
-import VerticalGestureScreen from './screens/VerticalGesture';
-import WithoutImageScreen from './screens/WithoutImage';
-import WithoutIconScreen from './screens/WithoutIcon';
-import WithStylingScreen from './screens/WithStyling';
-import CustomContentScreen from './screens/CustomContent';
-
-const Stack = createStackNavigator();
+import React, { useMemo } from 'react';
+import { ShowcaseApp } from '@gorhom/showcase-template';
+import { screens } from './screens';
+import { version, description } from '../../package.json';
 
 const App = () => {
+  // variables
+  const author = useMemo(
+    () => ({
+      username: 'Mo Gorhom',
+      url: 'https://gorhom.dev',
+    }),
+    []
+  );
+
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Root" headerMode="none">
-          <Stack.Screen name="Root" component={RootScreen} />
-          <Stack.Screen
-            name="HorizontalGesture"
-            component={HorizontalGestureScreen}
-          />
-          <Stack.Screen
-            name="VerticalGesture"
-            component={VerticalGestureScreen}
-          />
-          <Stack.Screen name="WithStyling" component={WithStylingScreen} />
-          <Stack.Screen name="WithoutImage" component={WithoutImageScreen} />
-          <Stack.Screen name="WithoutIcon" component={WithoutIconScreen} />
-          <Stack.Screen name="CustomContent" component={CustomContentScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </>
+    <ShowcaseApp
+      name="Paper Onboarding"
+      description={description}
+      version={version}
+      author={author}
+      data={screens}
+    />
   );
 };
 

@@ -25,9 +25,10 @@ const PageContentComponent = ({
   //#endregion
 
   //#region styles
-  const titleStyle = useMemo(() => [styles.title, titleStyleOverride], [
-    titleStyleOverride,
-  ]);
+  const titleStyle = useMemo(
+    () => [styles.title, titleStyleOverride],
+    [titleStyleOverride]
+  );
 
   const descriptionStyle = useMemo(
     () => [styles.description, descriptionStyleOverride],

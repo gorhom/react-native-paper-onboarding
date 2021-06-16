@@ -6,8 +6,6 @@ import Animated, {
   add,
   Extrapolate,
 } from 'react-native-reanimated';
-// @ts-ignore 😞
-import isEqual from 'lodash.isequal';
 import { BackgroundCircleProps } from '../../types';
 
 const AnimatedCircle = Animated.createAnimatedComponent(
@@ -56,6 +54,6 @@ const BackgroundCircleComponent = ({
   );
 };
 
-const BackgroundCircle = memo(BackgroundCircleComponent, isEqual);
+const BackgroundCircle = memo(BackgroundCircleComponent);
 
 export default BackgroundCircle;

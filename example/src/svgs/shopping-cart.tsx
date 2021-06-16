@@ -1,7 +1,8 @@
 import React from 'react';
 import { Svg, Path } from 'react-native-svg';
+import type { SVGProps } from './types';
 
-const ShoppingCartSVG = ({ size, color = '#9D8FBF' }) => (
+export const ShoppingCartSVG = ({ size, color = '#9D8FBF' }: SVGProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24">
     <Path
       d="M21.343 13.874H2.66c-.577 0-.92.446-.77.991L3.32 21.01c.151.547.742.991 1.326.991h14.711c.58 0 1.176-.446 1.327-.99l1.428-6.145c.152-.547-.198-.99-.77-.99zM17.338 2.51a1.058 1.058 0 00-1.425-.372c-.499.28-.67.903-.382 1.39l2.51 4.24H6.032l2.509-4.24a1.004 1.004 0 00-.382-1.39 1.058 1.058 0 00-1.425.372L3.623 7.767H1.047C.469 7.767 0 8.218 0 8.794v2.017a1.03 1.03 0 001.047 1.028h21.906c.578 0 1.047-.452 1.047-1.028V8.794a1.03 1.03 0 00-1.047-1.027H20.45l-3.112-5.258z"
@@ -9,5 +10,3 @@ const ShoppingCartSVG = ({ size, color = '#9D8FBF' }) => (
     />
   </Svg>
 );
-
-export default ShoppingCartSVG;

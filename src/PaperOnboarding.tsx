@@ -3,14 +3,11 @@ import { Dimensions, Insets, LayoutChangeEvent } from 'react-native';
 import { usePanGestureHandler, useValue } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-// @ts-ignore 😞
-import isEqual from 'lodash.isequal';
 import Background from './components/background';
 import Page from './components/page';
 import IndicatorsContainer from './components/indicatorsContainer';
 import CloseButton from './components/closeButton';
 import { useTiming } from './useTiming';
-import { PaperOnboardingProps, PaperOnboardingScreenDimensions } from './types';
 import {
   DEFAULT_SAFE_INSET,
   DEFAULT_DIRECTION,
@@ -21,6 +18,10 @@ import {
   DEFAULT_CLOSE_BUTTON_CALLBACK,
 } from './constants';
 import { styles } from './styles';
+import type {
+  PaperOnboardingProps,
+  PaperOnboardingScreenDimensions,
+} from './types';
 
 // @ts-ignore
 Animated.addWhitelistedUIProps({
@@ -70,17 +71,12 @@ const PaperOnboardingComponent = ({
       left: _safeInsets?.left ?? DEFAULT_SAFE_INSET,
       right: _safeInsets?.right ?? DEFAULT_SAFE_INSET,
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_safeInsets]);
   //#endregion
 
   // memo
-  const {
-    gestureHandler,
-    state,
-    translation,
-    velocity,
-  } = usePanGestureHandler();
+  const { gestureHandler, state, translation, velocity } =
+    usePanGestureHandler();
 
   const indicatorsContainerLeftPadding = useMemo(
     () => dimensions.width / 2 - indicatorSize / 2,
@@ -209,6 +205,6 @@ const PaperOnboardingComponent = ({
   );
 };
 
-const PaperOnboarding = memo(PaperOnboardingComponent, isEqual);
+const PaperOnboarding = memo(PaperOnboardingComponent);
 
 export default PaperOnboarding;

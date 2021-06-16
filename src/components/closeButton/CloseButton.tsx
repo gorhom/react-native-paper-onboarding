@@ -2,8 +2,6 @@ import React, { useMemo, memo, useRef } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useValues, get } from 'react-native-redash';
-// @ts-ignore 😞
-import isEqual from 'lodash.isequal';
 import { CloseButtonProps } from '../../types';
 import { styles } from './styles';
 
@@ -41,12 +39,12 @@ export const CloseButtonComponent = ({
     defaultShowButtonOpacity
   );
 
-  const animatedShowButtonPointerEvent = (get(
+  const animatedShowButtonPointerEvent = get(
     // @ts-ignore
     animatedShowButtonPointerEventValues,
     round(animatedIndex),
     defaultShowButtonPointerEvent
-  ) as any) as Animated.Value<'auto' | 'none'>;
+  ) as any as Animated.Value<'auto' | 'none'>;
   //#endregion
 
   //#region styles
@@ -61,9 +59,10 @@ export const CloseButtonComponent = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [safeInsets]
   );
-  const textStyle = useMemo(() => [styles.text, textStyleOverride], [
-    textStyleOverride,
-  ]);
+  const textStyle = useMemo(
+    () => [styles.text, textStyleOverride],
+    [textStyleOverride]
+  );
   //#endregion
   return (
     <Animated.View
@@ -86,6 +85,6 @@ export const CloseButtonComponent = ({
   );
 };
 
-const CloseButton = memo(CloseButtonComponent, isEqual);
+const CloseButton = memo(CloseButtonComponent);
 
 export default CloseButton;

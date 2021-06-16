@@ -1,7 +1,5 @@
 import React, { memo, useMemo } from 'react';
 import Svg from 'react-native-svg';
-// @ts-ignore 😞
-import isEqual from 'lodash.isequal';
 import BackgroundCircle from '../backgroundCircle';
 import { calculateRectangleCircleRadius } from '../../utils/math';
 import { BackgroundProps } from '../../types';
@@ -54,6 +52,6 @@ const BackgroundComponent = ({
   );
 };
 
-const Background = memo(BackgroundComponent, isEqual);
+const Background = memo(BackgroundComponent);
 
 export default Background;

@@ -1,2 +1,2 @@
 export { default } from './PaperOnboarding';
-export { PaperOnboardingItemType, PageContentProps } from './types';
+export type { PaperOnboardingItemType, PageContentProps } from './types';

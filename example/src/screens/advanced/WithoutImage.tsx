@@ -4,10 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import PaperOnboarding, {
   PaperOnboardingItemType,
 } from '@gorhom/paper-onboarding';
-import { useSafeArea } from 'react-native-safe-area-context';
-import KeySVG from '../svg/key';
-import WalletSVG from '../svg/wallet';
-import ShoppingCartSVG from '../svg/shopping-cart';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { KeySVG, WalletSVG, ShoppingCartSVG } from '../../svgs';
 
 const data: PaperOnboardingItemType[] = [
   {
@@ -33,7 +31,7 @@ const data: PaperOnboardingItemType[] = [
 const WithoutImage = () => {
   // hooks
   const { goBack } = useNavigation();
-  const safeInsets = useSafeArea();
+  const safeInsets = useSafeAreaInsets();
 
   // variable
   const insets = useMemo(
@@ -54,12 +52,7 @@ const WithoutImage = () => {
       <StatusBar barStyle="light-content" />
       <PaperOnboarding
         data={data}
-        safeInsets={{
-          top: insets.top,
-          bottom: insets.bottom,
-          left: insets.left,
-          right: insets.right,
-        }}
+        safeInsets={insets}
         onCloseButtonPress={handleOnClosePress}
       />
     </>

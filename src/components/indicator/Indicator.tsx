@@ -2,8 +2,6 @@ import React, { useMemo, useCallback, memo } from 'react';
 import { ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Svg, Circle, CircleProps } from 'react-native-svg';
-// @ts-ignore 😞
-import isEqual from 'lodash.isequal';
 import { IndicatorProps } from '../../types';
 import { styles } from './styles';
 
@@ -124,6 +122,6 @@ const IndicatorComponent = ({
     </Animated.View>
   );
 };
-const Indicator = memo(IndicatorComponent, isEqual);
+const Indicator = memo(IndicatorComponent);
 
 export default Indicator;

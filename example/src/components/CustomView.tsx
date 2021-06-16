@@ -5,10 +5,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { PageContentProps } from '@gorhom/paper-onboarding';
 import { TouchableOpacityProps } from 'react-native';
 
-const AnimatedTouchableOpacity: React.FC<Animated.AnimateProps<
-  ViewStyle,
-  TouchableOpacityProps
->> = Animated.createAnimatedComponent(TouchableOpacity) as any;
+const AnimatedTouchableOpacity: React.FC<
+  Animated.AnimateProps<ViewStyle, TouchableOpacityProps>
+> = Animated.createAnimatedComponent(TouchableOpacity) as any;
 
 const styles = StyleSheet.create({
   container: {

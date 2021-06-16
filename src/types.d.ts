@@ -1,6 +1,6 @@
-import { ReactNode, MutableRefObject, FC, ComponentClass } from 'react';
-import { TextStyle, Insets, StyleProp } from 'react-native';
-import Animated from 'react-native-reanimated';
+import type { ReactNode, MutableRefObject, FC, ComponentClass } from 'react';
+import type { TextStyle, Insets, StyleProp } from 'react-native';
+import type Animated from 'react-native-reanimated';
 
 export interface PaperOnboardingItemType {
   /**

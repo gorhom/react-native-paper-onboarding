@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { Svg, Path } from 'react-native-svg';
+import type { SVGProps } from './types';
 
-const KeySVG = ({ size, color = '#698FB8' }) => (
+export const KeySVG = ({ size, color = '#698FB8' }: SVGProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24">
     <Path
       d="M13.714 2.373a7.985 7.985 0 00-11.361 0c-3.137 3.164-3.137 8.295 0 11.459a7.986 7.986 0 008.818 1.732l1.176 1.186c.471.475 2.046-.011 2.517.464.465.469-.174 1.9.292 2.369.501.505 2.127.07 2.629.576.675.682-.477 1.594.199 2.276.485.49 5.043 1.538 5.043 1.538.536.129.972-.215.971-.766 0 0 .046-3.253-.327-3.63l-8.24-8.31c1.24-2.95.667-6.49-1.717-8.894zM6.147 6.2a2.995 2.995 0 014.26 0 3.057 3.057 0 010 4.297 2.995 2.995 0 01-4.26 0 3.057 3.057 0 010-4.297z"
@@ -9,5 +10,3 @@ const KeySVG = ({ size, color = '#698FB8' }) => (
     />
   </Svg>
 );
-
-export default KeySVG;

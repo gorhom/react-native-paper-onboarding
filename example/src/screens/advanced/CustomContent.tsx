@@ -4,9 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import PaperOnboarding, {
   PaperOnboardingItemType,
 } from '@gorhom/paper-onboarding';
-import { useSafeArea } from 'react-native-safe-area-context';
-import CustomView from '../components/CustomView';
-import CustomButton from '../components/CustomButton';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import CustomView from '../../components/CustomView';
+import CustomButton from '../../components/CustomButton';
 
 const data: PaperOnboardingItemType[] = [
   {
@@ -31,7 +31,7 @@ const data: PaperOnboardingItemType[] = [
 const CustomContentScreen = () => {
   // hooks
   const { goBack } = useNavigation();
-  const safeInsets = useSafeArea();
+  const safeInsets = useSafeAreaInsets();
 
   // refs
   const goBackRef = useRef<any>(null);

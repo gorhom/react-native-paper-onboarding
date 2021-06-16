@@ -4,10 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import PaperOnboarding, {
   PaperOnboardingItemType,
 } from '@gorhom/paper-onboarding';
-import { useSafeArea } from 'react-native-safe-area-context';
-import BankSVG from '../svg/bank';
-import HotelSVG from '../svg/hotel';
-import StoreSVG from '../svg/store';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BankSVG, HotelSVG, StoreSVG } from '../../svgs';
 
 const data: PaperOnboardingItemType[] = [
   {
@@ -39,7 +37,7 @@ const data: PaperOnboardingItemType[] = [
 const WithStylingScreen = () => {
   // hooks
   const { goBack } = useNavigation();
-  const safeInsets = useSafeArea();
+  const safeInsets = useSafeAreaInsets();
 
   // variable
   const insets = useMemo(
@@ -66,12 +64,7 @@ const WithStylingScreen = () => {
         indicatorBorderColor="black"
         indicatorBackgroundColor="black"
         indicatorSize={24}
-        safeInsets={{
-          top: insets.top,
-          bottom: insets.bottom,
-          left: insets.left,
-          right: insets.right,
-        }}
+        safeInsets={insets}
         onCloseButtonPress={handleOnClosePress}
       />
     </>

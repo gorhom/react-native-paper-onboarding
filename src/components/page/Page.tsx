@@ -90,10 +90,10 @@ const PageComponent = ({
   //#endregion
 
   //#region callbacks
-  const handleContainerRef = useCallback(ref => handleRef(ref, index), [
-    index,
-    handleRef,
-  ]);
+  const handleContainerRef = useCallback(
+    ref => handleRef(ref, index),
+    [index, handleRef]
+  );
   //#endregion
 
   // render
