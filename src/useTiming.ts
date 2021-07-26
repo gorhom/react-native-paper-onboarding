@@ -16,6 +16,7 @@ import Animated, {
   abs,
   timing,
 } from 'react-native-reanimated';
+import { I18nManager } from 'react-native';
 import { State } from 'react-native-gesture-handler';
 import { useClock, useValue } from 'react-native-redash';
 
@@ -67,13 +68,13 @@ export const useTiming = ({
 
   const valueClamp = interpolate(value, {
     inputRange: [screenWidth * -1, 0, screenWidth],
-    outputRange: [1, 0, -1],
+    outputRange: I18nManager.isRTL ? [-1, 0, 1] : [1, 0, -1],
     extrapolate: Animated.Extrapolate.CLAMP,
   });
 
   const velocityClamp = interpolate(velocity, {
     inputRange: [screenWidth * -2, 0, screenWidth * 2],
-    outputRange: [0.5, 0, -0.5],
+    outputRange: I18nManager.isRTL ? [-0.5, 0, 0.5] : [0.5, 0, -0.5],
     extrapolate: Animated.Extrapolate.CLAMP,
   });
 

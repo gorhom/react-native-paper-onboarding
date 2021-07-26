@@ -204,4 +204,5 @@ export interface BackgroundCircleProps
   color: string;
   extendedSize: number;
   bottomPosition: number;
+  screenDimensions: PaperOnboardingScreenDimensions;
 }
