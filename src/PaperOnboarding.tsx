@@ -1,5 +1,10 @@
 import React, { useMemo, useRef, useCallback, memo, useState } from 'react';
-import { Dimensions, Insets, LayoutChangeEvent } from 'react-native';
+import {
+  Dimensions,
+  Insets,
+  LayoutChangeEvent,
+  I18nManager,
+} from 'react-native';
 import { usePanGestureHandler, useValue } from 'react-native-redash';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated, {
@@ -87,10 +92,12 @@ const PaperOnboardingComponent = ({
   const { gestureHandler, state, translation, velocity } =
     usePanGestureHandler();
 
-  const indicatorsContainerLeftPadding = useMemo(
-    () => dimensions.width / 2 - indicatorSize / 2,
-    [dimensions.width, indicatorSize]
-  );
+  const indicatorsContainerLeftPadding = useMemo(() => {
+    const containerLeftPadding = dimensions.width / 2 - indicatorSize / 2;
+    return I18nManager.isRTL
+      ? -containerLeftPadding + indicatorSize * (data.length - 1)
+      : containerLeftPadding;
+  }, [dimensions.width, indicatorSize, data.length]);
 
   // animations
   const animatedStaticIndex = useValue(0);
@@ -103,10 +110,15 @@ const PaperOnboardingComponent = ({
     screenWidth: dimensions.width,
   });
 
+  const indicatorsContainerPosition = data.map(
+    (_, index) => index * indicatorSize * -1
+  );
   const animatedIndicatorsContainerPosition = add(
     interpolate(animatedIndex, {
       inputRange: data.map((_, index) => index),
-      outputRange: data.map((_, index) => index * indicatorSize * -1),
+      outputRange: I18nManager.isRTL
+        ? indicatorsContainerPosition.reverse()
+        : indicatorsContainerPosition,
       extrapolate: Animated.Extrapolate.CLAMP,
     }),
     indicatorsContainerLeftPadding

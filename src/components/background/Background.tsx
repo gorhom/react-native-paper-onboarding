@@ -41,6 +41,7 @@ const BackgroundComponent = ({
             color={item.backgroundColor}
             extendedSize={extendedSize}
             bottomPosition={bottomPosition}
+            screenDimensions={screenDimensions}
             indicatorSize={indicatorSize}
             animatedIndicatorsContainerPosition={
               animatedIndicatorsContainerPosition

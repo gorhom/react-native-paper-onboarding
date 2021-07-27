@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { ViewStyle } from 'react-native';
+import { ViewStyle, I18nManager } from 'react-native';
 import { Circle, CircleProps } from 'react-native-svg';
 import Animated, { add, Extrapolate } from 'react-native-reanimated';
 import type { BackgroundCircleProps } from '../../types';
@@ -21,6 +21,7 @@ const BackgroundCircleComponent = ({
   color,
   extendedSize,
   bottomPosition,
+  screenDimensions,
   indicatorSize,
   animatedIndicatorsContainerPosition,
 }: BackgroundCircleProps) => {
@@ -41,7 +42,8 @@ const BackgroundCircleComponent = ({
   const animatedLeftPosition = add(
     animatedIndicatorsContainerPosition,
     indicatorSize / 2,
-    index * indicatorSize
+    I18nManager.isRTL ? -((index + 1) * indicatorSize) : index * indicatorSize,
+    I18nManager.isRTL ? screenDimensions.width : 0
   );
   //#endregion
 
