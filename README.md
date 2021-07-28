@@ -96,6 +96,13 @@ const Screen = () => {
 | descriptionStyle | Text style to override page/slide description default style.                                  | NO       | StyleProp<TextStyle>                                                                    |
 | showCloseButton  | Show close button when page/slide is active, _note: last page will always show close button._ | NO       | boolean                                                                                 |
 
+## Methods
+
+| name     | description                | type       |
+| -------- | -------------------------- | ---------- |
+| next     | Navigate to next page.     | () => void |
+| previous | Navigate to previous page. | () => void |
+
 ## Built With ❤️
 
 - [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler)

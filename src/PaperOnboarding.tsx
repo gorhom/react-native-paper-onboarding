@@ -152,8 +152,8 @@ const PaperOnboardingComponent = forwardRef<
     //#endregion
 
     //#region callbacks
-    const handlePageRef = useCallback((ref, index) => {
-      pagesRef.current[index] = ref;
+    const handlePageRef = useCallback((pageRef, index) => {
+      pagesRef.current[index] = pageRef;
     }, []);
 
     const handleOnLayout = useCallback(
