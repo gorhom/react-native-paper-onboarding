@@ -2,6 +2,17 @@ import type { ReactNode, MutableRefObject, FC, ComponentClass } from 'react';
 import type { TextStyle, Insets, StyleProp } from 'react-native';
 import type Animated from 'react-native-reanimated';
 
+export interface PaperOnboardingMethods {
+  /**
+   * Navigate to next page.
+   */
+  next: () => void;
+  /**
+   * Navigate to previous page.
+   */
+  previous: () => void;
+}
+
 export interface PaperOnboardingItemType {
   /**
    * Image cover.

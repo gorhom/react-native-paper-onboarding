@@ -22,26 +22,38 @@ const PageComponent = ({
   handleRef,
 }: PageProps) => {
   //#region animation
-  const animatedFocus = interpolate(animatedIndex, {
-    inputRange: [index - 1, index, index + 1],
-    outputRange: [0, 1, 2],
-    extrapolate: Extrapolate.CLAMP,
-  });
-  const animatedContentOpacity = interpolate(animatedFocus, {
-    inputRange: [0.5, 1, 1.5],
-    outputRange: [0, 1, 0],
-    extrapolate: Extrapolate.CLAMP,
-  });
+  const animatedFocus = useMemo(
+    () =>
+      interpolate(animatedIndex, {
+        inputRange: [index - 1, index, index + 1],
+        outputRange: [0, 1, 2],
+        extrapolate: Extrapolate.CLAMP,
+      }),
+    [animatedIndex, index]
+  );
+  const animatedContentOpacity = useMemo(
+    () =>
+      interpolate(animatedFocus, {
+        inputRange: [0.5, 1, 1.5],
+        outputRange: [0, 1, 0],
+        extrapolate: Extrapolate.CLAMP,
+      }),
+    [animatedFocus]
+  );
 
-  const animatedContentTopPosition = interpolate(animatedFocus, {
-    inputRange: [0, 1, 2],
-    outputRange: [
-      screenDimensions.height / 8,
-      0,
-      (screenDimensions.height / 6) * -1,
-    ],
-    extrapolate: Extrapolate.CLAMP,
-  });
+  const animatedContentTopPosition = useMemo(
+    () =>
+      interpolate(animatedFocus, {
+        inputRange: [0, 1, 2],
+        outputRange: [
+          screenDimensions.height / 8,
+          0,
+          (screenDimensions.height / 6) * -1,
+        ],
+        extrapolate: Extrapolate.CLAMP,
+      }),
+    [animatedFocus, screenDimensions.height]
+  );
   //#endregion
 
   //#region styles

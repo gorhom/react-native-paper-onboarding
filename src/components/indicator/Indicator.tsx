@@ -30,29 +30,45 @@ const IndicatorComponent = ({
   const radius = useMemo(() => (indicatorSize - 2) / 2, [indicatorSize]);
 
   //#region animation
-  const animatedRadius = interpolate(animatedIndex, {
-    inputRange: [index - 1, index, index + 1],
-    outputRange: [radius * 0.33, radius, radius * 0.33],
-    extrapolate: Extrapolate.CLAMP,
-  });
+  const animatedRadius = useMemo(
+    () =>
+      interpolate(animatedIndex, {
+        inputRange: [index - 1, index, index + 1],
+        outputRange: [radius * 0.33, radius, radius * 0.33],
+        extrapolate: Extrapolate.CLAMP,
+      }),
+    [animatedIndex, index, radius]
+  );
 
-  const animatedIconScale = interpolate(animatedIndex, {
-    inputRange: [index - 1, index, index + 1],
-    outputRange: [1 * 0.33, 1, 1 * 0.33],
-    extrapolate: Extrapolate.CLAMP,
-  });
+  const animatedIconScale = useMemo(
+    () =>
+      interpolate(animatedIndex, {
+        inputRange: [index - 1, index, index + 1],
+        outputRange: [1 * 0.33, 1, 1 * 0.33],
+        extrapolate: Extrapolate.CLAMP,
+      }),
+    [animatedIndex, index]
+  );
 
-  const animatedIconOpacity = interpolate(animatedIndex, {
-    inputRange: [index - 0.25, index, index + 0.25],
-    outputRange: [0, 1, 0],
-    extrapolate: Extrapolate.CLAMP,
-  });
+  const animatedIconOpacity = useMemo(
+    () =>
+      interpolate(animatedIndex, {
+        inputRange: [index - 0.25, index, index + 0.25],
+        outputRange: [0, 1, 0],
+        extrapolate: Extrapolate.CLAMP,
+      }),
+    [animatedIndex, index]
+  );
 
-  const animatedCircleFillOpacity = interpolate(animatedIndex, {
-    inputRange: [index - 1, index],
-    outputRange: [0, 1],
-    extrapolate: Extrapolate.CLAMP,
-  });
+  const animatedCircleFillOpacity = useMemo(
+    () =>
+      interpolate(animatedIndex, {
+        inputRange: [index - 1, index],
+        outputRange: [0, 1],
+        extrapolate: Extrapolate.CLAMP,
+      }),
+    [animatedIndex, index]
+  );
   //#endregion
 
   //#region styles
@@ -80,8 +96,7 @@ const IndicatorComponent = ({
         transform: [{ scale: animatedIconScale }],
       },
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [indicatorSize]
+    [animatedIconOpacity, animatedIconScale, indicatorSize]
   );
   //#endregion
 
