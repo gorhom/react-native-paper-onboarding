@@ -126,29 +126,22 @@ const PaperOnboardingComponent = forwardRef<
       size: data.length,
       screenWidth: dimensions.width,
     });
-    const indicatorsContainerPosition = useMemo(
-      () => data.map((_, index) => index * indicatorSize * -1),
-      [data, indicatorSize]
-    );
-    const animatedIndicatorsContainerPosition = useMemo(
-      () =>
-        add(
-          interpolate(animatedIndex, {
-            inputRange: data.map((_, index) => index),
-            outputRange: I18nManager.isRTL
-              ? indicatorsContainerPosition.reverse()
-              : indicatorsContainerPosition,
-            extrapolate: Animated.Extrapolate.CLAMP,
-          }),
-          indicatorsContainerLeftPadding
-        ),
-      [
-        data,
-        animatedIndex,
-        indicatorsContainerLeftPadding,
-        indicatorsContainerPosition,
-      ]
-    );
+    const animatedIndicatorsContainerPosition = useMemo(() => {
+      const indicatorsContainerPosition = data.map(
+        (_, index) => index * indicatorSize * -1
+      );
+
+      return add(
+        interpolate(animatedIndex, {
+          inputRange: data.map((_, index) => index),
+          outputRange: I18nManager.isRTL
+            ? indicatorsContainerPosition.reverse()
+            : indicatorsContainerPosition,
+          extrapolate: Animated.Extrapolate.CLAMP,
+        }),
+        indicatorsContainerLeftPadding
+      );
+    }, [data, animatedIndex, indicatorSize, indicatorsContainerLeftPadding]);
     //#endregion
 
     //#region callbacks
